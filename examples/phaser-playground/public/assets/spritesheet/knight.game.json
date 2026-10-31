@@ -1,0 +1,86 @@
+{
+  "version": "1.0",
+  "width": 32,
+  "height": 32,
+  "frameIds": [
+    "frame-0",
+    "frame-1",
+    "frame-2",
+    "frame-3",
+    "attack-windup",
+    "attack-active"
+  ],
+  "game": {
+    "version": "1.0",
+    "origin": {
+      "x": 0.5,
+      "y": 1
+    },
+    "body": {
+      "type": "rectangle",
+      "x": 11,
+      "y": 5,
+      "width": 11,
+      "height": 25
+    },
+    "boxes": [
+      {
+        "id": "body-hurt",
+        "kind": "hurtbox",
+        "name": "body",
+        "scope": {
+          "type": "project"
+        },
+        "rect": {
+          "x": 11,
+          "y": 5,
+          "width": 11,
+          "height": 25
+        },
+        "enabled": true
+      },
+      {
+        "id": "blade-active",
+        "kind": "hitbox",
+        "name": "weapon",
+        "scope": {
+          "type": "entry",
+          "animation": "attack",
+          "index": 1
+        },
+        "rect": {
+          "x": 20,
+          "y": 12,
+          "width": 12,
+          "height": 8
+        },
+        "enabled": true
+      }
+    ],
+    "anchors": [
+      {
+        "id": "hand",
+        "name": "weapon_hand",
+        "x": 20,
+        "y": 15,
+        "scope": {
+          "type": "project"
+        }
+      }
+    ],
+    "events": [
+      {
+        "id": "attack-start",
+        "animation": "attack",
+        "index": 1,
+        "name": "attack_start"
+      },
+      {
+        "id": "attack-end",
+        "animation": "attack",
+        "index": 2,
+        "name": "attack_end"
+      }
+    ]
+  }
+}

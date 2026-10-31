@@ -1,0 +1,46 @@
+import { it, expect } from "vitest";
+import * as pf from "../packages/core/src/index.js";
+const make = () => pf.createProject({ name: "Structure", width: 2, height: 2 });
+it("maintains global layer planes and prevents deleting the final layer", () => {
+  const p = make();
+  pf.createFrame(p, "second");
+  pf.createLayer(p, "top");
+  pf.renameLayer(p, "top", "Highlights");
+  pf.setLayerVisibility(p, "top", false);
+  pf.reorderLayers(p, ["top", "base"]);
+  expect(p.layers[0]!.name).toBe("Highlights");
+  expect(() => pf.reorderLayers(p, ["top", "missing"])).toThrow();
+  expect(p.layers.map((l) => l.id)).toEqual(["top", "base"]);
+  pf.removeLayer(p, "top");
+  expect(p.frames.every((f) => !f.layers.has("top"))).toBe(true);
+  expect(() => pf.removeLayer(p, "base")).toThrow();
+  pf.toDocument(p);
+});
+it("rejects used palette removal across hidden layers and preserves colors after index remapping", () => {
+  const p = make();
+  pf.addPaletteColor(p, [10, 20, 30, 128]);
+  pf.addPaletteColor(p, [40, 50, 60, 255]);
+  pf.createLayer(p, "hidden");
+  pf.setLayerVisibility(p, "hidden", false);
+  pf.createFrame(p, "second");
+  pf.setPixel(p, "second", "hidden", 0, 0, 3);
+  expect(() => pf.removePaletteColor(p, 3)).toThrow(/still used/);
+  pf.removePaletteColor(p, 2);
+  expect(pf.getPixel(p, "second", "hidden", 0, 0)).toBe(2);
+  expect(p.palette[2]).toEqual([40, 50, 60, 255]);
+  expect(() => pf.updatePaletteColor(p, 0, [1, 2, 3, 4])).toThrow();
+  expect(() => pf.removePaletteColor(p, 0)).toThrow();
+  expect(() => pf.addPaletteColor(p, [300, 0, 0, 255])).toThrow();
+  pf.toDocument(p);
+});
+it("allows deliberate reference resolution by deleting an animation", () => {
+  const p = make();
+  pf.createFrame(p, "second");
+  pf.addAnimation(p, "walk", [{ frameId: "second", durationMs: 100 }]);
+  pf.setAnimationLoop(p, "walk", false);
+  expect(p.animations[0]!.loop).toBe(false);
+  expect(() => pf.removeFrame(p, "second")).toThrow(/references/);
+  pf.removeAnimation(p, "walk");
+  pf.removeFrame(p, "second");
+  pf.toDocument(p);
+});

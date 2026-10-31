@@ -1,0 +1,9 @@
+node_modules
+dist
+**/dist
+package-lock.json
+examples/coin/*.sprite.json
+examples/character/*.sprite.json
+apps/web/public/examples
+schemas
+.impeccable

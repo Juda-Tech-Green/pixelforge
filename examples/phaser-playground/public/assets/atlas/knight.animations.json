@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "animations": [
+    {
+      "name": "walk",
+      "loop": true,
+      "frames": [
+        {
+          "frameId": "frame-0",
+          "durationMs": 150
+        },
+        {
+          "frameId": "frame-1",
+          "durationMs": 150
+        },
+        {
+          "frameId": "frame-2",
+          "durationMs": 150
+        },
+        {
+          "frameId": "frame-3",
+          "durationMs": 150
+        }
+      ]
+    },
+    {
+      "name": "idle",
+      "loop": true,
+      "frames": [
+        {
+          "frameId": "frame-0",
+          "durationMs": 350
+        },
+        {
+          "frameId": "frame-1",
+          "durationMs": 450
+        }
+      ]
+    },
+    {
+      "name": "jump",
+      "loop": false,
+      "frames": [
+        {
+          "frameId": "frame-2",
+          "durationMs": 200
+        }
+      ]
+    },
+    {
+      "name": "attack",
+      "loop": false,
+      "frames": [
+        {
+          "frameId": "attack-windup",
+          "durationMs": 120
+        },
+        {
+          "frameId": "attack-active",
+          "durationMs": 220
+        },
+        {
+          "frameId": "frame-0",
+          "durationMs": 180
+        }
+      ]
+    }
+  ]
+}

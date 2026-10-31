@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T13:35:34Z",
+  "title": "Design System: PixelForge",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Pale Green", "purpose": "Playback, frame selection, focus and text selection." },
+      "page": { "role": "neutral", "displayName": "Workspace Charcoal" },
+      "canvas-surround": { "role": "neutral", "displayName": "Canvas Charcoal" },
+      "timeline": { "role": "neutral", "displayName": "Timeline Slate" },
+      "foreground": { "role": "neutral", "displayName": "Light Foreground" },
+      "secondary": { "role": "neutral", "displayName": "Muted Metadata" }
+    },
+    "typographyMeta": {
+      "brand": { "displayName": "Brand", "purpose": "Header wordmark; reduces to 18px on mobile." },
+      "headline": { "displayName": "Workspace Heading", "purpose": "Sidebar heading; reduces to 16px on mobile." },
+      "body": { "displayName": "Introductory Copy", "purpose": "Short supporting text in the project sidebar." },
+      "measurement": { "displayName": "Pixel Measurements", "purpose": "Dimensions and frame numbers; timing uses 10px and zoom uses 12px." }
+    },
+    "shadows": [
+      { "name": "artboard", "value": "0 8px 28px #0005", "purpose": "Separates the artboard from the canvas surround." }
+    ],
+    "motion": [
+      { "name": "button-background", "value": "background 0.15s", "purpose": "Button hover feedback; removed under prefers-reduced-motion: reduce." }
+    ],
+    "breakpoints": [
+      { "name": "compact-sidebar", "value": "800px", "purpose": "Maximum width: 210px sidebar, reduced insets, wrapping timeline controls." },
+      { "name": "single-column", "value": "580px", "purpose": "Maximum width: stacked shell, two-column examples, native Project details disclosure." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Playback Button",
+      "kind": "button",
+      "refersTo": "playback",
+      "description": "Primary playback action with visible hover and keyboard focus states.",
+      "html": "<button class=\"play\">Play</button>",
+      "css": ".play { font: 600 12px 'Segoe UI', sans-serif; padding: 9px 13px; min-width: 68px; background: #b0db88; color: #203020; border: 1px solid #b0db88; border-radius: 5px; cursor: pointer; transition: background 0.15s; } .play:hover { background: #c4e7a6; } .play:focus-visible { outline: 2px solid #b0db88; outline-offset: 3px; } .play:disabled { opacity: 0.45; cursor: default; } @media (prefers-reduced-motion: reduce) { .play { transition: none; } }"
+    },
+    {
+      "name": "Mobile Project Details",
+      "kind": "custom",
+      "description": "Native disclosure preserves mobile access to metadata and palette; shown at a maximum viewport width of 580px in the application.",
+      "html": "<details class=\"project\"><summary>Project details</summary><dl><dt>Canvas</dt><dd>32 × 32 px</dd><dt>Frames</dt><dd>4</dd><dt>Layers</dt><dd>1</dd><dt>Format</dt><dd>PixelForge 1.0</dd><dt>Palette</dt><dd>10 RGBA colors</dd></dl></details>",
+      "css": ".project { background: #181c20; color: #a7b2bc; padding: 16px 20px; font: 12px 'Segoe UI', sans-serif; } .project summary { cursor: pointer; padding: 8px 0; } .project summary:focus-visible { outline: 2px solid #b0db88; outline-offset: 3px; } .project dl { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin: 0; padding: 12px 0 16px; } .project dd { margin: 0; color: #e5e9ec; text-align: right; font-variant-numeric: tabular-nums; }"
+    }
+  ],
+  "narrative": {
+    "overview": "A clean, lightweight developer tool. Charcoal surfaces recede around pixel artwork; precise controls and restrained green state cues support inspection. The interface is compact and practical, with native browser controls and system typography.",
+    "keyCharacteristics": ["Tonal charcoal workspace layers", "Crisp pixel rendering", "Quiet metadata", "Green playback, selection and focus"],
+    "rules": [
+      { "name": "Pixel Fidelity", "body": "Preserve exact pixel zoom and allow oversized artwork to scroll rather than shrink responsively.", "section": "layout" },
+      { "name": "Functional Accent", "body": "Use green consistently for playback, selection and focus; sprite palette colors remain content.", "section": "colors" }
+    ],
+    "dos": ["Keep artwork visually primary.", "Preserve metadata access through the mobile disclosure.", "Retain native control semantics and reduced-motion behavior."],
+    "donts": ["Do not smooth canvas pixels.", "Do not promote sprite colors into shell accents.", "Do not add decorative elevation or oversized type that competes with the workspace."]
+  }
+}

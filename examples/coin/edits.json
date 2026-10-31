@@ -1,0 +1,1 @@
+{"version":"1.0","operations":[{"op":"setPixel","frame":"frame-0","layer":"base","x":7,"y":3,"color":5},{"op":"copyFrame","source":"frame-0","id":"coin-highlight"}]}

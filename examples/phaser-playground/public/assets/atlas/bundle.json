@@ -1,0 +1,13 @@
+{
+  "format": "pixelforge-phaser",
+  "version": "1.0",
+  "layout": "atlas",
+  "texture": "knight.png",
+  "atlas": "knight.atlas.json",
+  "animations": "knight.animations.json",
+  "game": "knight.game.json",
+  "frameWidth": 32,
+  "frameHeight": 32,
+  "padding": 2,
+  "frameCount": 6
+}

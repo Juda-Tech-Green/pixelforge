@@ -1,0 +1,47 @@
+{
+  "name": "pixelforge",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "examples/phaser-playground"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && tsx scripts/build.ts && npm run build -w @pixelforge/web && npm run build -w @pixelforge/playground",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dev": "npm run dev -w @pixelforge/web",
+    "cli": "tsx --conditions=development packages/cli/src/index.ts",
+    "examples": "tsx --conditions=development scripts/examples.ts",
+    "schemas": "tsx scripts/schemas.ts",
+    "smoke:browser": "tsx --conditions=development scripts/browser-smoke.ts",
+    "format": "prettier --write .",
+    "smoke:editor": "tsx --conditions=development scripts/editor-smoke.ts",
+    "dev:playground": "npm run dev -w @pixelforge/playground",
+    "assets:playground": "tsx --conditions=development scripts/playground-assets.ts",
+    "smoke:playground": "tsx --conditions=development scripts/playground-smoke.ts",
+    "smoke:game-editor": "tsx --conditions=development scripts/game-editor-smoke.ts",
+    "prepare:packages": "node scripts/prepare-packages.mjs",
+    "pack:release": "npm run build && npm run schemas && npm run prepare:packages && node scripts/pack-release.mjs",
+    "test:external": "node --test tests/external-install.test.mjs",
+    "test:skill": "node --test tests/skill-install.test.mjs",
+    "examples:reference": "tsx --conditions=development scripts/reference-example.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "phaser": "^3.90.0",
+    "playwright-core": "^1.64.1",
+    "prettier": "^3.9.10",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.5",
+    "yaml": "^2.9.1"
+  }
+}

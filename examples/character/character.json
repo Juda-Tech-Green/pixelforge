@@ -1,0 +1,71 @@
+{
+  "format": "pixelforge-manifest",
+  "version": "1.0",
+  "name": "Blue cape scout",
+  "width": 128,
+  "height": 32,
+  "frameWidth": 32,
+  "frameHeight": 32,
+  "columns": 4,
+  "rows": 1,
+  "padding": 0,
+  "margin": 0,
+  "frames": [
+    {
+      "id": "frame-0",
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "frame-1",
+      "index": 1,
+      "x": 32,
+      "y": 0,
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "frame-2",
+      "index": 2,
+      "x": 64,
+      "y": 0,
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "frame-3",
+      "index": 3,
+      "x": 96,
+      "y": 0,
+      "width": 32,
+      "height": 32
+    }
+  ],
+  "animations": [
+    {
+      "name": "walk",
+      "loop": true,
+      "frames": [
+        {
+          "index": 0,
+          "durationMs": 150
+        },
+        {
+          "index": 1,
+          "durationMs": 150
+        },
+        {
+          "index": 2,
+          "durationMs": 150
+        },
+        {
+          "index": 3,
+          "durationMs": 150
+        }
+      ]
+    }
+  ]
+}

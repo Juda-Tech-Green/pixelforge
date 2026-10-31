@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "name": "Golden four pixels",
+  "width": 2,
+  "height": 2,
+  "palette": [
+    [0, 0, 0, 0],
+    [255, 0, 0, 255],
+    [0, 255, 0, 128]
+  ],
+  "layers": [{ "id": "base", "name": "Base", "visible": true }],
+  "frames": [{ "id": "frame-0", "layers": { "base": [1, 0, 2, 1] } }],
+  "animations": [
+    {
+      "name": "idle",
+      "loop": true,
+      "frames": [{ "frameId": "frame-0", "durationMs": 100 }]
+    }
+  ]
+}

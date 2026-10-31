@@ -1,0 +1,95 @@
+{
+  "format": "pixelforge-manifest",
+  "version": "1.0",
+  "name": "Amber coin",
+  "width": 96,
+  "height": 16,
+  "frameWidth": 16,
+  "frameHeight": 16,
+  "columns": 6,
+  "rows": 1,
+  "padding": 0,
+  "margin": 0,
+  "frames": [
+    {
+      "id": "frame-0",
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "width": 16,
+      "height": 16
+    },
+    {
+      "id": "frame-1",
+      "index": 1,
+      "x": 16,
+      "y": 0,
+      "width": 16,
+      "height": 16
+    },
+    {
+      "id": "frame-2",
+      "index": 2,
+      "x": 32,
+      "y": 0,
+      "width": 16,
+      "height": 16
+    },
+    {
+      "id": "frame-3",
+      "index": 3,
+      "x": 48,
+      "y": 0,
+      "width": 16,
+      "height": 16
+    },
+    {
+      "id": "frame-4",
+      "index": 4,
+      "x": 64,
+      "y": 0,
+      "width": 16,
+      "height": 16
+    },
+    {
+      "id": "frame-5",
+      "index": 5,
+      "x": 80,
+      "y": 0,
+      "width": 16,
+      "height": 16
+    }
+  ],
+  "animations": [
+    {
+      "name": "spin",
+      "loop": true,
+      "frames": [
+        {
+          "index": 0,
+          "durationMs": 125
+        },
+        {
+          "index": 1,
+          "durationMs": 125
+        },
+        {
+          "index": 2,
+          "durationMs": 125
+        },
+        {
+          "index": 3,
+          "durationMs": 125
+        },
+        {
+          "index": 4,
+          "durationMs": 125
+        },
+        {
+          "index": 5,
+          "durationMs": 125
+        }
+      ]
+    }
+  ]
+}

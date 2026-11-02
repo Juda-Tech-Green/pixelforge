@@ -25,3 +25,7 @@ Phase 3 worked character: scripts/playground-assets.ts applies examples/phaser-p
 ## Portable skill
 
 Install pixelforge-sprite-creator into the target .agents/skills directory using skill-installation.md. Six reusable scenarios live in examples/prompts. The original reference-scout fixture records a48px specification and reusable operation construction. Helpers validate through the target's installed CLI/core. The independent acceptance test proves packed toolchain/game execution, not autonomous host selection. See agent-compatibility.md for actual verification status.
+
+## v0.5 default workflow
+
+Discover → Inspect → Specify → Generate/Edit → Render → Review → Validate → Export → Integrate. Start from AGENTS.md and setup.md. Prefer inspect selectors over dense source reads, operations list/describe over source-code searches, and small batches over unrelated reconstruction. Use contact previews and semantic checks only for task-defined expectations, diff/preservation for agreed invariants, and build-assets or --replace for safe managed updates. See large-projects.md, contact-sheets.md, semantic-checks.md, safe-exports.md and asset-management.md. Schema validity, source/export equality, asset loading, actual rendering, gameplay and visual quality are distinct evidence levels.

@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "assets": [
+    {
+      "id": "coin",
+      "source": "examples/coin/coin.sprite.json",
+      "output": "test-output/asset-pipeline/coin",
+      "layout": "atlas",
+      "runtimeKey": "coin",
+      "operations": ["examples/coin/edits.json"]
+    },
+    {
+      "id": "scout",
+      "source": "examples/character/character.sprite.json",
+      "output": "test-output/asset-pipeline/scout",
+      "layout": "spritesheet",
+      "runtimeKey": "scout",
+      "options": { "columns": 4, "padding": 1 }
+    }
+  ]
+}

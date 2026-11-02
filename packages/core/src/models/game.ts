@@ -66,6 +66,54 @@ export interface SpriteTransform {
   flipY?: boolean;
   rotation?: number;
 }
+/** Resolve named anchors with the same scope precedence as combat boxes. */
+export function resolveGameAnchors(
+  game: GameMetadata,
+  frame: string,
+  animation?: string,
+  index?: number,
+) {
+  const result = new Map<string, GameMetadata["anchors"][number]>();
+  for (const type of ["project", "animation", "frame", "entry"])
+    for (const anchor of game.anchors)
+      if (
+        anchor.scope.type === type &&
+        matches(anchor.scope, frame, animation, index)
+      )
+        result.set(anchor.name, anchor);
+  return [...result.values()];
+}
+/** Source-canvas point transformed about the sprite's current origin, including flips and nonuniform scale. Parent-container transforms are not represented. */
+export function pointToWorld(
+  point: { x: number; y: number },
+  width: number,
+  height: number,
+  t: SpriteTransform,
+) {
+  if (
+    ![
+      point.x,
+      point.y,
+      t.x,
+      t.y,
+      t.originX,
+      t.originY,
+      t.scaleX,
+      t.scaleY,
+      t.rotation ?? 0,
+    ].every(Number.isFinite)
+  )
+    throw new Error("Transform values must be finite");
+  const x =
+      ((t.flipX ? width - point.x : point.x) - width * t.originX) * t.scaleX,
+    y =
+      ((t.flipY ? height - point.y : point.y) - height * t.originY) * t.scaleY,
+    angle = t.rotation ?? 0;
+  return {
+    x: t.x + x * Math.cos(angle) - y * Math.sin(angle),
+    y: t.y + x * Math.sin(angle) + y * Math.cos(angle),
+  };
+}
 export function boxToWorld(
   rect: { x: number; y: number; width: number; height: number },
   width: number,

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "assets": {
+      "minItems": 1,
+      "maxItems": 1000,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "output": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "layout": {
+            "default": "atlas",
+            "type": "string",
+            "enum": [
+              "atlas",
+              "spritesheet"
+            ]
+          },
+          "runtimeKey": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$"
+          },
+          "operations": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            }
+          },
+          "inputs": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            }
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "columns": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 1024
+              },
+              "padding": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1024
+              },
+              "maxWidth": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 32767
+              },
+              "maxHeight": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 32767
+              },
+              "powerOfTwo": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "source",
+          "output",
+          "layout"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "version",
+    "assets"
+  ],
+  "additionalProperties": false
+}

@@ -1,6 +1,6 @@
 {
   "name": "@pixelforge/phaser",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "module",
   "exports": {
     "types": "./dist/index.d.ts",
@@ -8,10 +8,11 @@
     "default": "./dist/index.js"
   },
   "peerDependencies": {
-    "phaser": "^3.90.0"
+    "phaser": "^3.90.0 || ^4.2.1"
   },
   "dependencies": {
-    "@pixelforge/core": "0.4.0"
+    "@pixelforge/core": "0.5.0",
+    "zod": "^4.1.0"
   },
   "license": "MIT",
   "description": "PixelForge phaser: deterministic editable pixel sprites and game assets",

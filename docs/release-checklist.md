@@ -1,18 +1,13 @@
-# Controlled release checklist
+# Controlled v0.5 release candidate
 
-Version0.4.0 is prepared for local distribution. No GitHub push, release or npm publication is authorized or performed.
+No commit, push, GitHub release or npm publication is authorized by the implementation brief. Local artifacts and validation do not establish public namespace rights. The full executed/unexecuted matrix is v0.5-acceptance-matrix.md.
 
-1. Run `npm run typecheck`, `npm test`, `npm run test:skill`, all browser smoke scripts, and `npm audit`.
-2. Run `npm run pack:release`. This builds packages/editor/playground, regenerates schemas, prepares compiled declarations/license/readme allowlists and packs four tarballs under ignored release/.
-3. Run `npm run test:external`. Inspect tarball contents and exports; no src, fixture caches or workspace references should be required.
-4. Verify public name/namespace rights using the intended publisher's registry account. `npm view pixelforge` returned404 with an old unpublished timestamp, and `npm view @pixelforge/cli` returned404. Neither proves availability or ownership. Scoped package names are local identifiers until this gate is resolved.
-5. Obtain explicit publication authorization. Only then publish the reviewed tarballs in dependency order core, exporters, cli, phaser using `npm publish PATH_TO_TARBALL --access public`, with registry authentication/2FA handled by the maintainer. Do not run this command automatically.
+1. From clean source run npm ci, npm run typecheck, npm test, npm run build. `npm run test:clean` repeats clean-source acceptance in a temporary directory without dist declarations. Cross-platform CI covers Windows/Linux/macOS; only executed jobs count as platform evidence.
+2. Run npm run pack:release. Four matching0.5.0 tarballs, SHA256SUMS and RELEASE-0.5.0.md are written under ignored release/. Compiled JS/declarations, licenses/readmes and canonical schemas are allowlisted. Development source conditions are removed only in packed manifests, then the workspace is restored.
+3. Run `node scripts/verify-release.mjs release`, `npm run test:skill`, `npm run test:external`, `npm run test:engines`, `npm run bench` and all browser smoke suites with their dev servers running. npm audit must be reviewed. Do not claim success from uncollected process handles.
+4. Check complete P0/P1 acceptance and candidate limitations. Engine exact versions3.90.0/4.2.1 are independently typed and browser-tested. Other platforms/versions and autonomous host sessions need explicit evidence. Prepare release notes reflecting actual results, not an unconditional readiness claim.
+5. If publication is later requested, verify publisher namespace rights with the intended account and obtain explicit authorization before publishing/pushing/creating a release. This checklist does not grant that authorization; no publication command runs automatically.
 
-Local installation into an unrelated repository:
+See setup.md for one source-checkout and portable consumer installation path. Copy reviewed archives/checksums into a stable vendor directory inside the game; install the matching local set with normal online dependency resolution and no unrelated sibling source paths. --offline is explicit and requires cached third-party dependencies. Source tarballs do not bundle those dependencies or authenticate a publisher. SHA256SUMS is corruption detection, not a signature/provenance attestation; use a trusted distribution channel.
 
-```sh
-npm install --offline --ignore-scripts /absolute/release/pixelforge-core-0.4.0.tgz /absolute/release/pixelforge-exporters-0.4.0.tgz /absolute/release/pixelforge-cli-0.4.0.tgz /absolute/release/pixelforge-phaser-0.4.0.tgz
-node node_modules/@pixelforge/cli/dist/index.js --version
-```
-
-Offline needs an existing dependency cache; tarballs do not bundle third-party runtime packages. Review/cache dependencies through normal project policy when needed. The exact local binary is pixelforge, provided by @pixelforge/cli; `npx pixelforge` is not a supported registry installation claim. The root workspace remains private. Public scope ownership is the only unresolved publication-rights gate; local toolchain artifacts can be used now.
+Reproducibility means documented source revision, lockfile, Node/npm versions and exact build/test commands. Cross-platform byte-for-byte archive reproducibility and signed supply-chain provenance are not claimed. Retain original editable inputs and do not publish ignored test artifacts or caches.

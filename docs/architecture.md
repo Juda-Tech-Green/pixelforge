@@ -18,4 +18,8 @@ Timeline rasters use a 16 MiB content cache. It compares only visible planes and
 
 ## Phase 3
 
-Phase 3 keeps game geometry/metadata validation, associations, atlas packing and bundle assembly in core. packages/phaser is a separate typed Phaser 3.90 adapter. Exporters encode shared rasters and stage new directories; browser Canvas encoding uses the same metadata files. A namespaced metadata extension preserves document 1.0. GameData/GameOverlay integrate with existing history; game movement belongs to the playground scene.
+Phase 3 keeps game geometry/metadata validation, associations, atlas packing and bundle assembly in core. packages/phaser is a separate typed Phaser adapter (3.90.0 and4.2.1 independently verified in v0.5). Exporters encode shared rasters and stage new directories; browser Canvas encoding uses the same metadata files. A namespaced metadata extension preserves document 1.0. GameData/GameOverlay integrate with existing history; game movement belongs to the playground scene.
+
+## v0.5 production reliability
+
+Workspace-relative TypeScript source paths remove bootstrap dependency on dist while emitted package imports remain public bare names; tarball types/default maps point only at compiled output. Core analysis modules handle bounded inspection/discovery/diff/contracts without filesystem dependencies. Node exporters implement contacts and manifest builds, with ownership/hash-verified staged bundles and rollback. Host-specific game behavior stays outside core. See safe-exports.md for cross-platform rename/interruption limits and asset-management.md for freshness/ownership semantics.

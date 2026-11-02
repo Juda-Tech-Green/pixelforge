@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "files": {
+    "bundle.json": "8e6bc93724abe208604226c4f379fe5b0802459f7cfdea5702dabc10f1e03898",
+    "knight.animations.json": "87275aca2998de5b5b50f783b70de942591478f6ac16b1b1f9bb066c71362364",
+    "knight.game.json": "7557e2932943bde6bc0959242d1fcf57c53f888eee5a9909bb8bb798442a6569",
+    "README.md": "f15fe85c0cdbeb6b86e5c26d55c1bee258dfa9997e8365d95db25b1e1d26a78b",
+    "knight.png": "47e1cce1045cb45d6758d2b19bd2b6439fb82943b21a2e84f8c28e08a792e336"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "pixelforge",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -30,7 +30,11 @@
     "pack:release": "npm run build && npm run schemas && npm run prepare:packages && node scripts/pack-release.mjs",
     "test:external": "node --test tests/external-install.test.mjs",
     "test:skill": "node --test tests/skill-install.test.mjs",
-    "examples:reference": "tsx --conditions=development scripts/reference-example.ts"
+    "examples:reference": "tsx --conditions=development scripts/reference-example.ts",
+    "test:clean": "node scripts/clean-check.mjs",
+    "verify:release": "node scripts/verify-release.mjs",
+    "bench": "tsx --conditions=development scripts/benchmark.ts",
+    "test:engines": "node --test tests/engine-consumers.test.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

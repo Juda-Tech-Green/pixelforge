@@ -16,3 +16,5 @@ Uninstall with `uninstall --target SAME_DIRECTORY`. Changed files stop removal u
 Manual installation: copy the complete `pixelforge-sprite-creator` directory into the target `.agents/skills/` using your file manager. Check SKILL.md and all subdirectories. Manual copies have no installer receipt: remove that named directory manually after preserving custom files, or use a separate destination for managed installation. Never overwrite another skill's files to work around a conflict.
 
 Install CLI separately using the complete local tarball set described in release-checklist.md. Then from the game repository run the installed skill's `scripts/check-environment.mjs`. No public npm publication is implied.
+
+For a single setup path covering checkout, clean builds, portable local archives, online/offline dependency resolution, integrity and optional global skill targets, see setup.md. v0.5 adds compact inspection/discovery/contact/diff/check/build-assets and managed --replace; update the installed skill using the protected installer then verify its receipt.

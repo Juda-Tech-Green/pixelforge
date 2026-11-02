@@ -10,3 +10,8 @@ export * from "./models/game.js";
 export * from "./rendering/atlas.js";
 export * from "./operations/game.js";
 export * from "./rendering/bundle.js";
+export * from "./analysis/inspect.js";
+export * from "./analysis/discovery.js";
+export * from "./analysis/diff.js";
+export * from "./analysis/semantic.js";
+export * from "./analysis/assets.js";

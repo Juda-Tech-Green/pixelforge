@@ -4,6 +4,8 @@ import {
   bundleManifestSchema,
   animationMetadataSchema,
   gameAssetSchema,
+  assetManifestSchema,
+  semanticContractSchema,
 } from "../packages/core/src/index.js";
 import { mkdir, writeFile } from "node:fs/promises";
 import {
@@ -25,6 +27,8 @@ for (const [name, schema] of Object.entries({
   bundle: bundleManifestSchema,
   animations: animationMetadataSchema,
   gameAsset: gameAssetSchema,
+  assets: assetManifestSchema,
+  semanticContract: semanticContractSchema,
 }))
   await writeFile(
     `schemas/${name}.schema.json`,

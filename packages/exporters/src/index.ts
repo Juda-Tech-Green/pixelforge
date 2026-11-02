@@ -1,5 +1,8 @@
 import { renderSpriteSheet, type SheetOptions } from "@pixelforge/core";
 export { exportPhaserBundle } from "./bundle.js";
+export { verifyManagedBundle, assertNoSymlinkPath } from "./bundle.js";
+export { exportContactSheet, type ContactOptions } from "./contact.js";
+export { buildAssets } from "./assets.js";
 export { renderSpriteSheet, type SheetOptions } from "@pixelforge/core";
 import sharp from "sharp";
 import {

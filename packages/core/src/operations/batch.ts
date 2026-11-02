@@ -326,7 +326,7 @@ export function applyOperations(project: Project, input: unknown): Project {
       }
     } catch (error) {
       throw new Error(
-        `Operation ${index} (${o.op}): ${error instanceof Error ? error.message : String(error)}`,
+        `Operation ${index} (${o.op})${"frame" in o ? ` frame=${o.frame}` : ""}${"layer" in o ? ` layer=${o.layer}` : ""}${"x" in o && "y" in o ? ` coordinate=(${o.x},${o.y})` : ""}; canvas=${p.width}x${p.height}, valid x=0..${p.width - 1}, y=0..${p.height - 1}: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   });

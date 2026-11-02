@@ -6,6 +6,8 @@ import {
   gameAssetSchema,
   resolveGameBoxes,
   boxToWorld,
+  resolveGameAnchors,
+  pointToWorld,
   type GameMetadata,
   validateBundleMetadata,
 } from "@pixelforge/core";
@@ -120,6 +122,37 @@ export function createPixelForgeCharacter(
   applyPixelForgePhysics(sprite, config.game);
   return sprite;
 }
+/** Reapply source geometry after moving/scaling an Arcade StaticBody. Positive scale, unrotated objects only. */
+export function syncPixelForgeStaticBody(
+  sprite: Phaser.Physics.Arcade.Sprite,
+  asset: GameAsset,
+): void {
+  const body = sprite.body;
+  if (!body || !("updateFromGameObject" in body))
+    throw new Error("A StaticBody is required");
+  if (sprite.rotation || sprite.scaleX <= 0 || sprite.scaleY <= 0)
+    throw new Error(
+      "Static synchronization requires positive scale and no rotation",
+    );
+  const data = gameAssetSchema.parse(asset);
+  sprite.setOrigin(data.game.origin.x, data.game.origin.y);
+  body.setOffset(0, 0);
+  body.updateFromGameObject();
+  const b = data.game.body;
+  if (!b) return;
+  if (b.type === "rectangle") {
+    body.setSize(b.width * sprite.scaleX, b.height * sprite.scaleY, false);
+    body.setOffset(b.x * sprite.scaleX, b.y * sprite.scaleY);
+  } else {
+    if (sprite.scaleX !== sprite.scaleY)
+      throw new Error("Static circle requires uniform scale");
+    body.setCircle(
+      b.radius * sprite.scaleX,
+      b.x * sprite.scaleX,
+      b.y * sprite.scaleY,
+    );
+  }
+}
 export function currentAnimationEntry(
   sprite: Phaser.GameObjects.Sprite,
 ): number {
@@ -162,6 +195,33 @@ export function playPixelForgeAnimation(
   const key = keys[name];
   if (!key) throw new Error(`Unknown animation: ${name}`);
   sprite.play(key, !restart);
+}
+export function getActiveAnchors(
+  sprite: Phaser.GameObjects.Sprite,
+  asset: GameAsset,
+  animation: string,
+) {
+  const frame = sprite.frame.name,
+    frameId = typeof frame === "number" ? asset.frameIds[frame] : String(frame);
+  return resolveGameAnchors(
+    asset.game,
+    frameId ?? "",
+    animation,
+    currentAnimationEntry(sprite),
+  ).map((anchor) => ({
+    ...anchor,
+    world: pointToWorld(anchor, asset.width, asset.height, {
+      x: sprite.x,
+      y: sprite.y,
+      originX: sprite.originX,
+      originY: sprite.originY,
+      scaleX: sprite.scaleX,
+      scaleY: sprite.scaleY,
+      flipX: sprite.flipX,
+      flipY: sprite.flipY,
+      rotation: sprite.rotation,
+    }),
+  }));
 }
 export interface GameEventNotice {
   id: string;

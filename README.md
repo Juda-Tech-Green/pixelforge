@@ -7,10 +7,10 @@
 Editable pixel sprites, timed animations, and Phaser-ready assets.<br>
 Build with a coding agent. Refine in the editor. Keep every pixel yours.
 
-[![Version 0.4.0](https://img.shields.io/badge/version-0.4.0-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
+[![Version 0.5.0](https://img.shields.io/badge/version-0.5.0-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
 [![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-78b7e5?style=flat-square&labelColor=20262c)](tsconfig.json)
 [![Node 22.12 or newer](https://img.shields.io/badge/Node.js-22.12%2B-b0db88?style=flat-square&labelColor=20262c)](package.json)
-[![Phaser 3.90](https://img.shields.io/badge/Phaser-3.90-f4c46a?style=flat-square&labelColor=20262c)](docs/phaser-integration.md)
+[![Phaser 3.90 and 4.2](https://img.shields.io/badge/Phaser-3.90%20%7C%204.2-f4c46a?style=flat-square&labelColor=20262c)](docs/phaser-integration.md)
 [![MIT license](https://img.shields.io/badge/license-MIT-b0db88?style=flat-square&labelColor=20262c)](LICENSE)
 
 **[Quick start](#quick-start) · [Agent workflow](#create-with-an-agent) · [Phaser](#take-it-into-phaser) · [Documentation](#documentation)**
@@ -30,6 +30,12 @@ The headless CLI and browser editor share one deterministic renderer. Everything
 | Create                                                             | Refine                                                                         | Ship                                                                                      |
 | :----------------------------------------------------------------- | :----------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
 | TypeScript API, JSON operation batches, and a portable agent skill | Eight drawing tools, layers, palette editing, onion skins, timeline, undo/redo | Transparent PNGs, fixed-cell sheets, native Phaser atlases, animations, and game metadata |
+
+## Production workflows in v0.5
+
+Inspect large projects without dumping pixel grids, discover operation syntax from the CLI, review labeled contact sheets, check task-defined animation contracts, compare targeted edits, and rebuild only stale assets with managed exports.
+
+[Setup](docs/setup.md) · [Large sprites](docs/large-projects.md) · [Contact sheets](docs/contact-sheets.md) · [Semantic checks](docs/semantic-checks.md) · [Safe re-exports](docs/safe-exports.md) · [Asset manifests](docs/asset-management.md) · [v0.5 verification](docs/v0.5-verification.md)
 
 ## Quick start
 
@@ -151,7 +157,7 @@ Export a bundle containing a native atlas or fixed-cell sheet, animation timing,
 npm run cli -- export examples/phaser-playground/character.sprite.json --format phaser --layout atlas --name knight --output test-output/knight-bundle
 ```
 
-Use a **new output directory** for bundle exports. The typed [`@pixelforge/phaser` adapter](packages/phaser) loads the bundle and applies configured origins, Arcade bodies, combat regions, anchors, and event markers. [Integration guide →](docs/phaser-integration.md)
+Use a **new output directory** initially; add `--replace` to update an unchanged, verified managed bundle safely. The typed [`@pixelforge/phaser` adapter](packages/phaser) loads the bundle and applies configured origins, Arcade bodies, combat regions, anchors, and event markers. [Integration guide →](docs/phaser-integration.md)
 
 Try the playable demo:
 
@@ -251,7 +257,7 @@ npm run pack:release         # Four local package tarballs
 npm run test:external        # Independent packed-package + Phaser acceptance
 ```
 
-`test:external` needs the tarballs, installed Chrome, and cached third-party dependencies for its offline install. It compiles a TypeScript consumer and runs Phaser outside the monorepo. [Acceptance details →](docs/external-phaser-integration.md)
+`test:external` needs the tarballs and installed Chrome. Dependency installation is online by default; set `PIXELFORGE_OFFLINE=1` only with a compatible populated cache. It compiles a TypeScript consumer and runs Phaser outside the monorepo. [Acceptance details →](docs/external-phaser-integration.md)
 
 For another repository, install the complete local tarball set using the [release guide](docs/release-checklist.md). These packages are **not published to npm**. To regenerate the README gallery, run `npx tsx --conditions=development scripts/readme-assets.ts`; add `--capture-editor` while the editor dev server runs to refresh its screenshot.
 
@@ -259,7 +265,7 @@ For another repository, install the complete local tarball set using the [releas
 
 ## Current scope
 
-PixelForge v0.4 includes the core, interactive editor, Phaser integration, portable agent skill, and reference workflow. Windows toolchain execution is verified. macOS/Linux execution and autonomous skill activation in other agent hosts remain unverified; see [compatibility](docs/agent-compatibility.md) and [verification](docs/verification.md).
+PixelForge v0.5 release candidate includes the core, interactive editor, Phaser integration, portable agent skill, and reference workflow. Windows toolchain execution is verified. macOS/Linux execution and autonomous skill activation in other agent hosts remain unverified; see [compatibility](docs/agent-compatibility.md) and [verification](docs/verification.md).
 
 Canvases support **1–1024 pixels per dimension**, with up to **256 palette entries**; exports are capped at **64 megapixels**. Layer opacity/blend modes, selection/transform tools, and cloud persistence are not implemented. History is bounded to 50 checkpoints / 32 MiB of retained text. Browser multi-file downloads may require permission. Each output replacement is atomic; a multi-file export is not a single transaction. Public namespace rights and publication authorization remain release gates.
 

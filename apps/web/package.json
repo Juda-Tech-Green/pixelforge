@@ -1,6 +1,6 @@
 {
   "name": "@pixelforge/web",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
-    "@pixelforge/core": "0.4.0",
+    "@pixelforge/core": "0.5.0",
     "lucide-react": "^1.65.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

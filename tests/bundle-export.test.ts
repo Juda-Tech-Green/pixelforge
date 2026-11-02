@@ -14,6 +14,7 @@ it("stages complete bundles and preserves existing output/fails without partial 
     const target = join(dir, "hero");
     await exportPhaserBundle(p, target, { name: "hero" });
     expect((await readdir(target)).sort()).toEqual([
+      ".pixelforge-bundle.json",
       "README.md",
       "bundle.json",
       "hero.animations.json",

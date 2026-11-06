@@ -1,5 +1,6 @@
 import { externalBrowser } from "./external-browser.mjs";
 import { manageSkill } from "../.agents/skills/pixelforge-sprite-creator/scripts/install.mjs";
+import { manageSkill as manageAudioSkill } from "../.agents/skills/pixelforge-audio-creator/scripts/install.mjs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -45,8 +46,8 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
     );
     const npm = process.env.npm_execpath;
     assert.ok(npm, "Run through npm run test:external");
-    const tarballs = ["core", "exporters", "cli", "phaser"].map((name) =>
-      resolve(root, "release", `pixelforge-${name}-0.5.0.tgz`),
+    const tarballs = ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"].map((name) =>
+      resolve(root, "release", `pixelforge-${name}-0.6.0.tgz`),
     );
     run([
       npm,
@@ -60,7 +61,7 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
       "vite@7.3.7",
       "typescript@5.9.3",
     ]);
-    for (const name of ["core", "exporters", "cli", "phaser"]) {
+    for (const name of ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"]) {
       assert.equal(
         (
           await lstat(join(dir, "node_modules", "@pixelforge", name))
@@ -73,7 +74,7 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
           "utf8",
         ),
       );
-      assert.equal(p.version, "0.5.0");
+      assert.equal(p.version, "0.6.0");
       const files = await readdir(
         join(dir, "node_modules", "@pixelforge", name),
       );
@@ -127,7 +128,15 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
       "dist",
       "index.js",
     );
-    assert.match(run([cli, "--version"]), /0\.5\.0/);
+    assert.match(run([cli, "--version"]), /0\.6\.0/);
+    const audioSkill = await manageAudioSkill("install", join(dir, ".agents", "skills"));
+    run([join(audioSkill.path, "scripts", "check-environment.mjs")]);
+    run([cli, "audio", "create", "laser", "--output", "laser.sound.json"]);
+    run([cli, "audio", "validate", "laser.sound.json", "--render"]);
+    run([cli, "audio", "export", "laser.sound.json", "--output", "public/audio"]);
+    const audioManifest = JSON.parse(await readFile(join(dir, "public/audio/audio.json"), "utf8"));
+    assert.equal(audioManifest.assets[0].key, "laser-shot");
+    assert.equal((await readFile(join(dir, "public/audio/laser-shot.wav"))).subarray(0, 4).toString(), "RIFF");
     run([
       cli,
       "init",

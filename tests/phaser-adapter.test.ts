@@ -6,7 +6,40 @@ import {
   animationKey,
   observePixelForgeEvents,
   registerPixelForgeAnimations,
+  syncPixelForgeStaticBody,
 } from "../packages/phaser/src/index.js";
+it("rejects dynamic bodies and nonuniform static circles before changing any geometry", () => {
+  const p = pf.createProject({ name: "Static guard", width: 16, height: 16 });
+  pf.setCollisionBody(p, { type: "circle", x: 2, y: 2, radius: 4 });
+  const game = pf.assemblePhaserBundle(p).gameData;
+  let mutations = 0;
+  const body = {
+    physicsType: 0,
+    updateFromGameObject: () => {
+      mutations++;
+    },
+    setOffset: () => {
+      mutations++;
+    },
+    setCircle: () => {
+      mutations++;
+    },
+  };
+  const sprite = {
+    body,
+    rotation: 0,
+    scaleX: 2,
+    scaleY: 3,
+    setOrigin: () => {
+      mutations++;
+    },
+  } as unknown as Phaser.Physics.Arcade.Sprite;
+  expect(() => syncPixelForgeStaticBody(sprite, game)).toThrow(/StaticBody/);
+  expect(mutations).toBe(0);
+  body.physicsType = 1;
+  expect(() => syncPixelForgeStaticBody(sprite, game)).toThrow(/uniform scale/);
+  expect(mutations).toBe(0);
+});
 it("namespaces animation keys injectively and preserves exact durations and repeated source names", () => {
   expect(animationKey("hero:one", "walk")).not.toBe(
     animationKey("hero", "one:walk"),

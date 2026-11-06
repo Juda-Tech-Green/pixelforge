@@ -25,10 +25,11 @@ import {
   sharedFrameUses,
 } from "@pixelforge/core";
 import { z } from "zod";
+import { registerAudioCommands } from "./audio.js";
 import { exportFramePNG, exportSpriteSheet } from "@pixelforge/exporters";
 const program = new Command()
   .name("pixelforge")
-  .version("0.5.0")
+  .version("0.6.0")
   .description("Deterministic, editable pixel art for agents and humans");
 const integer = (value: string) => {
   if (!/^\d+$/.test(value) || !Number.isSafeInteger(Number(value)))
@@ -388,6 +389,7 @@ program
       warningsTotal: warnings.length,
     });
   });
+registerAudioCommands(program, atomicWrite);
 program.parseAsync().catch((error: unknown) => {
   process.stderr.write(
     JSON.stringify({

@@ -1,3 +1,7 @@
+# Current verification
+
+PixelForge0.5 now has executed Windows and clean Alpine Linux evidence,70Vitest tests/18files,7skill tests, independent Phaser3.90.0/4.2.1 TypeScript/WebGL consumers, packed CLI acceptance and all original browser suites. See [v0.5 verification](v0.5-verification.md), [acceptance matrix](v0.5-acceptance-matrix.md) and [Linux methodology](linux-verification.md) for exact environments, commands, benchmarks and limitations. macOS/Ubuntu-specific CI and autonomous host activation remain unverified. Historical results below describe their original phases.
+
 # PixelForge v0.2 verification
 
 Verified on Windows with Node 24.16.0 and npm 12.0.2:

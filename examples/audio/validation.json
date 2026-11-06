@@ -1,0 +1,82 @@
+{
+  "runtime": "v24.16.0",
+  "platform": "win32",
+  "review": "Numerical integrity checked; subjective listening review remains required.",
+  "sounds": [
+    {
+      "preset": "laser-shot",
+      "valid": true,
+      "metrics": {
+        "peak": 0.2599901425222336,
+        "rms": 0.08756764109598619,
+        "clippedSamples": 0,
+        "silent": false,
+        "samples": 17640
+      },
+      "renderMs": 7.902800000000013,
+      "processRssBytes": 89583616,
+      "pcmBytes": 141120,
+      "wavBytes": 35324
+    },
+    {
+      "preset": "gunshot",
+      "valid": true,
+      "metrics": {
+        "peak": 0.5187265388120791,
+        "rms": 0.06522533861381963,
+        "clippedSamples": 0,
+        "silent": false,
+        "samples": 17640
+      },
+      "renderMs": 8.455699999999979,
+      "processRssBytes": 98418688,
+      "pcmBytes": 141120,
+      "wavBytes": 35324
+    },
+    {
+      "preset": "zombie-growl",
+      "valid": true,
+      "metrics": {
+        "peak": 0.5146468769559955,
+        "rms": 0.15143305784614372,
+        "clippedSamples": 0,
+        "silent": false,
+        "samples": 61740
+      },
+      "renderMs": 59.87439999999998,
+      "processRssBytes": 103604224,
+      "pcmBytes": 493920,
+      "wavBytes": 123524
+    },
+    {
+      "preset": "metal-impact",
+      "valid": true,
+      "metrics": {
+        "peak": 0.45047920794712204,
+        "rms": 0.052091453949953535,
+        "clippedSamples": 0,
+        "silent": false,
+        "samples": 52920
+      },
+      "renderMs": 17.55619999999999,
+      "processRssBytes": 104071168,
+      "pcmBytes": 423360,
+      "wavBytes": 105884
+    },
+    {
+      "preset": "altar-activation",
+      "valid": true,
+      "metrics": {
+        "peak": 0.35739126491519446,
+        "rms": 0.07201813357629451,
+        "clippedSamples": 0,
+        "silent": false,
+        "samples": 105840
+      },
+      "renderMs": 43.22930000000002,
+      "processRssBytes": 105160704,
+      "pcmBytes": 846720,
+      "wavBytes": 211724
+    }
+  ]
+}

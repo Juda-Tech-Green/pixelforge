@@ -7,7 +7,7 @@
 Editable pixel sprites, timed animations, and Phaser-ready assets.<br>
 Build with a coding agent. Refine in the editor. Keep every pixel yours.
 
-[![Version 0.5.0](https://img.shields.io/badge/version-0.5.0-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
+[![Version 0.6.0](https://img.shields.io/badge/version-0.6.0-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
 [![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-78b7e5?style=flat-square&labelColor=20262c)](tsconfig.json)
 [![Node 22.12 or newer](https://img.shields.io/badge/Node.js-22.12%2B-b0db88?style=flat-square&labelColor=20262c)](package.json)
 [![Phaser 3.90 and 4.2](https://img.shields.io/badge/Phaser-3.90%20%7C%204.2-f4c46a?style=flat-square&labelColor=20262c)](docs/phaser-integration.md)
@@ -32,6 +32,11 @@ The headless CLI and browser editor share one deterministic renderer. Everything
 | TypeScript API, JSON operation batches, and a portable agent skill | Eight drawing tools, layers, palette editing, onion skins, timeline, undo/redo | Transparent PNGs, fixed-cell sheets, native Phaser atlases, animations, and game metadata |
 
 ## Production workflows in v0.5
+
+**New in v0.6:** create editable procedural sound effects, render deterministic
+PCM16 WAV, and refine sounds in the dedicated `/audio.html` workspace. Five
+original presets cover lasers, gunshots, growls, metallic impacts and magical
+activations. [Audio guide](docs/audio/README.md) · [Audio Creator skill](.agents/skills/pixelforge-audio-creator/SKILL.md)
 
 Inspect large projects without dumping pixel grids, discover operation syntax from the CLI, review labeled contact sheets, check task-defined animation contracts, compare targeted edits, and rebuild only stale assets with managed exports.
 
@@ -265,7 +270,7 @@ For another repository, install the complete local tarball set using the [releas
 
 ## Current scope
 
-PixelForge v0.5 release candidate includes the core, interactive editor, Phaser integration, portable agent skill, and reference workflow. Windows toolchain execution is verified. macOS/Linux execution and autonomous skill activation in other agent hosts remain unverified; see [compatibility](docs/agent-compatibility.md) and [verification](docs/verification.md).
+PixelForge v0.5 includes the core, interactive editor, Phaser integration, portable agent skill, and reference workflow. Windows and Alpine Linux clean builds are verified. macOS execution and autonomous skill activation in other agent hosts remain unverified; see [compatibility](docs/agent-compatibility.md) and [verification](docs/verification.md).
 
 Canvases support **1–1024 pixels per dimension**, with up to **256 palette entries**; exports are capped at **64 megapixels**. Layer opacity/blend modes, selection/transform tools, and cloud persistence are not implemented. History is bounded to 50 checkpoints / 32 MiB of retained text. Browser multi-file downloads may require permission. Each output replacement is atomic; a multi-file export is not a single transaction. Public namespace rights and publication authorization remain release gates.
 

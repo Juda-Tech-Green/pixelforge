@@ -27,6 +27,7 @@ test-results/
 *.tar.gz
 # Copied from /schemas by npm run prepare:packages
 /packages/core/schemas/
+/packages/audio-core/schemas/
 
 # Local design-tool state (keep the shared design specification)
 /.impeccable/*
@@ -65,3 +66,7 @@ temp/
 *.swp
 *.swo
 *~
+
+# Local research references (redistribution permission not established)
+/docs/Sound Synthesis Based on Ordinary Differential Equations.pdf
+/docs/A Simple Non-linear Transfer Function for a Wiener-Hammerstein Model to Simulate Guitar Distortion and Overdrive Effects.pdf

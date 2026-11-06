@@ -1,0 +1,72 @@
+{
+  "version": "1.0",
+  "id": "laser-shot",
+  "name": "laser-shot",
+  "sampleRate": 44100,
+  "durationMs": 400,
+  "seed": 9382,
+  "prng": "xorshift32-v1",
+  "voices": [
+    {
+      "id": "main",
+      "gain": 0.35,
+      "phase": 0,
+      "envelope": {
+        "type": "points",
+        "points": [
+          {
+            "timeMs": 0,
+            "value": 0
+          },
+          {
+            "timeMs": 4,
+            "value": 1
+          },
+          {
+            "timeMs": 370,
+            "value": 0
+          },
+          {
+            "timeMs": 400,
+            "value": 0
+          }
+        ]
+      },
+      "type": "oscillator",
+      "waveform": "sawtooth",
+      "frequency": {
+        "startHz": 900,
+        "endHz": 120,
+        "curve": "exponential"
+      },
+      "duty": 0.5,
+      "modulation": {
+        "rateHz": 0,
+        "depth": 0
+      }
+    }
+  ],
+  "effects": [
+    {
+      "id": "tone",
+      "type": "lowpass",
+      "cutoffHz": 3200
+    },
+    {
+      "id": "echo",
+      "type": "delay",
+      "delayMs": 75,
+      "feedback": 0.15,
+      "mix": 0.16
+    }
+  ],
+  "output": {
+    "gain": 1,
+    "clipping": "error",
+    "fadeMs": 2
+  },
+  "export": {
+    "format": "wav-pcm16",
+    "key": "laser-shot"
+  }
+}

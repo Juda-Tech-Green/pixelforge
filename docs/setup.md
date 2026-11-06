@@ -12,14 +12,14 @@ npm run pack:release
 node scripts/verify-release.mjs release
 ```
 
-The local v0.5 candidate is not pushed by this task: a GitHub clone can still point at the earlier public revision. Select the reviewed v0.5 source snapshot/revision before running the build commands. This builds from that source without preexisting dist declarations. Release metadata contains four versioned tarballs, SHA256SUMS and versioned release notes. To use a different reviewed revision, select it through your normal Git workflow before building. This run does not publish a release or establish npm namespace ownership.
+This agent does not publish source: a GitHub clone can point at a different revision. Select the reviewed v0.6 source snapshot/revision before running the build commands. This builds from that source without preexisting dist declarations. Release metadata contains six versioned tarballs, SHA256SUMS and versioned release notes. To use a different reviewed revision, select it through your normal Git workflow before building. This run does not publish a release or establish npm namespace ownership. Historical v0.5 verification remains separate from [current audio verification](audio/verification.md).
 
 ## Install into an unrelated game
 
-Copy the four matching0.5.0 tarballs into a stable directory **inside your game**, such as `vendor/pixelforge/`. From that game:
+Copy the six matching0.6.0 tarballs into a stable directory **inside your game**, such as `vendor/pixelforge/`. From that game:
 
 ```sh
-npm install --ignore-scripts ./vendor/pixelforge/pixelforge-core-0.5.0.tgz ./vendor/pixelforge/pixelforge-exporters-0.5.0.tgz ./vendor/pixelforge/pixelforge-cli-0.5.0.tgz ./vendor/pixelforge/pixelforge-phaser-0.5.0.tgz
+npm install --ignore-scripts ./vendor/pixelforge/pixelforge-core-0.6.0.tgz ./vendor/pixelforge/pixelforge-exporters-0.6.0.tgz ./vendor/pixelforge/pixelforge-cli-0.6.0.tgz ./vendor/pixelforge/pixelforge-phaser-0.6.0.tgz ./vendor/pixelforge/pixelforge-audio-core-0.6.0.tgz ./vendor/pixelforge/pixelforge-audio-exporters-0.6.0.tgz
 node node_modules/@pixelforge/cli/dist/index.js --version
 ```
 
@@ -34,12 +34,14 @@ From the PixelForge checkout:
 ```sh
 node .agents/skills/pixelforge-sprite-creator/scripts/install.mjs install --target /path/to/game/.agents/skills
 node .agents/skills/pixelforge-sprite-creator/scripts/install.mjs verify --target /path/to/game/.agents/skills
+node .agents/skills/pixelforge-audio-creator/scripts/install.mjs install --target /path/to/game/.agents/skills
 ```
 
 Then from the game:
 
 ```sh
 node .agents/skills/pixelforge-sprite-creator/scripts/check-environment.mjs
+node .agents/skills/pixelforge-audio-creator/scripts/check-environment.mjs
 node node_modules/@pixelforge/cli/dist/index.js inspect assets-src/hero.sprite.json --summary
 ```
 

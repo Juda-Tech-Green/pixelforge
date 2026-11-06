@@ -5,7 +5,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const version = JSON.parse(
   await readFile(resolve(root, "package.json"), "utf8"),
 ).version;
-for (const name of ["core", "exporters", "cli", "phaser"]) {
+for (const name of ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"]) {
   const dir = resolve(root, "packages", name),
     p = JSON.parse(await readFile(resolve(dir, "package.json"), "utf8"));
   p.version = version;
@@ -35,6 +35,11 @@ for (const name of ["core", "exporters", "cli", "phaser"]) {
     await cp(resolve(root, "schemas"), resolve(dir, "schemas"), {
       recursive: true,
     });
+  }
+  if (name === "audio-core") {
+    await mkdir(resolve(dir, "schemas"), {recursive: true});
+    for (const schema of ["sound", "audioOperations", "audioManifest"])
+      await cp(resolve(root, "schemas", `${schema}.schema.json`), resolve(dir, "schemas", `${schema}.schema.json`));
   }
   if (name === "cli") await chmod(resolve(dir, "dist/index.js"), 0o755);
 }

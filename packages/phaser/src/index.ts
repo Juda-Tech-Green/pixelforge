@@ -1,4 +1,5 @@
 import type Phaser from "phaser";
+import { audioManifestSchema, type AudioManifest } from "@pixelforge/audio-core";
 import { z } from "zod";
 import {
   animationMetadataSchema,
@@ -16,6 +17,20 @@ export type AnimationMetadata = z.infer<typeof animationMetadataSchema>;
 export type GameAsset = z.infer<typeof gameAssetSchema>;
 export const animationKey = (namespace: string, name: string): string =>
   `${encodeURIComponent(namespace)}:${encodeURIComponent(name)}`;
+/** Queue generated WAVs during preload; filenames are validated relative files. */
+export function loadPixelForgeAudio(scene: Phaser.Scene, config: {baseURL: string; manifest: AudioManifest}): void {
+  const manifest = audioManifestSchema.parse(config.manifest);
+  for (const asset of manifest.assets) scene.load.audio(asset.key, `${config.baseURL.replace(/\/$/, "")}/${asset.file}`);
+}
+/** Use as the callback to observePixelForgeEvents, preserving its disposal lifecycle. */
+export function playPixelForgeSoundEvent(scene: Phaser.Scene, manifest: AudioManifest, event: GameEventNotice): number {
+  const parsed = audioManifestSchema.parse(manifest);
+  let played = 0;
+  for (const mapping of parsed.events) if (mapping.animation === event.animation && mapping.event === event.name) {
+    if (scene.sound.play(mapping.sound)) played++;
+  }
+  return played;
+}
 export function loadPixelForgeAssets(
   scene: Phaser.Scene,
   config: { key: string; baseURL: string; manifest: BundleManifest },
@@ -128,13 +143,17 @@ export function syncPixelForgeStaticBody(
   asset: GameAsset,
 ): void {
   const body = sprite.body;
-  if (!body || !("updateFromGameObject" in body))
+  // Phaser.Physics.Arcade.STATIC_BODY is 1 on both supported engines.
+  // Keep Phaser a type-only import so this module remains Node-loadable.
+  if (!body || body.physicsType !== 1 || !("updateFromGameObject" in body))
     throw new Error("A StaticBody is required");
   if (sprite.rotation || sprite.scaleX <= 0 || sprite.scaleY <= 0)
     throw new Error(
       "Static synchronization requires positive scale and no rotation",
     );
   const data = gameAssetSchema.parse(asset);
+  if (data.game.body?.type === "circle" && sprite.scaleX !== sprite.scaleY)
+    throw new Error("Static circle requires uniform scale");
   sprite.setOrigin(data.game.origin.x, data.game.origin.y);
   body.setOffset(0, 0);
   body.updateFromGameObject();
@@ -144,8 +163,6 @@ export function syncPixelForgeStaticBody(
     body.setSize(b.width * sprite.scaleX, b.height * sprite.scaleY, false);
     body.setOffset(b.x * sprite.scaleX, b.y * sprite.scaleY);
   } else {
-    if (sprite.scaleX !== sprite.scaleY)
-      throw new Error("Static circle requires uniform scale");
     body.setCircle(
       b.radius * sprite.scaleX,
       b.x * sprite.scaleX,

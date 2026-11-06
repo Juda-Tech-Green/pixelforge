@@ -1,6 +1,6 @@
 {
   "name": "pixelforge",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -18,6 +18,9 @@
     "dev": "npm run dev -w @pixelforge/web",
     "cli": "tsx --conditions=development packages/cli/src/index.ts",
     "examples": "tsx --conditions=development scripts/examples.ts",
+    "examples:audio": "tsx --conditions=development scripts/audio-examples.ts",
+    "verify:audio": "python scripts/audio-verify-wav.py",
+    "smoke:audio": "tsx --conditions=development scripts/audio-browser-smoke.ts",
     "schemas": "tsx scripts/schemas.ts",
     "smoke:browser": "tsx --conditions=development scripts/browser-smoke.ts",
     "format": "prettier --write .",
@@ -29,7 +32,7 @@
     "prepare:packages": "node scripts/prepare-packages.mjs",
     "pack:release": "npm run build && npm run schemas && npm run prepare:packages && node scripts/pack-release.mjs",
     "test:external": "node --test tests/external-install.test.mjs",
-    "test:skill": "node --test tests/skill-install.test.mjs",
+    "test:skill": "node --test tests/skill-install.test.mjs tests/audio-skill.test.mjs",
     "examples:reference": "tsx --conditions=development scripts/reference-example.ts",
     "test:clean": "node scripts/clean-check.mjs",
     "verify:release": "node scripts/verify-release.mjs",

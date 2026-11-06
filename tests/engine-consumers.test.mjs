@@ -50,7 +50,7 @@ for (const engineVersion of ["3.90.0", "4.2.1"])
           "--no-audit",
           "--no-fund",
           ...(process.env.PIXELFORGE_OFFLINE === "1" ? ["--offline"] : []),
-          ...["core", "exporters", "cli", "phaser"].map((name) =>
+          ...["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"].map((name) =>
             resolve("release", `pixelforge-${name}-${version}.tgz`),
           ),
           `phaser@${engineVersion}`,
@@ -81,6 +81,11 @@ for (const engineVersion of ["3.90.0", "4.2.1"])
         );
         run([join(dir, "node_modules/typescript/bin/tsc")]);
         const cli = join(dir, "node_modules/@pixelforge/cli/dist/index.js");
+        run([cli, "audio", "create", "laser", "--output", "laser.sound.json"]);
+        run([cli, "audio", "export", "laser.sound.json", "--output", "public/audio"]);
+        const audioManifest = JSON.parse(await readFile(join(dir, "public/audio/audio.json"), "utf8"));
+        audioManifest.events = [{animation: "attack", event: "impact", sound: "laser-shot"}];
+        await writeFile(join(dir, "public/audio/audio.json"), JSON.stringify(audioManifest));
         run([
           cli,
           "init",
@@ -170,6 +175,15 @@ for (const engineVersion of ["3.90.0", "4.2.1"])
             },
           },
         ];
+        operations.push({
+          op: "setAnimationEvent",
+          event: {
+            id: "idle-phase",
+            name: "idle_phase",
+            animation: "idle",
+            index: 0,
+          },
+        });
         await writeFile(
           join(dir, "ops.json"),
           JSON.stringify({ version: "1.0", operations }),
@@ -199,24 +213,27 @@ for (const engineVersion of ["3.90.0", "4.2.1"])
           ]);
         await writeFile(
           join(dir, "index.html"),
-          '<!doctype html><html><body style="margin:0"><script type="module" src="/main.js"></script></body></html>',
+          '<!doctype html><html><body style="margin:0"><button id="unlock">Enable audio</button><script type="module" src="/main.js"></script></body></html>',
         );
         await writeFile(
           join(dir, "main.js"),
           `
 import Phaser from 'phaser';
-import {loadPixelForgeAssets,readPixelForgeMetadata,registerPixelForgeAnimations,createPixelForgeCharacter,playPixelForgeAnimation,observePixelForgeEvents,getActiveHitboxes,getActiveAnchors,syncPixelForgeStaticBody} from '@pixelforge/phaser';
+import {loadPixelForgeAudio,playPixelForgeSoundEvent,loadPixelForgeAssets,readPixelForgeMetadata,registerPixelForgeAnimations,createPixelForgeCharacter,playPixelForgeAnimation,observePixelForgeEvents,getActiveHitboxes,getActiveAnchors,syncPixelForgeStaticBody} from '@pixelforge/phaser';
 const manifests=await Promise.all(['atlas','spritesheet'].map(async layout=>[layout,await(await fetch('/'+layout+'/bundle.json')).json()]));
+const audioManifest=await(await fetch('/audio/audio.json')).json();
 class Scene extends Phaser.Scene{
- preload(){this.load.on('loaderror',f=>window.assetError=f.key);for(const [layout,manifest]of manifests)loadPixelForgeAssets(this,{key:layout,baseURL:'/'+layout,manifest});}
+ preload(){loadPixelForgeAudio(this,{baseURL:'/audio',manifest:audioManifest});this.load.on('loaderror',f=>window.assetError=f.key);for(const [layout,manifest]of manifests)loadPixelForgeAssets(this,{key:layout,baseURL:'/'+layout,manifest});}
  create(){const assets={};for(const [layout,manifest]of manifests){const data=readPixelForgeMetadata(this,layout),keys=registerPixelForgeAnimations(this,{key:layout,manifest,...data});const sprite=createPixelForgeCharacter(this,{key:layout,game:data.game,x:80,y:90,layout}).setScale(2,3).setFlipX(true);sprite.body.setAllowGravity(false);assets[layout]={data,keys,sprite};}
- const a=assets.atlas;let complete=0,impact=0;const times=[];let last=this.time.now,started=0,elapsed=0,ticks=0;this.events.on('postupdate',()=>ticks++);a.sprite.on('animationupdate',()=>{times.push(this.time.now-last);last=this.time.now;});observePixelForgeEvents(a.sprite,a.data.game,a.keys,event=>{if(event.id==='$complete'){complete++;elapsed=this.time.now-started;}if(event.name==='impact')impact++;});playPixelForgeAnimation(assets.spritesheet.sprite,assets.spritesheet.keys,'idle');
- const fixed=this.physics.add.staticSprite(140,100,'atlas','frame-0').setScale(2);syncPixelForgeStaticBody(fixed,a.data.game);fixed.setPosition(150,110);syncPixelForgeStaticBody(fixed,a.data.game);
+ const a=assets.atlas;let complete=0,impact=0;const times=[];let last=this.time.now,started=0,elapsed=0,ticks=0;this.events.on('postupdate',()=>ticks++);a.sprite.on('animationupdate',()=>{times.push(this.time.now-last);last=this.time.now;});observePixelForgeEvents(a.sprite,a.data.game,a.keys,event=>{if(event.id==='$complete'){complete++;elapsed=this.time.now-started;}if(event.name==='impact')impact++;audioEvents+=playPixelForgeSoundEvent(this,audioManifest,event);});let loopMarkers=0,loopRepeats=0;const loopSprite=assets.spritesheet.sprite;loopSprite.on('animationrepeat',()=>loopRepeats++);observePixelForgeEvents(loopSprite,assets.spritesheet.data.game,assets.spritesheet.keys,event=>{if(event.name==='idle_phase')loopMarkers++;});playPixelForgeAnimation(loopSprite,assets.spritesheet.keys,'idle');
+ let audioEvents=0;const analyser=this.sound.context.createAnalyser();this.sound.masterVolumeNode.connect(analyser);document.querySelector('#unlock').onclick=async()=>{await this.sound.context.resume();};
+ window.audioAcceptance=()=>({loaded:this.cache.audio.exists('laser-shot'),events:audioEvents,state:this.sound.context.state,peak:(()=>{const samples=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(samples);return Math.max(...samples.map(Math.abs));})()});
+ let dynamicRejected=false;try{syncPixelForgeStaticBody(a.sprite,a.data.game);}catch{dynamicRejected=true;}const fixed=this.physics.add.staticSprite(140,100,'atlas','frame-0').setScale(2);syncPixelForgeStaticBody(fixed,a.data.game);fixed.setPosition(150,110);syncPixelForgeStaticBody(fixed,a.data.game);
  const circleData=structuredClone(a.data.game);circleData.game.body={type:'circle',x:2,y:2,radius:4};const circle=createPixelForgeCharacter(this,{key:'atlas',game:circleData,x:210,y:90,layout:'atlas'}).setScale(2);circle.body.setAllowGravity(false);
- window.acceptance={circle,version:Phaser.VERSION,assets,times,ticks:()=>ticks,elapsed:()=>elapsed,start:()=>{times.length=0;last=this.time.now;started=this.time.now;playPixelForgeAnimation(a.sprite,a.keys,'attack',true);},complete:()=>complete,impact:()=>impact,scene:this,geometry:()=>({anchor:getActiveAnchors(a.sprite,a.data.game,'attack')[0].world,hit:getActiveHitboxes(a.sprite,a.data.game,'attack')[0].rect,hurt:getActiveHitboxes(a.sprite,a.data.game,'attack','hurtbox')[0].rect,origin:[a.sprite.originX,a.sprite.originY],body:{width:a.sprite.body.sourceWidth,height:a.sprite.body.sourceHeight,x:a.sprite.body.offset.x,y:a.sprite.body.offset.y},fixed:{x:fixed.body.x,y:fixed.body.y,width:fixed.body.width,height:fixed.body.height}})};
+ window.acceptance={circle,dynamicRejected,loop:()=>({markers:loopMarkers,repeats:loopRepeats}),version:Phaser.VERSION,assets,times,ticks:()=>ticks,elapsed:()=>elapsed,start:()=>{times.length=0;last=this.time.now;started=this.time.now;playPixelForgeAnimation(a.sprite,a.keys,'attack',true);},complete:()=>complete,impact:()=>impact,scene:this,geometry:()=>({anchor:getActiveAnchors(a.sprite,a.data.game,'attack')[0].world,hit:getActiveHitboxes(a.sprite,a.data.game,'attack')[0].rect,hurt:getActiveHitboxes(a.sprite,a.data.game,'attack','hurtbox')[0].rect,origin:[a.sprite.originX,a.sprite.originY],body:{width:a.sprite.body.sourceWidth,height:a.sprite.body.sourceHeight,x:a.sprite.body.offset.x,y:a.sprite.body.offset.y},fixed:{x:fixed.body.x,y:fixed.body.y,width:fixed.body.width,height:fixed.body.height}})};
  }
 }
-new Phaser.Game({type:Phaser.WEBGL,width:240,height:180,pixelArt:true,banner:false,backgroundColor:'#18202a',audio:{noAudio:true},physics:{default:'arcade',arcade:{gravity:{x:0,y:0}}},scene:Scene});
+new Phaser.Game({type:Phaser.WEBGL,width:240,height:180,pixelArt:true,banner:false,backgroundColor:'#18202a',physics:{default:'arcade',arcade:{gravity:{x:0,y:0}}},scene:Scene});
 `,
         );
         server = spawn(
@@ -262,7 +279,12 @@ new Phaser.Game({type:Phaser.WEBGL,width:240,height:180,pixelArt:true,banner:fal
         page.on("pageerror", (e) => errors.push(e.message));
         await page.goto(url);
         await page.waitForFunction(() => window.acceptance?.ticks() >= 10);
+        await page.getByRole("button", {name: "Enable audio", exact: true}).click();
+        await page.waitForFunction(() => window.audioAcceptance?.().state === "running");
         await page.evaluate(() => window.acceptance.start());
+        await page.waitForFunction(() => window.audioAcceptance?.().peak > 0.001);
+        assert.equal(await page.evaluate(() => window.audioAcceptance().loaded), true);
+        assert.equal(await page.evaluate(() => window.audioAcceptance().events), 1);
         await page.waitForFunction(() => window.acceptance?.complete() === 1);
         const result = await page.evaluate(() => {
           const a = window.acceptance;
@@ -273,6 +295,7 @@ new Phaser.Game({type:Phaser.WEBGL,width:240,height:180,pixelArt:true,banner:fal
               x: a.circle.body.offset.x,
               y: a.circle.body.offset.y,
             },
+            dynamicRejected: a.dynamicRejected,
             version: a.version,
             elapsed: a.elapsed(),
             complete: a.complete(),
@@ -295,6 +318,7 @@ new Phaser.Game({type:Phaser.WEBGL,width:240,height:180,pixelArt:true,banner:fal
           x: 2,
           y: 2,
         });
+        assert.equal(result.dynamicRejected, true);
         assert.equal(result.version, engineVersion);
         assert.deepEqual(errors, []);
         assert.equal(result.assetError, null);
@@ -344,6 +368,9 @@ new Phaser.Game({type:Phaser.WEBGL,width:240,height:180,pixelArt:true,banner:fal
         });
         await page.waitForFunction(() => window.acceptance.complete() === 2);
         assert.equal(await page.evaluate(() => window.acceptance.impact()), 2);
+        const loop = await page.evaluate(() => window.acceptance.loop());
+        assert.ok(loop.repeats >= 2);
+        assert.equal(loop.markers, loop.repeats + 1);
         console.log(
           JSON.stringify({ engine: engineVersion, acceptance: result }),
         );

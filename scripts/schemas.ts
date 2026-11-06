@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { soundSchema, audioOperationsSchema, audioManifestSchema } from "../packages/audio-core/src/index.js";
 import {
   gameMetadataSchema,
   bundleManifestSchema,
@@ -23,6 +24,9 @@ await writeFile(
 );
 
 for (const [name, schema] of Object.entries({
+  sound: soundSchema,
+  audioOperations: audioOperationsSchema,
+  audioManifest: audioManifestSchema,
   game: gameMetadataSchema,
   bundle: bundleManifestSchema,
   animations: animationMetadataSchema,

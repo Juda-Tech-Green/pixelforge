@@ -5,6 +5,8 @@
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "paths": {
+      "@pixelforge/audio-core": ["packages/audio-core/src/index.ts"],
+      "@pixelforge/audio-exporters": ["packages/audio-exporters/src/index.ts"],
       "@pixelforge/core": ["packages/core/src/index.ts"],
       "@pixelforge/exporters": ["packages/exporters/src/index.ts"],
       "@pixelforge/phaser": ["packages/phaser/src/index.ts"]

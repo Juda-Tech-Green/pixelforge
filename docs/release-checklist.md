@@ -1,4 +1,4 @@
-# Controlled v0.5 release candidate
+# Controlled v0.5 release preparation
 
 No commit, push, GitHub release or npm publication is authorized by the implementation brief. Local artifacts and validation do not establish public namespace rights. The full executed/unexecuted matrix is v0.5-acceptance-matrix.md.
 

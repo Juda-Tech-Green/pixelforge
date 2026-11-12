@@ -5,13 +5,13 @@ const dir = resolve(process.argv[2] ?? "release");
 const lines = (await readFile(join(dir, "SHA256SUMS"), "utf8"))
   .trim()
   .split(/\r?\n/);
-if (lines.length !== 6) throw new Error("Expected six package checksums");
+if (lines.length !== 7) throw new Error("Expected seven package checksums");
 const seen = new Set();
 const packages = new Set(),
   versions = new Set();
 for (const line of lines) {
   const match =
-    /^([a-f0-9]{64})  (pixelforge-(core|exporters|cli|phaser|audio-core|audio-exporters)-([0-9]+\.[0-9]+\.[0-9]+)\.tgz)$/.exec(
+    /^([a-f0-9]{64})  (pixelforge-(core|exporters|cli|phaser|audio-core|audio-exporters|geometry)-([0-9]+\.[0-9]+\.[0-9]+)\.tgz)$/.exec(
       line,
     );
   if (!match || seen.has(match[2]) || packages.has(match[3]))

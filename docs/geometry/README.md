@@ -1,7 +1,8 @@
-# Geometry-aware creation: frozen local checkpoint
+# Geometry-aware creation: v0.7 development checkpoint
 
-The user stopped development/verification and requested delivery of the current
-state. No additional development cycle should be inferred from this document.
+The implementation was preserved in local checkpoint33a572a. The subsequent bounded
+integration adds the Agent Skill workflow, aligned0.7.0 versions and geometry
+schema/package distribution metadata. Feature development remains frozen.
 
 ## Available now
 
@@ -39,8 +40,9 @@ npm run cli -- scene render examples/geometry/room/workshop.scene.json --asset s
 
 Existing output files require explicit `--force`; geometry input sources are
 protected. Use the existing sprite CLI/editor to refine or export generated
-`.sprite.json` assets. Commands work from source; packaged v0.7 installation is
-not finalized.
+`.sprite.json` assets. Distribution configuration now includes all seven packages.
+`npm run pack:release` is the existing build/schema/prepare/pack pipeline; building
+and installing its resulting archives was not exercised during bounded integration.
 
 ## Evidence already collected
 
@@ -60,13 +62,21 @@ Earlier failures involving floating-point assertions, an unreachable foot-contac
 preset, frame-order preservation and browser interactions were corrected. No
 final full-suite or release acceptance cycle was performed after the last edits.
 
-## Incomplete and deferred
+## Integration and deferred verification
 
-- Existing sprite Agent Skill geometry references/version guidance were not added.
-- Release/prepare/checksum scripts and independent-consumer tests still describe
-  the previous package set. Do not treat `pack:release` as a finished v0.7 path.
-- Root/CLI version remains0.6.0; the new geometry workspace is0.7.0 development.
-  Generated rig/pose/scene JSON Schema distribution is not wired into release tooling.
+Bounded final integration checks all passed once: `npm run typecheck`, the existing
+`scripts/check-skill.mjs` reference/frontmatter check, source CLI version0.7.0 plus
+one `rig inspect --limit 1`, and a package metadata inspection. The inspection
+confirmed seven aligned packages/lock entries, unchanged external dependencies,
+geometry exports and seven distributed schemas. No archives were built or installed
+in this integration pass; no additional acceptance suite was run.
+
+- The sprite Agent Skill now documents the geometry-first workflow and current
+  CLI examples while retaining ordinary pixel workflows.
+- Root, CLI and all workspaces/internal dependencies are aligned to0.7.0. Release,
+  prepare and checksum metadata include geometry as the seventh package.
+- Rig, pose, pose-library, animation, scene, observation and camera JSON Schemas
+  are generated and included in the geometry package's distribution files.
 - Final clean-build, packed-consumer, Phaser regression and cross-platform checks
   were not executed for this final snapshot.
 - Complex overlapping constraints and less common editor transitions need future
@@ -79,5 +89,6 @@ Artifacts: `examples/geometry/standard`, `chibi`, `tall`, `room`, `dataset`,
 `benchmark` and `model-benchmark`. Browser captures/results are local under
 `test-output/geometry-browser`.
 
-All changes remain uncommitted on `codex/procedural-audio-v0.6`, based on d4c5479.
-No commit, push, tag, package publication or release was created by this task.
+The branch remains `codex/procedural-audio-v0.6`, based on d4c5479, with separate
+local implementation and integration commits. No push, tag, package publication
+or GitHub Release was performed.

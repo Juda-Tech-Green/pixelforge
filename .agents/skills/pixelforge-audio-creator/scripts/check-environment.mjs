@@ -9,9 +9,9 @@ try {
   const require = createRequire(resolve("package.json"));
   const main = require.resolve("@pixelforge/cli/package.json");
   const metadata = JSON.parse(await readFile(main, "utf8"));
-  if (metadata.version !== "0.6.0")
+  if (!["0.6.0", "0.7.0"].includes(metadata.version))
     throw new Error(
-      `Audio skill requires PixelForge0.6.0, found ${metadata.version}`,
+      `Audio skill requires PixelForge0.6.0 or0.7.0, found ${metadata.version}`,
     );
   for (const name of ["audio-core", "audio-exporters"]) {
     const entry = require.resolve(`@pixelforge/${name}`);

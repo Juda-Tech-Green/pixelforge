@@ -50,7 +50,7 @@ for (const engineVersion of ["3.90.0", "4.2.1"])
           "--no-audit",
           "--no-fund",
           ...(process.env.PIXELFORGE_OFFLINE === "1" ? ["--offline"] : []),
-          ...["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"].map((name) =>
+          ...["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters", "geometry"].map((name) =>
             resolve("release", `pixelforge-${name}-${version}.tgz`),
           ),
           `phaser@${engineVersion}`,

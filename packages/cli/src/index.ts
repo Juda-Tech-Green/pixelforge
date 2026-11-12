@@ -30,7 +30,7 @@ import { registerGeometryCommands } from "./geometry.js";
 import { exportFramePNG, exportSpriteSheet } from "@pixelforge/exporters";
 const program = new Command()
   .name("pixelforge")
-  .version("0.6.0")
+  .version("0.7.0")
   .description("Deterministic, editable pixel art for agents and humans");
 const integer = (value: string) => {
   if (!/^\d+$/.test(value) || !Number.isSafeInteger(Number(value)))

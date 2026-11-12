@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0 — Geometry-aware creation (development checkpoint)
+
+- Shared geometry workspace, rig/pose/scene formats, constrained kinematics, editable raster generation, animation and scene occlusion.
+- Geometry CLI/browser workspace and preserved character/scene demonstrations.
+- Portable sprite skill geometry workflow, aligned workspace versions and seven-package/schema distribution metadata.
+- Bounded integration checks only; no new production release or publication is claimed. See docs/geometry/README.md.
+
 ## 0.6.0 — Procedural Sound FX (local implementation)
 
 - Separate sound format 1.0 and shared platform-independent audio core.

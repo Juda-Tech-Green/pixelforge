@@ -1,6 +1,6 @@
 {
   "name": "@pixelforge/audio-exporters",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "license": "MIT",
   "engines": {
@@ -18,7 +18,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@pixelforge/audio-core": "0.6.0"
+    "@pixelforge/audio-core": "0.7.0"
   },
   "description": "PixelForge audio-exporters: deterministic editable pixel sprites and game assets"
 }

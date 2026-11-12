@@ -4,13 +4,15 @@ PixelForge creates editable pixel sprites and Phaser assets. Use the portable sk
 
 For procedural sound effects use `.agents/skills/pixelforge-audio-creator/SKILL.md` and `docs/audio/README.md`. Audio uses separate sound format1.0 and the `audio` CLI command group.
 
+For rig-driven characters or spatial scenes, read `.agents/skills/pixelforge-sprite-creator/references/geometry.md`. The `rig` and `scene` groups require the matching0.7.0 package set and generate ordinary editable sprite1.0 assets.
+
 ## In this checkout
 
-Use Node22.12+ and npm. `npm ci` installs dependencies; `npm run cli -- --version` invokes source without prebuilt declarations. `npm run typecheck`, `npm test`, `npm run build` verify changes. Core stays independent of Node filesystems, React, Sharp and Phaser. Document/game format1.0 is backward compatible; software version0.6.0.
+Use Node22.12+ and npm. `npm ci` installs dependencies; `npm run cli -- --version` invokes source without prebuilt declarations. `npm run typecheck`, `npm test`, `npm run build` verify changes. Core stays independent of Node filesystems, React, Sharp and Phaser. Document/game format1.0 is backward compatible; software version0.7.0.
 
 ## In another game
 
-Build/verify local artifacts with `npm run pack:release` and `node scripts/verify-release.mjs release`. Install the matching core/exporters/cli/phaser/audio-core/audio-exporters tarballs together; see setup.md for relocatable paths and online/offline behavior. Do not install an unrelated similarly named registry package or force incompatible peers. Run `node <installed-skill>/scripts/check-environment.mjs` from the game directory. The exact CLI is `node node_modules/@pixelforge/cli/dist/index.js`; local npm scripts can use `pixelforge`.
+Build/verify local artifacts with `npm run pack:release` and `node scripts/verify-release.mjs release`. Install the matching core/exporters/cli/phaser/audio-core/audio-exporters/geometry tarballs together; see setup.md for relocatable paths and online/offline behavior. Do not install an unrelated similarly named registry package or force incompatible peers. Run `node <installed-skill>/scripts/check-environment.mjs` from the game directory. The exact CLI is `node node_modules/@pixelforge/cli/dist/index.js`; local npm scripts can use `pixelforge`.
 
 1. Discover the host engine/version, existing asset layout and stable runtime keys. Use `operations list` / `operations describe drawRect --example` for exact syntax.
 2. Use `inspect FILE --summary` and selectors `--animation NAME`, `--frame ID`, `--layer ID`, `--game`; paginate with `--offset`/`--limit`. Do not read an entire dense sprite file into agent context.

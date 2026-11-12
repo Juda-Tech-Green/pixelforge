@@ -1,6 +1,6 @@
 {
   "name": "@pixelforge/phaser",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "exports": {
     "types": "./dist/index.d.ts",
@@ -11,8 +11,8 @@
     "phaser": "^3.90.0 || ^4.2.1"
   },
   "dependencies": {
-    "@pixelforge/audio-core": "0.6.0",
-    "@pixelforge/core": "0.6.0",
+    "@pixelforge/audio-core": "0.7.0",
+    "@pixelforge/core": "0.7.0",
     "zod": "^4.1.0"
   },
   "license": "MIT",

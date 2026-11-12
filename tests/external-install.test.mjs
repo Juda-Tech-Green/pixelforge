@@ -46,8 +46,8 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
     );
     const npm = process.env.npm_execpath;
     assert.ok(npm, "Run through npm run test:external");
-    const tarballs = ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"].map((name) =>
-      resolve(root, "release", `pixelforge-${name}-0.6.0.tgz`),
+    const tarballs = ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters", "geometry"].map((name) =>
+      resolve(root, "release", `pixelforge-${name}-0.7.0.tgz`),
     );
     run([
       npm,
@@ -61,7 +61,7 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
       "vite@7.3.7",
       "typescript@5.9.3",
     ]);
-    for (const name of ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"]) {
+    for (const name of ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters", "geometry"]) {
       assert.equal(
         (
           await lstat(join(dir, "node_modules", "@pixelforge", name))
@@ -74,7 +74,7 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
           "utf8",
         ),
       );
-      assert.equal(p.version, "0.6.0");
+      assert.equal(p.version, "0.7.0");
       const files = await readdir(
         join(dir, "node_modules", "@pixelforge", name),
       );
@@ -128,7 +128,7 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
       "dist",
       "index.js",
     );
-    assert.match(run([cli, "--version"]), /0\.6\.0/);
+    assert.match(run([cli, "--version"]), /0\.7\.0/);
     const audioSkill = await manageAudioSkill("install", join(dir, ".agents", "skills"));
     run([join(audioSkill.path, "scripts", "check-environment.mjs")]);
     run([cli, "audio", "create", "laser", "--output", "laser.sound.json"]);

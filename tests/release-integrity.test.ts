@@ -15,7 +15,7 @@ it("verifies checksums and rejects corruption, traversal, duplicates and mixed v
   try {
     const bytes = Buffer.from("test release bytes"),
       hash = createHash("sha256").update(bytes).digest("hex");
-    const files = ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"].map(
+    const files = ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters", "geometry"].map(
       (name) => `pixelforge-${name}-0.5.0.tgz`,
     );
     for (const file of files) await writeFile(join(dir, file), bytes);

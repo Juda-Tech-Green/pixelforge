@@ -9,6 +9,7 @@
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
+    "@pixelforge/geometry": "0.7.0",
     "@pixelforge/audio-core": "0.6.0",
     "@pixelforge/audio-exporters": "0.6.0",
     "@pixelforge/core": "0.6.0",

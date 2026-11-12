@@ -1,0 +1,332 @@
+{
+  "version": "1.0",
+  "rig": "scout-standard",
+  "poses": [
+    {
+      "id": "idle",
+      "facing": "right",
+      "rotations": {
+        "pelvis": 0,
+        "spine": 0,
+        "chest": 0,
+        "neck": 0,
+        "head": 0,
+        "left-shoulder": 0,
+        "left-elbow": 0,
+        "left-wrist": 0,
+        "left-hand": 0,
+        "left-hip": 0,
+        "left-knee": 0,
+        "left-ankle": 0,
+        "left-foot": 0,
+        "right-shoulder": 0,
+        "right-elbow": 0,
+        "right-wrist": 0,
+        "right-hand": 0,
+        "right-hip": 0,
+        "right-knee": 0,
+        "right-ankle": 0,
+        "right-foot": 0
+      },
+      "rootTranslation": [
+        0,
+        0
+      ],
+      "targets": []
+    },
+    {
+      "id": "walk-a",
+      "facing": "right",
+      "rotations": {
+        "pelvis": 0,
+        "spine": 0,
+        "chest": 0,
+        "neck": 0,
+        "head": 0,
+        "left-shoulder": 0.25,
+        "left-elbow": 0.6,
+        "left-wrist": 0,
+        "left-hand": 0,
+        "left-hip": -0.3,
+        "left-knee": 0.45,
+        "left-ankle": 0,
+        "left-foot": 0,
+        "right-shoulder": -0.25,
+        "right-elbow": 0,
+        "right-wrist": 0,
+        "right-hand": 0,
+        "right-hip": 0.25,
+        "right-knee": -0.35,
+        "right-ankle": 0,
+        "right-foot": 0
+      },
+      "rootTranslation": [
+        -1,
+        0.5
+      ],
+      "targets": []
+    },
+    {
+      "id": "walk-b",
+      "facing": "right",
+      "rotations": {
+        "pelvis": 0,
+        "spine": 0,
+        "chest": 0,
+        "neck": 0,
+        "head": 0,
+        "right-shoulder": -0.25,
+        "right-elbow": 0,
+        "right-wrist": 0,
+        "right-hand": 0,
+        "right-hip": 0.3000000000000007,
+        "right-knee": -0.4499999999999993,
+        "right-ankle": 0,
+        "right-foot": 0,
+        "left-shoulder": 0.25,
+        "left-elbow": 0,
+        "left-wrist": 0,
+        "left-hand": 0,
+        "left-hip": -0.25,
+        "left-knee": 0.34999999999999964,
+        "left-ankle": 0,
+        "left-foot": 0
+      },
+      "rootTranslation": [
+        1,
+        0.5
+      ],
+      "targets": []
+    },
+    {
+      "id": "reach",
+      "facing": "right",
+      "rotations": {
+        "pelvis": 0,
+        "spine": 0,
+        "chest": 0,
+        "neck": 0,
+        "head": 0,
+        "left-shoulder": 0,
+        "left-elbow": 0,
+        "left-wrist": 0,
+        "left-hand": 0,
+        "left-hip": 0,
+        "left-knee": 0,
+        "left-ankle": 0,
+        "left-foot": 0,
+        "right-shoulder": 0,
+        "right-elbow": 0,
+        "right-wrist": 0,
+        "right-hand": 0,
+        "right-hip": 0,
+        "right-knee": 0,
+        "right-ankle": 0,
+        "right-foot": 0
+      },
+      "rootTranslation": [
+        0,
+        0
+      ],
+      "targets": [
+        {
+          "id": "reach-hand",
+          "root": "right-shoulder",
+          "middle": "right-elbow",
+          "end": "right-wrist",
+          "position": [
+            47,
+            24
+          ],
+          "bend": 1
+        }
+      ]
+    },
+    {
+      "id": "sit",
+      "facing": "right",
+      "rotations": {
+        "pelvis": 0,
+        "spine": 0,
+        "chest": 0,
+        "neck": 0,
+        "head": 0,
+        "left-shoulder": 0,
+        "left-elbow": 0,
+        "left-wrist": 0,
+        "left-hand": 0,
+        "left-hip": -1.2,
+        "left-knee": 1.4,
+        "left-ankle": 0,
+        "left-foot": 0,
+        "right-shoulder": 0,
+        "right-elbow": 0,
+        "right-wrist": 0,
+        "right-hand": 0,
+        "right-hip": -1.2,
+        "right-knee": 1.4,
+        "right-ankle": 0,
+        "right-foot": 0
+      },
+      "rootTranslation": [
+        0,
+        4
+      ],
+      "targets": []
+    },
+    {
+      "id": "turn",
+      "facing": "left",
+      "rotations": {
+        "pelvis": 0,
+        "spine": 0,
+        "chest": 0,
+        "neck": 0,
+        "head": -0.35,
+        "left-shoulder": 0.5,
+        "left-elbow": 0,
+        "left-wrist": 0,
+        "left-hand": 0,
+        "left-hip": 0,
+        "left-knee": 0,
+        "left-ankle": 0,
+        "left-foot": 0,
+        "right-shoulder": -0.7,
+        "right-elbow": 0,
+        "right-wrist": 0,
+        "right-hand": 0,
+        "right-hip": -0.15,
+        "right-knee": 0,
+        "right-ankle": 0,
+        "right-foot": 0
+      },
+      "rootTranslation": [
+        0,
+        0
+      ],
+      "targets": []
+    },
+    {
+      "id": "breathe",
+      "facing": "right",
+      "rotations": {
+        "pelvis": 0,
+        "spine": 0,
+        "chest": 0.025,
+        "neck": 0,
+        "head": 0,
+        "left-shoulder": 0,
+        "left-elbow": 0,
+        "left-wrist": 0,
+        "left-hand": 0,
+        "left-hip": 0,
+        "left-knee": 0,
+        "left-ankle": 0,
+        "left-foot": 0,
+        "right-shoulder": 0,
+        "right-elbow": 0,
+        "right-wrist": 0,
+        "right-hand": 0,
+        "right-hip": 0,
+        "right-knee": 0,
+        "right-ankle": 0,
+        "right-foot": 0
+      },
+      "rootTranslation": [
+        0,
+        0.4
+      ],
+      "targets": []
+    }
+  ],
+  "animations": [
+    {
+      "id": "idle",
+      "loop": true,
+      "frames": 4,
+      "durationMs": 800,
+      "keys": [
+        {
+          "time": 0,
+          "pose": "idle"
+        },
+        {
+          "time": 0.5,
+          "pose": "breathe"
+        },
+        {
+          "time": 1,
+          "pose": "idle"
+        }
+      ],
+      "contacts": []
+    },
+    {
+      "id": "walk",
+      "loop": true,
+      "frames": 8,
+      "durationMs": 800,
+      "keys": [
+        {
+          "time": 0,
+          "pose": "walk-a"
+        },
+        {
+          "time": 0.5,
+          "pose": "walk-b"
+        },
+        {
+          "time": 1,
+          "pose": "walk-a"
+        }
+      ],
+      "contacts": [
+        {
+          "id": "left-plant",
+          "root": "left-hip",
+          "middle": "left-knee",
+          "end": "left-ankle",
+          "position": [
+            29,
+            59
+          ],
+          "bend": 1,
+          "start": 0,
+          "endTime": 0.499,
+          "tolerance": 0.25
+        },
+        {
+          "id": "right-plant",
+          "root": "right-hip",
+          "middle": "right-knee",
+          "end": "right-ankle",
+          "position": [
+            35,
+            59
+          ],
+          "bend": -1,
+          "start": 0.5,
+          "endTime": 1,
+          "tolerance": 0.25
+        }
+      ]
+    },
+    {
+      "id": "reach",
+      "loop": false,
+      "frames": 5,
+      "durationMs": 600,
+      "keys": [
+        {
+          "time": 0,
+          "pose": "idle"
+        },
+        {
+          "time": 1,
+          "pose": "reach"
+        }
+      ],
+      "contacts": []
+    }
+  ]
+}

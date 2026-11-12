@@ -26,6 +26,7 @@ import {
 } from "@pixelforge/core";
 import { z } from "zod";
 import { registerAudioCommands } from "./audio.js";
+import { registerGeometryCommands } from "./geometry.js";
 import { exportFramePNG, exportSpriteSheet } from "@pixelforge/exporters";
 const program = new Command()
   .name("pixelforge")
@@ -390,6 +391,7 @@ program
     });
   });
 registerAudioCommands(program, atomicWrite);
+registerGeometryCommands(program, atomicWrite);
 program.parseAsync().catch((error: unknown) => {
   process.stderr.write(
     JSON.stringify({

@@ -1,0 +1,77 @@
+{
+  "valid": true,
+  "modifiedPose": "walk-a",
+  "unaffectedFrames": [
+    {
+      "frame": "idle-000",
+      "before": "37b2ffd9710b45be9e67a4fea7f286c3fdde591af8684be2c8832c5e3054c1fc",
+      "after": "37b2ffd9710b45be9e67a4fea7f286c3fdde591af8684be2c8832c5e3054c1fc"
+    },
+    {
+      "frame": "idle-001",
+      "before": "db8ddbc8878895bdcf1f03290a2030d679415e826bc0253ba81895b754d91db4",
+      "after": "db8ddbc8878895bdcf1f03290a2030d679415e826bc0253ba81895b754d91db4"
+    },
+    {
+      "frame": "idle-002",
+      "before": "2e452c63b9b6307b47b27004a2795502defe0b8f9ee8a71c4c80d2b3a3c691c4",
+      "after": "2e452c63b9b6307b47b27004a2795502defe0b8f9ee8a71c4c80d2b3a3c691c4"
+    },
+    {
+      "frame": "idle-003",
+      "before": "db8ddbc8878895bdcf1f03290a2030d679415e826bc0253ba81895b754d91db4",
+      "after": "db8ddbc8878895bdcf1f03290a2030d679415e826bc0253ba81895b754d91db4"
+    },
+    {
+      "frame": "reach-000",
+      "before": "37b2ffd9710b45be9e67a4fea7f286c3fdde591af8684be2c8832c5e3054c1fc",
+      "after": "37b2ffd9710b45be9e67a4fea7f286c3fdde591af8684be2c8832c5e3054c1fc"
+    },
+    {
+      "frame": "reach-001",
+      "before": "e8a05b8d31b79e18b5bb8c6fc788b8c5c813401c0421ada418ee2476fd0721e0",
+      "after": "e8a05b8d31b79e18b5bb8c6fc788b8c5c813401c0421ada418ee2476fd0721e0"
+    },
+    {
+      "frame": "reach-002",
+      "before": "1ee164f2378277fc20f67fa490ade81e080a0b5ed0524fbc136827ac9ab1f351",
+      "after": "1ee164f2378277fc20f67fa490ade81e080a0b5ed0524fbc136827ac9ab1f351"
+    },
+    {
+      "frame": "reach-003",
+      "before": "39486b3e575343a4c54f65643b2e841c18ef3b011524c4021627bdda04c6edfd",
+      "after": "39486b3e575343a4c54f65643b2e841c18ef3b011524c4021627bdda04c6edfd"
+    },
+    {
+      "frame": "reach-004",
+      "before": "05c032c6d367f6879b3db6ca943ce3a2095c22f78e52834e2785988462be9aac",
+      "after": "05c032c6d367f6879b3db6ca943ce3a2095c22f78e52834e2785988462be9aac"
+    },
+    {
+      "frame": "sit",
+      "before": "25f26fea5ecc477b0ed4551c32a6975696bdd1b93661defa2f68a58993f1362a",
+      "after": "25f26fea5ecc477b0ed4551c32a6975696bdd1b93661defa2f68a58993f1362a"
+    },
+    {
+      "frame": "turn",
+      "before": "ef96274647f7657763a82821acfc1a3bd482594e44a37c6ce5c9c38d039228f3",
+      "after": "ef96274647f7657763a82821acfc1a3bd482594e44a37c6ce5c9c38d039228f3"
+    }
+  ],
+  "stableFrameIds": true,
+  "unaffectedAnimations": [
+    "idle",
+    "reach",
+    "sit",
+    "turn"
+  ],
+  "changedFrames": [
+    "walk-000",
+    "walk-001",
+    "walk-002",
+    "walk-003",
+    "walk-005",
+    "walk-006",
+    "walk-007"
+  ]
+}

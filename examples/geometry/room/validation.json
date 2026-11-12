@@ -1,0 +1,17 @@
+{
+  "valid": true,
+  "diagnostics": [],
+  "order": [
+    "wall",
+    "floor",
+    "chair",
+    "door",
+    "handle",
+    "table:rear",
+    "character",
+    "table:front",
+    "table:left-leg",
+    "table:right-leg",
+    "foreground-crate"
+  ]
+}

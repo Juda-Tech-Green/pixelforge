@@ -1,0 +1,185 @@
+{
+  "version": "1.0",
+  "runtime": "v24.16.0",
+  "modelsExecuted": 2,
+  "conditionsPerModel": 2,
+  "task": "task.md",
+  "frozenBeforeEvaluation": true,
+  "runs": [
+    {
+      "requestedModel": "gpt-6-astra",
+      "direct": {
+        "valid": true,
+        "character": {
+          "maxBoneLengthError": 3.552713678800501e-15,
+          "meanBoneLengthError": 5.10702591327572e-16,
+          "maxFootTargetError": 0,
+          "maxFootSlidePerStep": 0,
+          "maxWristTargetError": 0,
+          "maxRootTranslationError": 0,
+          "maxHeadDimensionError": 0,
+          "headWidthVariance": 0,
+          "invalidJointRelationships": 0,
+          "humanVisualQuality": null
+        },
+        "scene": {
+          "occlusionViolations": 0,
+          "groupLayerViolations": 0,
+          "humanCompositionQuality": null
+        },
+        "repeatable": true,
+        "frameHashes": [
+          {
+            "id": "sample-0",
+            "hash": "dc9e51627fb2be2aae7db47cbff8739522123702d172dea04c11f8c7965532ca"
+          },
+          {
+            "id": "sample-1",
+            "hash": "27c0c0b97fd1fb37900313fea21bfcaed1c7e372abab80c7b1c0600a2610b651"
+          },
+          {
+            "id": "sample-2",
+            "hash": "eaa0b012690e15b88ec3c9bfe3b1e74d2a08c5bf5b9cc7d0146fe74ee2380f30"
+          },
+          {
+            "id": "sample-3",
+            "hash": "d018ca9c21b2b955dde3b40d216e892ca035cb983f2c7bf13f301fbe4f1a8e9d"
+          }
+        ]
+      },
+      "geometry": {
+        "valid": true,
+        "character": {
+          "maxBoneLengthError": 3.552713678800501e-15,
+          "meanBoneLengthError": 4.884981308350689e-16,
+          "maxFootTargetError": 2.1316282072803006e-14,
+          "maxFootSlidePerStep": 1.4210854715202004e-14,
+          "maxWristTargetError": 7.944109290391274e-15,
+          "maxRootTranslationError": 0,
+          "maxHeadDimensionError": 0,
+          "headWidthVariance": 0,
+          "invalidJointRelationships": 0,
+          "humanVisualQuality": null
+        },
+        "scene": {
+          "occlusionViolations": 0,
+          "groupLayerViolations": 0,
+          "humanCompositionQuality": null
+        },
+        "sceneGeometryPreserved": true,
+        "repeatable": true,
+        "frameHashes": [
+          {
+            "id": "sample-0",
+            "hash": "424d11bb40c5d6052f606909fe1845aca19b18274fc23d4dab98cb6ea560e3bd"
+          },
+          {
+            "id": "sample-1",
+            "hash": "522e3103e864eb6ea11320f86d4ae8706dfee6804f4b16a91b9ba7710eae256d"
+          },
+          {
+            "id": "sample-2",
+            "hash": "3ca6fda868159940ad4d4814588dde7004d1196d5ed85dcbc2454c3b01733803"
+          },
+          {
+            "id": "sample-3",
+            "hash": "03aed5202138ead31d32cd281d42b67cfc8c90c73064e900211baa6d6f174f14"
+          }
+        ]
+      },
+      "scenePriorExampleExposure": true,
+      "notes": "# Astra trial\n\nThe direct workflow accumulated rest offsets, translated the trunk and left arm, and intersected two circles for each elbow or knee that needed to move. The hands and shoes retain their rest offsets from their endpoints. The geometry workflow uses three two-bone targets per pose, with endpoint rotation compensation. The scene adds four part-level dependencies.\n\nA search for the scene part ID delimiter also exposed an existing workshop sprite layer order before the direct file was saved. The scene-order result therefore has prior example exposure. No model evaluator was run or scores consulted. This single rig and room do not measure general artistic quality.\n"
+    },
+    {
+      "requestedModel": "gpt-6.1-sol",
+      "direct": {
+        "valid": true,
+        "character": {
+          "maxBoneLengthError": 3.552713678800501e-15,
+          "meanBoneLengthError": 7.049916206369744e-16,
+          "maxFootTargetError": 0,
+          "maxFootSlidePerStep": 0,
+          "maxWristTargetError": 0,
+          "maxRootTranslationError": 0,
+          "maxHeadDimensionError": 0,
+          "headWidthVariance": 0,
+          "invalidJointRelationships": 0,
+          "humanVisualQuality": null
+        },
+        "scene": {
+          "occlusionViolations": 0,
+          "groupLayerViolations": 0,
+          "humanCompositionQuality": null
+        },
+        "repeatable": true,
+        "frameHashes": [
+          {
+            "id": "sample-0",
+            "hash": "f49389b4196afcd27b7c52be2cad79adf4237d1f3fc3246fa81c07e2d76b87a8"
+          },
+          {
+            "id": "sample-1",
+            "hash": "9e5384354707405875567e7beed8b42e7873122f710c2f8aca94be9f40a0e76f"
+          },
+          {
+            "id": "sample-2",
+            "hash": "36d3481b2a4bb7996be5b5041240c55483f2b19466099756e3e30ce1ded52940"
+          },
+          {
+            "id": "sample-3",
+            "hash": "42cf957b007d2fefd5bd9b94e73745939cd66bf7d208133f7a6750639de6209e"
+          }
+        ]
+      },
+      "geometry": {
+        "valid": true,
+        "character": {
+          "maxBoneLengthError": 3.552713678800501e-15,
+          "meanBoneLengthError": 7.049916206369744e-16,
+          "maxFootTargetError": 2.1316282072803006e-14,
+          "maxFootSlidePerStep": 1.4210854715202004e-14,
+          "maxWristTargetError": 7.944109290391274e-15,
+          "maxRootTranslationError": 0,
+          "maxHeadDimensionError": 0,
+          "headWidthVariance": 0,
+          "invalidJointRelationships": 0,
+          "humanVisualQuality": null
+        },
+        "scene": {
+          "occlusionViolations": 0,
+          "groupLayerViolations": 0,
+          "humanCompositionQuality": null
+        },
+        "sceneGeometryPreserved": true,
+        "repeatable": true,
+        "frameHashes": [
+          {
+            "id": "sample-0",
+            "hash": "05c032c6d367f6879b3db6ca943ce3a2095c22f78e52834e2785988462be9aac"
+          },
+          {
+            "id": "sample-1",
+            "hash": "7601a8ea0ef85a0ff7567ec74259b91b913b1971dccd0ce23e317e097ec27cc3"
+          },
+          {
+            "id": "sample-2",
+            "hash": "a1b6a91beaa6fb18275fb08e77a6b30263ec9fc46b11eed22c72802ea255909d"
+          },
+          {
+            "id": "sample-3",
+            "hash": "a4dc3341caa739533cefff6c87c494446d5d32910623fd83d9e4286842d8a16e"
+          }
+        ]
+      },
+      "scenePriorExampleExposure": false,
+      "notes": "# Methodology\n\nDirect condition was written and saved first, from the supplied rig and scene JSON only. World positions used ordinary hierarchical addition and my own circle-intersection arithmetic for fixed-length two-segment limbs. Both ankle targets remain at rest coordinates; hands and feet follow the final segment rotation. The left arm retains its rest pose. The full order was chosen using depth groups, render layers, requested occlusion and stable IDs.\n\nGeometry condition used actual source API schema discovery, parsePoses, applyPose, parseScene and depthOrder through tsx. It stores root translations plus right-wrist and two ankle IK targets. Table part dependencies were added without changing any scene geometry, camera or transforms.\n\nGeometry API complete order: wall, floor, chair, door, handle, table:rear, character, table:front, table:left-leg, table:right-leg, foreground-crate.\n\nOnly these four requested output files were written. No evaluator was run, no evaluator metrics were viewed, and no post-evaluation revisions were made. No visual/aesthetic rating is claimed; this single specification cannot establish general cross-model artistic superiority.\n"
+    }
+  ],
+  "limitations": [
+    "One specification and four poses per model; no general artistic-quality or model-superiority conclusion.",
+    "Prior example exposure is reported per run; such ordering results are not blind.",
+    "Both models may use their own mathematics in the direct condition. Scores compare actual drawing inputs, not self-reported raster annotations.",
+    "Head dimensions are explicit input dimensions; human visual/composition ratings remain null.",
+    "Model names record requested harness models, not immutable provider backend revisions."
+  ]
+}

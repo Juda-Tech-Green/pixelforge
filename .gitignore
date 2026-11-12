@@ -28,6 +28,7 @@ test-results/
 # Copied from /schemas by npm run prepare:packages
 /packages/core/schemas/
 /packages/audio-core/schemas/
+/packages/geometry/schemas/
 
 # Local design-tool state (keep the shared design specification)
 /.impeccable/*

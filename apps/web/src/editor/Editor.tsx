@@ -207,7 +207,7 @@ export function Editor() {
     >
       <header>
         <strong>
-          PixelForge <small>Editor</small> <a href="/audio.html">Audio editor</a>
+          PixelForge <small>Editor</small> <a href="/audio.html">Audio editor</a> <a href="/geometry.html">Geometry editor</a>
         </strong>
         <span>
           {project.name}

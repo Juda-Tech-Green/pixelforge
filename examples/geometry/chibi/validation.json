@@ -1,0 +1,541 @@
+{
+  "valid": true,
+  "diagnostics": [],
+  "observations": [
+    {
+      "frameId": "idle",
+      "joints": {
+        "pelvis": [
+          32,
+          48
+        ],
+        "spine": [
+          32,
+          43.95
+        ],
+        "chest": [
+          32,
+          39
+        ],
+        "neck": [
+          32,
+          36
+        ],
+        "head": [
+          32,
+          28
+        ],
+        "left-shoulder": [
+          26,
+          39
+        ],
+        "left-elbow": [
+          25,
+          46
+        ],
+        "left-wrist": [
+          24,
+          52
+        ],
+        "left-hand": [
+          24,
+          53.5
+        ],
+        "left-hip": [
+          29,
+          49
+        ],
+        "left-knee": [
+          29,
+          54
+        ],
+        "left-ankle": [
+          29,
+          59
+        ],
+        "left-foot": [
+          28,
+          60.5
+        ],
+        "right-shoulder": [
+          38,
+          39
+        ],
+        "right-elbow": [
+          39,
+          46
+        ],
+        "right-wrist": [
+          40,
+          52
+        ],
+        "right-hand": [
+          40,
+          53.5
+        ],
+        "right-hip": [
+          35,
+          49
+        ],
+        "right-knee": [
+          35,
+          54
+        ],
+        "right-ankle": [
+          35,
+          59
+        ],
+        "right-foot": [
+          36,
+          60.5
+        ]
+      },
+      "measurements": {
+        "headWidth": 16,
+        "headHeight": 16,
+        "shoulderWidth": 12,
+        "torsoLength": 9,
+        "upperLeg": 5,
+        "lowerLeg": 5
+      },
+      "bounds": {
+        "min": [
+          23,
+          20
+        ],
+        "max": [
+          43,
+          62
+        ]
+      }
+    },
+    {
+      "frameId": "walk-a",
+      "joints": {
+        "pelvis": [
+          31,
+          48.5
+        ],
+        "spine": [
+          31,
+          44.45
+        ],
+        "chest": [
+          31,
+          39.5
+        ],
+        "neck": [
+          31,
+          36.5
+        ],
+        "head": [
+          31,
+          28.5
+        ],
+        "left-shoulder": [
+          25,
+          39.5
+        ],
+        "left-elbow": [
+          22.299259863507693,
+          46.03498299271999
+        ],
+        "left-wrist": [
+          19.84592368626991,
+          51.60105356372934
+        ],
+        "left-hand": [
+          19.474817747388126,
+          53.054422196295306
+        ],
+        "left-hip": [
+          28,
+          49.5
+        ],
+        "left-knee": [
+          29.477601033306698,
+          54.276682445628026
+        ],
+        "left-ankle": [
+          28.730410370938703,
+          59.220537835308235
+        ],
+        "left-foot": [
+          27.517482094292262,
+          60.5542563197387
+        ],
+        "right-shoulder": [
+          37,
+          39.5
+        ],
+        "right-elbow": [
+          39.70074013649231,
+          46.03498299271999
+        ],
+        "right-wrist": [
+          42.15407631373009,
+          51.60105356372934
+        ],
+        "right-hand": [
+          42.52518225261187,
+          53.054422196295306
+        ],
+        "right-hip": [
+          34,
+          49.5
+        ],
+        "right-knee": [
+          32.76298020372739,
+          54.34456210855323
+        ],
+        "right-ankle": [
+          33.26214728696153,
+          59.319582934943355
+        ],
+        "right-foot": [
+          34.406901577209794,
+          60.712255766213566
+        ]
+      },
+      "measurements": {
+        "headWidth": 16,
+        "headHeight": 16,
+        "shoulderWidth": 12,
+        "torsoLength": 9,
+        "upperLeg": 5,
+        "lowerLeg": 5
+      },
+      "bounds": {
+        "min": [
+          18,
+          21
+        ],
+        "max": [
+          44,
+          62
+        ]
+      }
+    },
+    {
+      "frameId": "reach",
+      "joints": {
+        "pelvis": [
+          32,
+          48
+        ],
+        "spine": [
+          32,
+          43.95
+        ],
+        "chest": [
+          32,
+          39
+        ],
+        "neck": [
+          32,
+          36
+        ],
+        "head": [
+          32,
+          28
+        ],
+        "left-shoulder": [
+          26,
+          39
+        ],
+        "left-elbow": [
+          25,
+          46
+        ],
+        "left-wrist": [
+          24,
+          52
+        ],
+        "left-hand": [
+          24,
+          53.5
+        ],
+        "left-hip": [
+          29,
+          49
+        ],
+        "left-knee": [
+          29,
+          54
+        ],
+        "left-ankle": [
+          29,
+          59
+        ],
+        "left-foot": [
+          28,
+          60.5
+        ],
+        "right-shoulder": [
+          38,
+          39
+        ],
+        "right-elbow": [
+          44.03140969071894,
+          35.30918746849672
+        ],
+        "right-wrist": [
+          47,
+          30
+        ],
+        "right-hand": [
+          47.93732686449391,
+          28.82892427695814
+        ],
+        "right-hip": [
+          35,
+          49
+        ],
+        "right-knee": [
+          35,
+          54
+        ],
+        "right-ankle": [
+          35,
+          59
+        ],
+        "right-foot": [
+          36,
+          60.5
+        ]
+      },
+      "measurements": {
+        "headWidth": 16,
+        "headHeight": 16,
+        "shoulderWidth": 12,
+        "torsoLength": 9,
+        "upperLeg": 5,
+        "lowerLeg": 5
+      },
+      "bounds": {
+        "min": [
+          23,
+          20
+        ],
+        "max": [
+          49,
+          62
+        ]
+      }
+    },
+    {
+      "frameId": "sit",
+      "joints": {
+        "pelvis": [
+          32,
+          52
+        ],
+        "spine": [
+          32,
+          47.95
+        ],
+        "chest": [
+          32,
+          43
+        ],
+        "neck": [
+          32,
+          40
+        ],
+        "head": [
+          32,
+          32
+        ],
+        "left-shoulder": [
+          26,
+          43
+        ],
+        "left-elbow": [
+          25,
+          50
+        ],
+        "left-wrist": [
+          24,
+          56
+        ],
+        "left-hand": [
+          24,
+          57.5
+        ],
+        "left-hip": [
+          29,
+          53
+        ],
+        "left-knee": [
+          33.66019542983613,
+          54.811788772383366
+        ],
+        "left-ankle": [
+          32.66684877586082,
+          59.71212166158958
+        ],
+        "left-foot": [
+          31.388778201826987,
+          60.98355219755638
+        ],
+        "right-shoulder": [
+          38,
+          43
+        ],
+        "right-elbow": [
+          39,
+          50
+        ],
+        "right-wrist": [
+          40,
+          56
+        ],
+        "right-hand": [
+          40,
+          57.5
+        ],
+        "right-hip": [
+          35,
+          53
+        ],
+        "right-knee": [
+          39.66019542983613,
+          54.811788772383366
+        ],
+        "right-ankle": [
+          38.66684877586082,
+          59.71212166158958
+        ],
+        "right-foot": [
+          39.34891135750947,
+          61.380890859146504
+        ]
+      },
+      "measurements": {
+        "headWidth": 16,
+        "headHeight": 16,
+        "shoulderWidth": 12,
+        "torsoLength": 9,
+        "upperLeg": 5,
+        "lowerLeg": 5
+      },
+      "bounds": {
+        "min": [
+          23,
+          24
+        ],
+        "max": [
+          43,
+          63
+        ]
+      }
+    },
+    {
+      "frameId": "turn",
+      "joints": {
+        "pelvis": [
+          31,
+          48
+        ],
+        "spine": [
+          31,
+          43.95
+        ],
+        "chest": [
+          31,
+          39
+        ],
+        "neck": [
+          31,
+          36
+        ],
+        "head": [
+          31,
+          28
+        ],
+        "left-shoulder": [
+          37,
+          39
+        ],
+        "left-elbow": [
+          41.23356133211979,
+          44.66365239462841
+        ],
+        "left-wrist": [
+          44.98769712563538,
+          49.44972222736644
+        ],
+        "left-hand": [
+          45.706835433541684,
+          50.766096070202
+        ],
+        "left-hip": [
+          34,
+          49
+        ],
+        "left-knee": [
+          34,
+          54
+        ],
+        "left-ankle": [
+          34,
+          59
+        ],
+        "left-foot": [
+          35,
+          60.5
+        ],
+        "right-shoulder": [
+          25,
+          39
+        ],
+        "right-elbow": [
+          19.725634002051674,
+          43.70967762375373
+        ],
+        "right-wrist": [
+          15.09548569134104,
+          47.65451306022297
+        ],
+        "right-hand": [
+          14.129159160484503,
+          48.8017763411497
+        ],
+        "right-hip": [
+          28,
+          49
+        ],
+        "right-knee": [
+          27.252809337632005,
+          53.94385538968021
+        ],
+        "right-ankle": [
+          26.50561867526401,
+          58.88771077936042
+        ],
+        "right-foot": [
+          25.29269039861757,
+          60.22142926379088
+        ]
+      },
+      "measurements": {
+        "headWidth": 16,
+        "headHeight": 16,
+        "shoulderWidth": 12,
+        "torsoLength": 9,
+        "upperLeg": 5,
+        "lowerLeg": 5
+      },
+      "bounds": {
+        "min": [
+          13,
+          19
+        ],
+        "max": [
+          47,
+          62
+        ]
+      }
+    }
+  ]
+}

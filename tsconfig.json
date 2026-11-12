@@ -5,6 +5,7 @@
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "paths": {
+      "@pixelforge/geometry": ["packages/geometry/src/index.ts"],
       "@pixelforge/audio-core": ["packages/audio-core/src/index.ts"],
       "@pixelforge/audio-exporters": ["packages/audio-exporters/src/index.ts"],
       "@pixelforge/core": ["packages/core/src/index.ts"],

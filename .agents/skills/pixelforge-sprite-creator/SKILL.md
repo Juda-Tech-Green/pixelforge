@@ -5,6 +5,14 @@ description: Creates, edits, validates and exports pixel-perfect 2D sprites, ani
 
 Use PixelForge locally; the editor is optional. Follow **Discover → Inspect → Specify → Generate/Edit → Render → Review → Validate → Export → Integrate**. Preserve the user's intended task and unrelated files.
 
+For articulated characters, proportion-preserving animation, or spatial scenes,
+use **Specify → Construct Geometry → Generate Sprite → Inspect → Export** and
+read [geometry-aware creation](references/geometry.md). Rig/scene commands require
+the matching PixelForge0.7.0 runtime/package set. Reuse one rig and pose library
+instead of guessing proportions independently in each frame. Ordinary pixel
+operations remain appropriate for icons, tiles, effects and targeted sprite edits;
+geometry is optional and the legacy workflow below remains available.
+
 1. **Discover.** Inspect the game's package.json, engine/version, asset manifest, stable keys and scene conventions. Run installed `pixelforge --version` and the installed skill's `scripts/check-environment.mjs` from the game directory. If missing, read [CLI setup](references/cli.md); do not substitute an unrelated registry package. Use `operations list` and `operations describe NAME --example` for exact schema-derived fields before reading implementation source.
 2. **Inspect.** Use `inspect FILE --summary`, then `--animation NAME`, `--frame ID`, `--layer ID` or `--game`, with pagination. Never dump a dense .sprite.json into agent context just to understand it. Read [large projects](references/production-workflow.md). Execute core APIs locally when dense raster access is necessary.
 3. **Specify.** Record canvas/palette/orientation/baseline/timing and task-specific invariants. A recolor, expansion, redesign and effect restoration preserve different things; do not protect old artwork when redesign is requested. Reference tasks require actual image inspection and a documented editable approximation: [reference workflow](references/reference-workflow.md).

@@ -1,0 +1,561 @@
+{
+  "version": "1.0",
+  "id": "interior-room",
+  "name": "Scouts' workshop",
+  "canvas": {
+    "width": 320,
+    "height": 180
+  },
+  "camera": {
+    "projection": "side-view",
+    "origin": [
+      0,
+      165
+    ],
+    "worldOrigin": [
+      0,
+      0,
+      0
+    ],
+    "scale": 1
+  },
+  "palette": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      27,
+      37,
+      54,
+      255
+    ],
+    [
+      56,
+      135,
+      184,
+      255
+    ],
+    [
+      230,
+      172,
+      118,
+      255
+    ],
+    [
+      125,
+      152,
+      164,
+      255
+    ],
+    [
+      78,
+      53,
+      73,
+      255
+    ],
+    [
+      244,
+      196,
+      106,
+      255
+    ],
+    [
+      105,
+      94,
+      91,
+      255
+    ],
+    [
+      143,
+      125,
+      106,
+      255
+    ],
+    [
+      62,
+      72,
+      84,
+      255
+    ],
+    [
+      174,
+      139,
+      93,
+      255
+    ],
+    [
+      64,
+      55,
+      60,
+      255
+    ]
+  ],
+  "objects": [
+    {
+      "id": "foreground-crate",
+      "type": "decoration",
+      "position": [
+        270,
+        -2,
+        0
+      ],
+      "rotation": 0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "size": [
+        35,
+        20,
+        23
+      ],
+      "anchors": {},
+      "groundContact": [
+        0,
+        0,
+        0
+      ],
+      "depthGroup": "foreground",
+      "renderLayer": 0,
+      "depthOffset": 0,
+      "before": [],
+      "after": [],
+      "geometry": {
+        "type": "box",
+        "color": 11,
+        "outline": 1
+      },
+      "parts": []
+    },
+    {
+      "id": "table",
+      "type": "furniture",
+      "position": [
+        145,
+        0,
+        0
+      ],
+      "rotation": 0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "size": [
+        90,
+        25,
+        30
+      ],
+      "anchors": {},
+      "groundContact": [
+        0,
+        0,
+        0
+      ],
+      "depthGroup": "actors",
+      "renderLayer": 0,
+      "depthOffset": 0,
+      "before": [],
+      "after": [],
+      "parts": [
+        {
+          "id": "rear",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "depthOffset": 0,
+          "before": [],
+          "after": [],
+          "geometry": {
+            "type": "box",
+            "color": 10,
+            "topColor": 8,
+            "outline": 1,
+            "size": [
+              90,
+              18,
+              30
+            ]
+          }
+        },
+        {
+          "id": "front",
+          "offset": [
+            0,
+            18,
+            24
+          ],
+          "depthOffset": 0,
+          "before": [],
+          "after": [],
+          "geometry": {
+            "type": "box",
+            "color": 10,
+            "outline": 1,
+            "size": [
+              90,
+              7,
+              6
+            ]
+          }
+        },
+        {
+          "id": "left-leg",
+          "offset": [
+            7,
+            18,
+            0
+          ],
+          "depthOffset": 0,
+          "before": [],
+          "after": [],
+          "geometry": {
+            "type": "box",
+            "color": 5,
+            "outline": 1,
+            "size": [
+              6,
+              7,
+              24
+            ]
+          }
+        },
+        {
+          "id": "right-leg",
+          "offset": [
+            77,
+            18,
+            0
+          ],
+          "depthOffset": 0,
+          "before": [],
+          "after": [],
+          "geometry": {
+            "type": "box",
+            "color": 5,
+            "outline": 1,
+            "size": [
+              6,
+              7,
+              24
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "character",
+      "type": "character",
+      "position": [
+        190,
+        8,
+        0
+      ],
+      "rotation": 0,
+      "scale": [
+        1.5,
+        1.5,
+        1.5
+      ],
+      "size": [
+        22,
+        12,
+        46
+      ],
+      "anchors": {
+        "foot": [
+          0,
+          0,
+          0
+        ]
+      },
+      "groundContact": [
+        0,
+        0,
+        0
+      ],
+      "depthGroup": "actors",
+      "renderLayer": 0,
+      "depthOffset": 0,
+      "before": [],
+      "after": [],
+      "sprite": {
+        "asset": "scout",
+        "frame": "idle",
+        "anchor": [
+          32,
+          61
+        ]
+      },
+      "parts": []
+    },
+    {
+      "id": "chair",
+      "type": "furniture",
+      "position": [
+        117,
+        3,
+        0
+      ],
+      "rotation": 0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "size": [
+        27,
+        18,
+        39
+      ],
+      "anchors": {},
+      "groundContact": [
+        0,
+        0,
+        0
+      ],
+      "depthGroup": "midground",
+      "renderLayer": 0,
+      "depthOffset": 0,
+      "before": [],
+      "after": [],
+      "geometry": {
+        "type": "box",
+        "color": 10,
+        "sideColor": 5,
+        "topColor": 8,
+        "outline": 1
+      },
+      "parts": []
+    },
+    {
+      "id": "handle",
+      "type": "decoration",
+      "parent": "door",
+      "position": [
+        30,
+        -1,
+        42
+      ],
+      "rotation": 0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "size": [
+        4,
+        2,
+        3
+      ],
+      "anchors": {},
+      "groundContact": [
+        0,
+        0,
+        0
+      ],
+      "depthGroup": "midground",
+      "renderLayer": 1,
+      "depthOffset": 0,
+      "before": [],
+      "after": [],
+      "geometry": {
+        "type": "box",
+        "color": 6,
+        "outline": 0
+      },
+      "parts": []
+    },
+    {
+      "id": "door",
+      "type": "structure",
+      "position": [
+        34,
+        10,
+        0
+      ],
+      "rotation": 0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "size": [
+        38,
+        4,
+        92
+      ],
+      "anchors": {
+        "handle": [
+          32,
+          0,
+          43
+        ]
+      },
+      "groundContact": [
+        0,
+        0,
+        0
+      ],
+      "depthGroup": "midground",
+      "renderLayer": 0,
+      "depthOffset": 0,
+      "before": [],
+      "after": [],
+      "geometry": {
+        "type": "box",
+        "color": 9,
+        "outline": 1
+      },
+      "parts": []
+    },
+    {
+      "id": "floor",
+      "type": "structure",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": 0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "size": [
+        319,
+        1,
+        14
+      ],
+      "anchors": {},
+      "groundContact": [
+        0,
+        0,
+        0
+      ],
+      "depthGroup": "background",
+      "renderLayer": 1,
+      "depthOffset": 0,
+      "before": [],
+      "after": [],
+      "geometry": {
+        "type": "polygon",
+        "color": 8,
+        "outline": 0,
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            319,
+            0,
+            0
+          ],
+          [
+            319,
+            0,
+            -14
+          ],
+          [
+            0,
+            0,
+            -14
+          ]
+        ]
+      },
+      "parts": []
+    },
+    {
+      "id": "wall",
+      "type": "structure",
+      "position": [
+        0,
+        20,
+        0
+      ],
+      "rotation": 0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "size": [
+        319,
+        4,
+        140
+      ],
+      "anchors": {},
+      "groundContact": [
+        0,
+        0,
+        0
+      ],
+      "depthGroup": "background",
+      "renderLayer": 0,
+      "depthOffset": 0,
+      "before": [],
+      "after": [],
+      "geometry": {
+        "type": "box",
+        "color": 7,
+        "outline": 1
+      },
+      "parts": []
+    }
+  ],
+  "regions": [
+    {
+      "id": "room-ground",
+      "kind": "ground",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          319,
+          0
+        ],
+        [
+          319,
+          80
+        ],
+        [
+          0,
+          80
+        ]
+      ],
+      "z": 0
+    }
+  ],
+  "constraints": {
+    "noOverlap": [
+      [
+        "door",
+        "table"
+      ]
+    ],
+    "grounded": [
+      {
+        "object": "character",
+        "planeZ": 0,
+        "tolerance": 0.1
+      },
+      {
+        "object": "table",
+        "planeZ": 0,
+        "tolerance": 0.1
+      }
+    ],
+    "anchors": []
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "pixelforge",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -19,6 +19,10 @@
     "cli": "tsx --conditions=development packages/cli/src/index.ts",
     "examples": "tsx --conditions=development scripts/examples.ts",
     "examples:audio": "tsx --conditions=development scripts/audio-examples.ts",
+    "examples:geometry": "tsx --conditions=development scripts/geometry-examples.ts",
+    "smoke:geometry": "tsx --conditions=development scripts/geometry-browser-smoke.ts",
+    "bench:geometry": "tsx --conditions=development scripts/geometry-benchmark.ts",
+    "bench:geometry:models": "tsx --conditions=development scripts/geometry-model-evaluate.ts",
     "verify:audio": "python scripts/audio-verify-wav.py",
     "smoke:audio": "tsx --conditions=development scripts/audio-browser-smoke.ts",
     "schemas": "tsx scripts/schemas.ts",

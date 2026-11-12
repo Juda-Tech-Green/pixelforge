@@ -13,7 +13,7 @@ const sums = [];
 // Invoke npm's JavaScript entry point without shell command interpolation on Windows.
 const npm = process.env.npm_execpath;
 if (!npm) throw new Error("Run through npm run pack:release");
-for (const name of ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"]) {
+for (const name of ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters", "geometry"]) {
   const dir = resolve(root, "packages", name),
     file = resolve(dir, "package.json"),
     original = await readFile(file, "utf8"),
@@ -44,10 +44,10 @@ const changelog = await readFile(resolve(root, "CHANGELOG.md"), "utf8");
 const releaseSection =
   changelog.split(`## ${version}`)[1]?.split("\n## ")[0]?.trim() ??
   "See repository CHANGELOG.md.";
-const installArchives = ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters"]
+const installArchives = ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters", "geometry"]
   .map((name) => `./vendor/pixelforge/pixelforge-${name}-${version}.tgz`)
   .join(" ");
 await writeFile(
   resolve(out, `RELEASE-${version}.md`),
-  `# PixelForge ${version} local release artifacts\n\n${releaseSection}\n\n## Reproduce and verify\n\nFrom the reviewed source checkout: npm ci, npm run typecheck, npm test, npm run pack:release. Verify with node scripts/verify-release.mjs release.\n\nCopy the six matching archives into vendor/pixelforge inside the consumer repository, inspect its Phaser version, then run:\n\n\`\`\`sh\nnpm install --ignore-scripts ${installArchives}\n\`\`\`\n\nThird-party dependencies normally require network access. --offline works only with a populated npm cache. SHA256SUMS detects corruption; it is not a signature or publisher provenance attestation. No publication or namespace ownership is implied. See docs/v0.5-verification.md for exact executed environments and acceptance evidence.\n`,
+  `# PixelForge ${version} local release artifacts\n\n${releaseSection}\n\n## Reproduce and verify\n\nFrom the reviewed source checkout: npm ci, npm run typecheck, npm test, npm run pack:release. Verify with node scripts/verify-release.mjs release.\n\nCopy the seven matching archives into vendor/pixelforge inside the consumer repository, inspect its Phaser version, then run:\n\n\`\`\`sh\nnpm install --ignore-scripts ${installArchives}\n\`\`\`\n\nThird-party dependencies normally require network access. --offline works only with a populated npm cache. SHA256SUMS detects corruption; it is not a signature or publisher provenance attestation. No publication or namespace ownership is implied. See docs/geometry/README.md for current integration-check limits; older verification reports do not establish v0.7 acceptance.\n`,
 );

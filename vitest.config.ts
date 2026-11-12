@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 export default defineConfig({
   resolve: {
     alias: {
+      "@pixelforge/geometry": fileURLToPath(new URL("./packages/geometry/src/index.ts", import.meta.url)),
       "@pixelforge/audio-core": fileURLToPath(new URL("./packages/audio-core/src/index.ts", import.meta.url)),
       "@pixelforge/audio-exporters": fileURLToPath(new URL("./packages/audio-exporters/src/index.ts", import.meta.url)),
       "@pixelforge/core": fileURLToPath(

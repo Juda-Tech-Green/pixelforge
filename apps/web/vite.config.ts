@@ -5,6 +5,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: fileURLToPath(new URL("./index.html", import.meta.url)),
+        geometry: fileURLToPath(new URL("./geometry.html", import.meta.url)),
         audio: fileURLToPath(new URL("./audio.html", import.meta.url)),
         audioGame: fileURLToPath(new URL("./audio-game.html", import.meta.url)),
         phaser: fileURLToPath(new URL("./phaser.html", import.meta.url)),
@@ -13,6 +14,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@pixelforge/geometry": fileURLToPath(new URL("../../packages/geometry/src/index.ts", import.meta.url)),
       "@pixelforge/audio-core": fileURLToPath(new URL("../../packages/audio-core/src/index.ts", import.meta.url)),
       "@pixelforge/audio-exporters": fileURLToPath(new URL("../../packages/audio-exporters/src/index.ts", import.meta.url)),
       "@pixelforge/core": fileURLToPath(

@@ -1,0 +1,210 @@
+{
+  "version": "1.0",
+  "image": "breathe.png",
+  "rig": "scout-standard",
+  "joints": {
+    "pelvis": [
+      32,
+      42.4
+    ],
+    "spine": [
+      32,
+      37
+    ],
+    "chest": [
+      32,
+      30.4
+    ],
+    "neck": [
+      32.07499218774414,
+      27.40093745117289
+    ],
+    "head": [
+      32.22497656323241,
+      21.402812353518677
+    ],
+    "left-shoulder": [
+      25.002187386070084,
+      30.225018228597012
+    ],
+    "left-elbow": [
+      23.827518098391394,
+      37.197833446612215
+    ],
+    "left-wrist": [
+      22.677846206627418,
+      43.170961148351715
+    ],
+    "left-hand": [
+      22.64035011275535,
+      44.67049242276527
+    ],
+    "left-hip": [
+      29,
+      43.4
+    ],
+    "left-knee": [
+      29,
+      51.4
+    ],
+    "left-ankle": [
+      29,
+      59.4
+    ],
+    "left-foot": [
+      28,
+      60.9
+    ],
+    "right-shoulder": [
+      38.997812613929916,
+      30.574981771402985
+    ],
+    "right-elbow": [
+      39.82251835880263,
+      37.597791781247615
+    ],
+    "right-wrist": [
+      40.67222149959006,
+      43.62091427481654
+    ],
+    "right-hand": [
+      40.63472540571799,
+      45.1204455492301
+    ],
+    "right-hip": [
+      35,
+      43.4
+    ],
+    "right-knee": [
+      35,
+      51.4
+    ],
+    "right-ankle": [
+      35,
+      59.4
+    ],
+    "right-foot": [
+      36,
+      60.9
+    ]
+  },
+  "bones": [
+    {
+      "joint": "pelvis",
+      "parent": null
+    },
+    {
+      "joint": "spine",
+      "parent": "pelvis"
+    },
+    {
+      "joint": "chest",
+      "parent": "spine"
+    },
+    {
+      "joint": "neck",
+      "parent": "chest"
+    },
+    {
+      "joint": "head",
+      "parent": "neck"
+    },
+    {
+      "joint": "left-shoulder",
+      "parent": "chest"
+    },
+    {
+      "joint": "left-elbow",
+      "parent": "left-shoulder"
+    },
+    {
+      "joint": "left-wrist",
+      "parent": "left-elbow"
+    },
+    {
+      "joint": "left-hand",
+      "parent": "left-wrist"
+    },
+    {
+      "joint": "left-hip",
+      "parent": "pelvis"
+    },
+    {
+      "joint": "left-knee",
+      "parent": "left-hip"
+    },
+    {
+      "joint": "left-ankle",
+      "parent": "left-knee"
+    },
+    {
+      "joint": "left-foot",
+      "parent": "left-ankle"
+    },
+    {
+      "joint": "right-shoulder",
+      "parent": "chest"
+    },
+    {
+      "joint": "right-elbow",
+      "parent": "right-shoulder"
+    },
+    {
+      "joint": "right-wrist",
+      "parent": "right-elbow"
+    },
+    {
+      "joint": "right-hand",
+      "parent": "right-wrist"
+    },
+    {
+      "joint": "right-hip",
+      "parent": "pelvis"
+    },
+    {
+      "joint": "right-knee",
+      "parent": "right-hip"
+    },
+    {
+      "joint": "right-ankle",
+      "parent": "right-knee"
+    },
+    {
+      "joint": "right-foot",
+      "parent": "right-ankle"
+    }
+  ],
+  "orientation": "right",
+  "pose": {
+    "id": "breathe",
+    "facing": "right",
+    "rotations": {
+      "pelvis": 0,
+      "spine": 0,
+      "chest": 0.025,
+      "neck": 0,
+      "head": 0,
+      "left-shoulder": 0,
+      "left-elbow": 0,
+      "left-wrist": 0,
+      "left-hand": 0,
+      "left-hip": 0,
+      "left-knee": 0,
+      "left-ankle": 0,
+      "left-foot": 0,
+      "right-shoulder": 0,
+      "right-elbow": 0,
+      "right-wrist": 0,
+      "right-hand": 0,
+      "right-hip": 0,
+      "right-knee": 0,
+      "right-ankle": 0,
+      "right-foot": 0
+    },
+    "rootTranslation": [
+      0,
+      0.4
+    ],
+    "targets": []
+  }
+}

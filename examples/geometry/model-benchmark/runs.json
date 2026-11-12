@@ -1,0 +1,4 @@
+[
+  {"directory":"astra","model":"gpt-6-astra","scenePriorExampleExposure":true},
+  {"directory":"sol","model":"gpt-6.1-sol","scenePriorExampleExposure":false}
+]

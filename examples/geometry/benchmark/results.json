@@ -1,0 +1,71 @@
+{
+  "version": "1.0",
+  "kind": "controlled-algorithm-comparison",
+  "runtime": "v24.16.0",
+  "character": {
+    "directPixels": {
+      "frames": 16,
+      "maxBoneLengthError": 0.002499869794383436,
+      "meanBoneLengthError": 0.0003650662726228479,
+      "maxFootTargetError": 1.9385600429437666,
+      "maxFootSlidePerStep": 0.25226741172550415,
+      "headWidthVariance": 0,
+      "invalidJointRelationships": 0,
+      "humanVisualQuality": null,
+      "renderMs": 1.03449999999998
+    },
+    "geometry": {
+      "frames": 16,
+      "maxBoneLengthError": 5.329070518200751e-15,
+      "meanBoneLengthError": 1.1199374760906267e-15,
+      "maxFootTargetError": 2.842170943040401e-14,
+      "maxFootSlidePerStep": 3.552713678800501e-14,
+      "headWidthVariance": 0,
+      "invalidJointRelationships": 0,
+      "humanVisualQuality": null,
+      "renderMs": 444.00919999999996
+    }
+  },
+  "scene": {
+    "directOrder": [
+      "chair",
+      "character",
+      "door",
+      "floor",
+      "foreground-crate",
+      "handle",
+      "table:front",
+      "table:left-leg",
+      "table:rear",
+      "table:right-leg",
+      "wall"
+    ],
+    "geometryOrder": [
+      "floor",
+      "wall",
+      "chair",
+      "door",
+      "handle",
+      "table:rear",
+      "character",
+      "table:front",
+      "table:left-leg",
+      "table:right-leg",
+      "foreground-crate"
+    ],
+    "directOcclusionViolations": 1,
+    "geometryOcclusionViolations": 0,
+    "projectionError": 0,
+    "groundAnchorError": 0,
+    "unexpectedOverlapViolations": 0,
+    "humanCompositionQuality": null
+  },
+  "crossModelEvaluated": false,
+  "limitations": [
+    "Controlled comparison of world-coordinate interpolation/direct drawing against joint interpolation and constraints; not a claim about the best possible direct workflow.",
+    "Bone and foot metrics measure pre-raster geometry for both methods; pixel rounding can add up to half a pixel per axis.",
+    "Both methods keep the same explicit head dimensions; head-width variance is zero by construction.",
+    "Scene comparison isolates ordering on identical projected parts; projection and declared ground anchors are shared.",
+    "No human visual/composition ratings or cross-model quality results are fabricated."
+  ]
+}

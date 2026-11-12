@@ -1,0 +1,39 @@
+{
+  "runtime": "v24.16.0",
+  "platform": "win32",
+  "measurements": [
+    {
+      "preset": "standard",
+      "renderMs": 951.7622999999999,
+      "frames": 19,
+      "rssBytes": 282198016,
+      "spriteBytes": 1170908,
+      "sheetBytes": 4126,
+      "diagnostics": 0
+    },
+    {
+      "preset": "chibi",
+      "renderMs": 850.3600000000001,
+      "frames": 19,
+      "rssBytes": 321503232,
+      "spriteBytes": 1170902,
+      "sheetBytes": 4006,
+      "diagnostics": 0
+    },
+    {
+      "preset": "tall",
+      "renderMs": 938.2458000000001,
+      "frames": 19,
+      "rssBytes": 323022848,
+      "spriteBytes": 1170900,
+      "sheetBytes": 4382,
+      "diagnostics": 0
+    },
+    {
+      "scene": "room",
+      "renderMs": 154.97050000000036,
+      "rssBytes": 323719168,
+      "parts": 11
+    }
+  ]
+}

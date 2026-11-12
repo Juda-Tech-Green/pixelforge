@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { rigSchema, poseSchema, posesSchema, animationSchema, sceneSchema, observationsSchema, cameraSchema } from "../packages/geometry/src/index.js";
 import { soundSchema, audioOperationsSchema, audioManifestSchema } from "../packages/audio-core/src/index.js";
 import {
   gameMetadataSchema,
@@ -24,6 +25,13 @@ await writeFile(
 );
 
 for (const [name, schema] of Object.entries({
+  rig: rigSchema,
+  pose: poseSchema,
+  poses: posesSchema,
+  rigAnimation: animationSchema,
+  scene: sceneSchema,
+  geometryObservations: observationsSchema,
+  geometryCamera: cameraSchema,
   sound: soundSchema,
   audioOperations: audioOperationsSchema,
   audioManifest: audioManifestSchema,

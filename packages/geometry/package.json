@@ -1,0 +1,24 @@
+{
+  "name": "@pixelforge/geometry",
+  "version": "0.7.0",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "development": "./src/index.ts",
+    "default": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "schemas",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@pixelforge/core": "0.7.0",
+    "zod": "^4.1.0"
+  }
+}

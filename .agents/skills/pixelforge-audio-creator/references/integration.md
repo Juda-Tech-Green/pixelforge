@@ -1,11 +1,12 @@
 # Installation, integration and recovery
 
 From the PixelForge source checkout, `npm run pack:release` builds local tarballs.
-Install the six matching 0.6.0 archives (core, exporters, cli, phaser, audio-core,
-audio-exporters) in the game. Third-party dependencies need network or a populated
+For0.7.0 install all seven matching archives (core, exporters, cli, phaser,
+audio-core, audio-exporters, geometry); existing0.6.0 uses its six-package set.
+Third-party dependencies need network or a populated
 npm cache. No registry publication is implied. Do not force incompatible peers.
 
-`check-environment.mjs` requires the exact audio runtime version and actually
+`check-environment.mjs` accepts0.6.0/0.7.0 with matching package versions and actually
 queries audio operation discovery. A v0.5 CLI cannot satisfy this check.
 
 During Phaser preload, import `loadPixelForgeAudio` from `@pixelforge/phaser` and

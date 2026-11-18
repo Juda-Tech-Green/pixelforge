@@ -14,15 +14,9 @@ import {
   projectJsonSchema,
   operationsJsonSchema,
 } from "../packages/core/src/index.js";
-await mkdir("schemas", { recursive: true });
-await writeFile(
-  "schemas/project.schema.json",
-  JSON.stringify(projectJsonSchema, null, 2) + "\n",
-);
-await writeFile(
-  "schemas/operations.schema.json",
-  JSON.stringify(operationsJsonSchema, null, 2) + "\n",
-);
+const generated = new Map<string, unknown>([
+  ["project", projectJsonSchema], ["operations", operationsJsonSchema],
+]);
 
 for (const [name, schema] of Object.entries({
   rig: rigSchema,
@@ -44,7 +38,13 @@ for (const [name, schema] of Object.entries({
   assets: assetManifestSchema,
   semanticContract: semanticContractSchema,
 }))
-  await writeFile(
-    `schemas/${name}.schema.json`,
-    JSON.stringify(z.toJSONSchema(schema), null, 2) + "\n",
-  );
+  generated.set(name, z.toJSONSchema(schema));
+
+// Optional names let bounded schema edits preserve unrelated working-copy schemas.
+const selected = process.argv.slice(2);
+for (const name of selected) if (!generated.has(name)) throw new Error(`Unknown schema ${name}`);
+await mkdir("schemas", { recursive: true });
+for (const [name, schema] of generated) {
+  if (selected.length && !selected.includes(name)) continue;
+  await writeFile(`schemas/${name}.schema.json`, JSON.stringify(schema, null, 2) + "\n");
+}

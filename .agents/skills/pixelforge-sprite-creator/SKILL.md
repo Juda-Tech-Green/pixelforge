@@ -34,7 +34,7 @@ npm run cli -- preview FILE --contact-sheet --out sheet.png --json
 For articulated characters, proportion-preserving animation, or spatial scenes,
 use **Specify → Construct Geometry → Generate Sprite → Inspect → Export** and
 read [geometry-aware creation](references/geometry.md). Rig/scene commands require
-the matching PixelForge0.8.1 runtime/package set. Reuse one rig and pose library
+the matching PixelForge0.8.2 runtime/package set. Reuse one rig and pose library
 instead of guessing proportions independently in each frame. Ordinary pixel
 operations remain appropriate for icons, tiles, effects and targeted sprite edits;
 geometry is optional and the legacy workflow below remains available.
@@ -53,6 +53,22 @@ missing overlay geometry is an error, or select body-only intentionally. Write w
 ordinary sprite and `preview`/`--contact-sheet` when an animation exists. Open PNGs
 only with image-reading tools. See [semantic posing](references/semantic-posing.md)
 and the separate `examples/semantic-pose/` fixture; preserve original sources.
+
+For optional gaze and relative placement, query `semanticPosing.extensions` in
+runtime capabilities and re-read the schemas (available in runtime 0.8.2). Gaze requires a declared head-local forward vector and supports
+world, joint/role or object-anchor targets. `attachment.placement` or a prop's
+transform can use joint-local offsets/rotation; stable chest references avoid
+IK/gaze dependency cycles. Resolve once, review gaze error and grip residual,
+then use the existing renderer/preview. See the semantic reference and
+`examples/semantic-pose/gaze-relative.semantic-pose.json`; do not guess fields or
+combine gaze with an explicit rotation override on the same head joint.
+
+For large gaze corrections that would over-rotate the head, explicitly choose
+`gaze.mode: anatomical` after checking runtime modes/profiles. Omitted mode and
+`legacy` retain the original result. Anatomical mode bounds neck and head, uses
+standard-skeleton defaults only where justified, and reports visible residual
+error. Custom rigs need meaningful rig limits or explicit anatomy limits. Preview
+the bounded result; eye pixels are unchanged. See the semantic reference.
 
 1. **Discover.** Inspect the game's package.json, engine/version, asset manifest, stable keys and scene conventions. Run installed `pixelforge --version` and the installed skill's `scripts/check-environment.mjs` from the game directory. If missing, read [CLI setup](references/cli.md); do not substitute an unrelated registry package. Use `operations list` and `operations describe NAME --example` for exact schema-derived fields before reading implementation source.
 2. **Inspect.** Use `inspect FILE --summary`, then `--animation NAME`, `--frame ID`, `--layer ID` or `--game`, with pagination. Never dump a dense .sprite.json into agent context just to understand it. Read [large projects](references/production-workflow.md). Execute core APIs locally when dense raster access is necessary.

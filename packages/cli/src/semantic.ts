@@ -15,14 +15,14 @@ export async function semanticContext(options: { library?: string; object?: stri
     objects: await Promise.all((options.object ?? []).map(readSemanticInput)) };
 }
 export function registerSemanticCommand(rig: Command, atomicWrite: (file: string, data: string | Uint8Array) => Promise<void>) {
-  rig.command("resolve-pose").description("Resolve semantic posture, hand IK and one explicit held prop (v0.8.1)")
+  rig.command("resolve-pose").description("Resolve semantic posture, hand IK, gaze and one explicit held prop (v0.8.2)")
     .argument("<request>").requiredOption("--rig <file>", "Existing source rig")
     .option("--library <file>", "Existing pose library for basePose and named contacts")
     .option("--object <file>", "Held-object definition, repeat for target resources", (v: string, previous: string[]) => [...previous, v], [])
     .option("--out <file>", "Write an existing-schema-compatible resolved pose; omitted means read-only")
     .option("--out-rig <file>", "Also write the derived attachment rig; requires --out")
     .option("--force", "Replace explicitly selected outputs, protecting all input sources")
-    .option("--json", "JSON result including pose, derived rig, reach reports and diagnostics")
+    .option("--json", "JSON pose/rig, reach, optional gaze/placement metadata and diagnostics")
     .action(async (request: string, o: { rig: string; library?: string; object: string[]; out?: string; outRig?: string; force?: boolean; json?: boolean }) => {
       if (o.outRig && !o.out) throw new Error("--out-rig requires --out; omit both for read-only resolution");
       const result = resolveSemanticPose(await readSemanticInput(o.rig), await readSemanticInput(request), await semanticContext(o));
@@ -53,6 +53,7 @@ export function registerSemanticCommand(rig: Command, atomicWrite: (file: string
       }
       if (o.json) process.stdout.write(JSON.stringify({ ...result, outputs: result.ok ? outputs.map(p => resolve(p)) : [] }) + "\n");
       else process.stdout.write(`${result.ok ? "OK" : "FAILED"}: semantic pose\n` + result.hands.map(h => `${h.hand}: ${h.reachable ? "reached" : "unreachable"}, residual ${h.residual} px\n`).join("") +
+        (result.gaze ? `Gaze: ${result.gaze.joint}, angle ${result.gaze.appliedAngle} rad, direction error ${result.gaze.directionError} rad\n` : "") +
         result.diagnostics.map(d => `${d.severity} ${d.code} ${d.path}: ${d.message} ${d.suggestion}\n`).join("") +
         (outputs.length && result.ok ? outputs.map(p => `Output: ${resolve(p)}\n`).join("") : "Read-only resolution; use --json to inspect the pose and derived rig.\n"));
       if (!result.ok) process.exitCode = 1;

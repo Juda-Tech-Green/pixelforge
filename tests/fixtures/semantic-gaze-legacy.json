@@ -1,0 +1,208 @@
+{
+  "description": "Exact serialized-result SHA-256 values captured from the existing v0.8.2 legacy resolver before anatomical-mode edits.",
+  "rigSourceSha256": "e775328a15a851fd39d791a0fb7a9ad181b2afec5bda7c03fc665f6b58d7cab3",
+  "cases": [
+    {
+      "request": {
+        "format": "pixelforge-semantic-pose",
+        "version": "1.0",
+        "id": "slumped-folder",
+        "rig": "semantic-clerk",
+        "basePose": "idle",
+        "posture": {
+          "type": "slumped",
+          "strength": 0.65
+        },
+        "attachment": {
+          "object": "folder",
+          "primaryHand": "right",
+          "grip": "grip",
+          "occlusion": {
+            "type": "sandwich",
+            "palmShapes": [
+              "right-hand-shape"
+            ],
+            "frontShapes": [
+              "grip-overlay"
+            ]
+          }
+        }
+      },
+      "sha256": "0f78d7f7a4039ca30490ce432c755c19d740888c8acede3e2f65eac2eccc9e62"
+    },
+    {
+      "request": {
+        "format": "pixelforge-semantic-pose",
+        "version": "1.0",
+        "id": "gaze-folder",
+        "rig": "semantic-clerk",
+        "basePose": "idle",
+        "posture": {
+          "type": "slumped",
+          "strength": 0.65
+        },
+        "attachment": {
+          "object": "folder",
+          "primaryHand": "right",
+          "grip": "grip",
+          "placement": {
+            "space": "joint-local",
+            "role": "chest",
+            "offset": [
+              10,
+              6
+            ],
+            "rotation": -0.2
+          },
+          "occlusion": {
+            "type": "sandwich",
+            "palmShapes": [
+              "right-hand-shape"
+            ],
+            "frontShapes": [
+              "grip-overlay"
+            ]
+          }
+        },
+        "gaze": {
+          "target": {
+            "type": "object-anchor",
+            "object": "folder",
+            "anchor": "support"
+          },
+          "forward": [
+            1,
+            0
+          ],
+          "strength": 1
+        }
+      },
+      "sha256": "84c02325a43208406817453a9ab7a0eb5ac6ff057506a73716f12225847c3f2a"
+    },
+    {
+      "request": {
+        "format": "pixelforge-semantic-pose",
+        "version": "1.0",
+        "id": "gaze-folder",
+        "rig": "semantic-clerk",
+        "basePose": "idle",
+        "posture": {
+          "type": "slumped",
+          "strength": 0.65
+        },
+        "attachment": {
+          "object": "folder",
+          "primaryHand": "right",
+          "grip": "grip",
+          "placement": {
+            "space": "joint-local",
+            "role": "chest",
+            "offset": [
+              10,
+              6
+            ],
+            "rotation": -0.2
+          },
+          "occlusion": {
+            "type": "sandwich",
+            "palmShapes": [
+              "right-hand-shape"
+            ],
+            "frontShapes": [
+              "grip-overlay"
+            ]
+          }
+        },
+        "gaze": {
+          "target": {
+            "type": "object-anchor",
+            "object": "folder",
+            "anchor": "support"
+          },
+          "forward": [
+            1,
+            0
+          ],
+          "strength": 1
+        },
+        "overrides": {
+          "facing": "left"
+        }
+      },
+      "sha256": "134e6144aafde0f3bc3a5e1533e5532282c6e93445aecfe2f34cba609cbb1f40"
+    },
+    {
+      "request": {
+        "format": "pixelforge-semantic-pose",
+        "version": "1.0",
+        "id": "gaze-folder",
+        "rig": "semantic-clerk",
+        "basePose": "idle",
+        "posture": {
+          "type": "slumped",
+          "strength": 0.65
+        },
+        "attachment": {
+          "object": "folder",
+          "primaryHand": "right",
+          "grip": "grip",
+          "placement": {
+            "space": "joint-local",
+            "role": "chest",
+            "offset": [
+              10,
+              6
+            ],
+            "rotation": -0.2
+          },
+          "occlusion": {
+            "type": "sandwich",
+            "palmShapes": [
+              "right-hand-shape"
+            ],
+            "frontShapes": [
+              "grip-overlay"
+            ]
+          }
+        },
+        "gaze": {
+          "target": {
+            "type": "object-anchor",
+            "object": "folder",
+            "anchor": "support"
+          },
+          "forward": [
+            1,
+            0
+          ],
+          "strength": 0.3
+        }
+      },
+      "sha256": "a8e8261a33bfaa0c56800f7b833e4d2e25e590868fd6bd4d31efb8aed6c76679"
+    },
+    {
+      "request": {
+        "format": "pixelforge-semantic-pose",
+        "version": "1.0",
+        "id": "world-gaze",
+        "rig": "semantic-clerk",
+        "gaze": {
+          "target": {
+            "type": "coordinate",
+            "space": "world",
+            "position": [
+              42,
+              30
+            ]
+          },
+          "forward": [
+            0,
+            -1
+          ],
+          "strength": 0.5
+        }
+      },
+      "sha256": "1ebdf146b9b1864c3503fa9231e045664fee20407a7a519901e36c4734443242"
+    }
+  ]
+}

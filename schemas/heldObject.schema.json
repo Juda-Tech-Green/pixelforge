@@ -18,42 +18,143 @@
           "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
         },
         "transform": {
-          "type": "object",
-          "properties": {
-            "space": {
-              "type": "string",
-              "const": "world"
-            },
-            "position": {
-              "type": "array",
-              "prefixItems": [
-                {
-                  "type": "number",
-                  "minimum": -10000,
-                  "maximum": 10000
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "space": {
+                  "type": "string",
+                  "const": "world"
                 },
-                {
+                "position": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    },
+                    {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "rotation": {
                   "type": "number",
-                  "minimum": -10000,
-                  "maximum": 10000
+                  "minimum": -3.141592653589793,
+                  "maximum": 3.141592653589793
                 }
+              },
+              "required": [
+                "space",
+                "position",
+                "rotation"
               ],
-              "items": false,
-              "minItems": 2,
-              "maxItems": 2
+              "additionalProperties": false
             },
-            "rotation": {
-              "type": "number",
-              "minimum": -3.141592653589793,
-              "maximum": 3.141592653589793
+            {
+              "type": "object",
+              "properties": {
+                "space": {
+                  "type": "string",
+                  "const": "joint-local"
+                },
+                "joint": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                },
+                "offset": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    },
+                    {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "rotation": {
+                  "type": "number",
+                  "minimum": -3.141592653589793,
+                  "maximum": 3.141592653589793
+                }
+              },
+              "required": [
+                "space",
+                "joint",
+                "offset",
+                "rotation"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "space": {
+                  "type": "string",
+                  "const": "joint-local"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "spine",
+                    "chest",
+                    "neck",
+                    "head",
+                    "leftShoulder",
+                    "leftElbow",
+                    "leftWrist",
+                    "rightShoulder",
+                    "rightElbow",
+                    "rightWrist"
+                  ]
+                },
+                "offset": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    },
+                    {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "rotation": {
+                  "type": "number",
+                  "minimum": -3.141592653589793,
+                  "maximum": 3.141592653589793
+                }
+              },
+              "required": [
+                "space",
+                "role",
+                "offset",
+                "rotation"
+              ],
+              "additionalProperties": false
             }
-          },
-          "required": [
-            "space",
-            "position",
-            "rotation"
-          ],
-          "additionalProperties": false
+          ]
         },
         "anchors": {
           "type": "object",

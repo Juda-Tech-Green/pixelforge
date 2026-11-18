@@ -1,9 +1,9 @@
 # CLI setup and execution
 
-Use Node22.12+ (24 recommended). For v0.8.1, install all seven matching0.8.1 local tarballs together from a stable location inside the consumer repository, such as vendor/pixelforge/:
+Use Node22.12+ (24 recommended). For v0.8.2, install all seven matching0.8.2 local tarballs together from a stable location inside the consumer repository, such as vendor/pixelforge/:
 
 ```sh
-npm install --ignore-scripts ./vendor/pixelforge/pixelforge-core-0.8.1.tgz ./vendor/pixelforge/pixelforge-exporters-0.8.1.tgz ./vendor/pixelforge/pixelforge-cli-0.8.1.tgz ./vendor/pixelforge/pixelforge-phaser-0.8.1.tgz ./vendor/pixelforge/pixelforge-audio-core-0.8.1.tgz ./vendor/pixelforge/pixelforge-audio-exporters-0.8.1.tgz ./vendor/pixelforge/pixelforge-geometry-0.8.1.tgz
+npm install --ignore-scripts ./vendor/pixelforge/pixelforge-core-0.8.2.tgz ./vendor/pixelforge/pixelforge-exporters-0.8.2.tgz ./vendor/pixelforge/pixelforge-cli-0.8.2.tgz ./vendor/pixelforge/pixelforge-phaser-0.8.2.tgz ./vendor/pixelforge/pixelforge-audio-core-0.8.2.tgz ./vendor/pixelforge/pixelforge-audio-exporters-0.8.2.tgz ./vendor/pixelforge/pixelforge-geometry-0.8.2.tgz
 ```
 
 Normal installation resolves third-party dependencies online. --offline additionally requires a populated compatible npm cache; archives do not bundle those dependencies. Verify SHA256SUMS through the provider's verifier/trusted channel; checksums detect corruption, do not authenticate publishers. Do not save a dependency pointing to an unrelated sibling source checkout, substitute a similarly named public package, or force legacy-peer-deps. Inspect the host Phaser version before installing its adapter. Build source using npm ci then npm run pack:release; no dist bootstrap workaround is needed.

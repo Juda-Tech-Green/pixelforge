@@ -7,7 +7,7 @@
 Editable pixel sprites, timed animations, and Phaser-ready assets.<br>
 Build with a coding agent. Refine in the editor. Keep every pixel yours.
 
-[![Version 0.8.1](https://img.shields.io/badge/version-0.8.1-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
+[![Version 0.8.2](https://img.shields.io/badge/version-0.8.2-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
 [![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-78b7e5?style=flat-square&labelColor=20262c)](tsconfig.json)
 [![Node 22.12 or newer](https://img.shields.io/badge/Node.js-22.12%2B-b0db88?style=flat-square&labelColor=20262c)](package.json)
 [![Phaser 3.90 and 4.2](https://img.shields.io/badge/Phaser-3.90%20%7C%204.2-f4c46a?style=flat-square&labelColor=20262c)](docs/phaser-integration.md)
@@ -32,6 +32,24 @@ The headless CLI and browser editor share one deterministic renderer. Everything
 | TypeScript API, JSON operation batches, and a portable agent skill | Eight drawing tools, layers, palette editing, onion skins, timeline, undo/redo | Transparent PNGs, fixed-cell sheets, native Phaser atlases, animations, and game metadata |
 
 ## Production workflows in v0.5
+
+**New in v0.8.2 — Semantic Gaze & Anatomical Constraints:** place a held object
+relative to a postured joint or role and aim toward a world position, joint/role
+or object anchor. Existing hand IK keeps the grip aligned. Omitted gaze mode and
+`legacy` retain head-only behavior; opt-in `anatomical` bounds neck/head correction
+and honestly reports residual direction error. Standard-skeleton defaults are
+neck [-0.20,0.20] and head [-0.35,0.35] radians; these are presentation defaults,
+not universal anatomy. Explicit profiles respect tighter rig restrictions.
+
+```powershell
+npm run cli -- rig resolve-pose examples/semantic-pose/gaze-anatomical.semantic-pose.json --rig examples/semantic-pose/clerk.rig.json --library examples/semantic-pose/clerk.poses.json --object examples/semantic-pose/folder.object.json --json
+```
+
+This remains static posing with one rigid prop and direct neck/head anatomy.
+There is no full-body optimizer, eye-pixel animation, automatic animation generation
+or articulated-prop support. Cyclic dependencies and unsupported sprite reflections
+remain rejected. Zero directional error does not guarantee convincing pixel art.
+[Coordinate conventions, profiles, diagnostics and previews](.agents/skills/pixelforge-sprite-creator/references/semantic-posing.md)
 
 **New in v0.8.1 — Semantic Posing & Object Interaction:** express normalized
 posture and hand targets with explicit bone roles; resolve them through existing

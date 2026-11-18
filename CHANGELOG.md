@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.8.2 — Semantic Gaze & Anatomical Constraints
+
+- Gaze toward explicit world positions, named rig joints/roles and held-object anchors using an explicit head-local forward vector and authoritative FK.
+- Joint-relative held-object placement from postured joints or roles, including rotated/mirrored local offsets and local radians; existing hand IK, grip alignment and sandwich occlusion remain intact.
+- Optional gaze modes: omitted mode and `legacy` preserve head-only behavior; opt-in `anatomical` distributes correction across a direct neck/head chain and reports rendered residual error. Standard-skeleton defaults are neck [-0.20,0.20] and head [-0.35,0.35] radians, not universal human limits. Explicit profiles remain bounded by tighter rig limits.
+- Diagnostics include PF_GAZE_LIMIT_REACHED, PF_GAZE_TARGET_UNREACHABLE, PF_GAZE_FORWARD_MISSING, PF_GAZE_ROTATION_CONFLICT, PF_PLACEMENT_JOINT_MISSING and PF_SEMANTIC_CYCLE. Zero direction error alone does not establish convincing pixel art.
+- Backward-compatible format 1.0 schema extensions, selective schema generation, two minimal source requests, legacy fingerprints and focused tests; package versions aligned to 0.8.2.
+- User-provided Antigravity acceptance: chest-relative folder placement, maintained grip, automatic gaze, stable occlusion and no manual folder world coordinates/head angles. Identical-pose comparison reported legacy/anatomical head angles 1.33945/0.35 rad, anatomical neck 0.20 rad, direction errors 0/0.90167 rad and unchanged hand residual approximately 7.1e-15 px. Anatomical facial readability and neck continuity were reported as preserved: PASS — Ready for release preparation. Evaluation artwork was not regenerated or included.
+- Limits: static posing, direct neck/head anatomy, one rigid prop, no full-body optimizer, eye-pixel animation, automatic animation generation or articulated props. Cyclic constraints remain rejected; existing sprite-prop reflection restrictions remain.
+
 ## 0.8.1 — Semantic Posing & Object Interaction
 
 - Normalized posture strength, neutral/upright/slumped/lean-forward presets, and explicit rig bone-role mappings.

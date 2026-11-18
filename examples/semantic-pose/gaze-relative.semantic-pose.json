@@ -1,0 +1,26 @@
+{
+  "format": "pixelforge-semantic-pose",
+  "version": "1.0",
+  "id": "gaze-folder",
+  "rig": "semantic-clerk",
+  "basePose": "idle",
+  "posture": { "type": "slumped", "strength": 0.65 },
+  "attachment": {
+    "object": "folder",
+    "primaryHand": "right",
+    "grip": "grip",
+    "placement": {
+      "space": "joint-local", "role": "chest", "offset": [10, 6], "rotation": -0.2
+    },
+    "occlusion": {
+      "type": "sandwich",
+      "palmShapes": ["right-hand-shape"],
+      "frontShapes": ["grip-overlay"]
+    }
+  },
+  "gaze": {
+    "target": { "type": "object-anchor", "object": "folder", "anchor": "support" },
+    "forward": [1, 0],
+    "strength": 1
+  }
+}

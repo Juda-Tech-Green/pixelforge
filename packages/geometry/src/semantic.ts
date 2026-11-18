@@ -1,16 +1,21 @@
-import { affine, compose, transform, inverse, distance, wrapAngle, type Vec2 } from "./math.js";
+import { affine, compose, transform, inverse, distance, wrapAngle, type Vec2, type Affine } from "./math.js";
 import { applyPose, forwardKinematics, restPose, solveRigIK, type Diagnostic } from "./kinematics.js";
 import { parseRig, parsePoses, poseSchema, type Rig, type Pose } from "./rig-schema.js";
-import { semanticPoseSchema, heldObjectSchema, postureNames, type HeldObject, type SemanticTarget } from "./semantic-schema.js";
+import { semanticPoseSchema, heldObjectSchema, postureNames, semanticJointRoles, type HeldObject, type SemanticTarget, type SemanticJointRole } from "./semantic-schema.js";
+import { solveAnatomicalGaze, standardGazeAnatomy, AnatomicalGazeError, type AnatomicalGazeMetadata } from "./anatomical-gaze.js";
 
 export const semanticPoseCapabilities = {
   introducedIn: "0.8.1", schema: "semanticPose", objectSchema: "heldObject",
+  extensions: { introducedIn: "0.8.2", gaze: { targets: ["world coordinate", "joint", "role", "object-anchor"], forwardReference: "explicit nonzero head-local vector", rotation: "legacy: head only; anatomical: neck/head with intersected limits",
+      modes: ["legacy", "anatomical"], defaultMode: "legacy", standardAnatomy: standardGazeAnatomy,
+      customAnatomy: "Existing meaningful neck/head rig limits or explicit profile limits required; no inferred human limits", eyeAim: "not implemented; rendered direction error only" },
+    objectPlacement: { spaces: ["world", "joint-local"], references: semanticJointRoles, sampling: "after posture/overrides, before hand IK", rotation: "radians, local in joint-local space; full FK reflection retained" } },
   postures: postureNames, targetSpaces: ["world", "joint-local"],
   contacts: "Named IK targets in the selected base pose and named contacts in the supplied pose library; duplicate names are ambiguous",
-  standardRoles: { spine: "spine", chest: "chest", neck: "neck",
+  standardRoles: { spine: "spine", chest: "chest", neck: "neck", head: "head",
     leftArm: { root: "left-shoulder", middle: "left-elbow", end: "left-wrist" },
     rightArm: { root: "right-shoulder", middle: "right-elbow", end: "right-wrist" } },
-  order: ["base pose constraints", "posture", "explicit overrides", "primary hand IK", "other hand IK", "rig-local attachment layers"],
+  order: ["base pose constraints", "posture", "explicit overrides", "postured FK object placement", "primary hand IK", "other hand IK", "rig-local attachment layers", "post-IK FK and gaze", "final pose/rig validation"],
   limits: { heldObjects: 1, hands: 2, objectResources: 8 },
 };
 export interface SemanticDiagnostic { code: string; severity: "error" | "warning"; path: string; message: string; suggestion: string; }
@@ -18,8 +23,17 @@ export interface HandResolution {
   hand: "left" | "right"; target: Vec2; reached: Vec2; reachable: boolean; residual: number;
   chain: { root: string; middle: string; end: string }; bend: 1 | -1; rotations: Record<string, number>;
 }
+interface ResolvedObjectPlacement {
+  matrix: Affine; position: Vec2; rotation: number; space: "world" | "joint-local";
+  sourceJoint?: string; sourceRole?: SemanticJointRole; localOffset?: Vec2;
+}
 export interface SemanticPoseResult { ok: boolean; diagnostics: SemanticDiagnostic[]; hands: HandResolution[]; pose?: Pose; rig?: Rig;
-  attachment?: { object: string; primaryHand: string; grip: string; originalTarget: Vec2; reachedGrip: Vec2; objectOrigin: Vec2; rotation: number; layers: string[] }; }
+  attachment?: { object: string; primaryHand: string; grip: string; originalTarget: Vec2; reachedGrip: Vec2; objectOrigin: Vec2; rotation: number; layers: string[] };
+  placement?: { object: string; space: "world" | "joint-local"; sourceJoint?: string; sourceRole?: SemanticJointRole; localOffset?: Vec2;
+    worldPosition: Vec2; objectRotation: number; gripPosition: Vec2; attachedWorldPosition: Vec2; reachedGrip: Vec2; matrix: Affine };
+  gaze?: { joint: string; targetWorld: Vec2; headOrigin: Vec2; forwardLocal: Vec2; referenceWorldDirection: Vec2;
+    desiredAngle: number; appliedAngle: number; finalWorldDirection: Vec2; directionError: number; anatomical?: AnatomicalGazeMetadata };
+}
 
 /** Pure deterministic resolution. All parsed sources are copies; errors never modify inputs. */
 export function resolveSemanticPose(rigInput: unknown, requestInput: unknown, context: { library?: unknown; objects?: unknown[] } = {}): SemanticPoseResult {
@@ -61,6 +75,33 @@ export function resolveSemanticPose(rigInput: unknown, requestInput: unknown, co
     }
     if (request.overrides) pose = poseSchema.parse({ ...pose, ...request.overrides, rotations: { ...pose.rotations, ...request.overrides.rotations } });
     forwardKinematics(rig, pose); // Strictly validate explicit overrides before solving.
+    const isWithin = (id: string, ancestor: string): boolean => {
+      let current = byId.get(id);
+      while (current) { if (current.id === ancestor) return true; current = current.parent ? byId.get(current.parent) : undefined; }
+      return false;
+    };
+    const roleJoint = (role: SemanticJointRole): string => {
+      if (role === "spine" || role === "chest" || role === "neck" || role === "head") return request.roles?.[role] ?? role;
+      const side = role.startsWith("left") ? "left" : "right";
+      const chain = request.roles?.[side === "left" ? "leftArm" : "rightArm"] ?? semanticPoseCapabilities.standardRoles[side === "left" ? "leftArm" : "rightArm"];
+      return role.endsWith("Shoulder") ? chain.root : role.endsWith("Elbow") ? chain.middle : chain.end;
+    };
+    const gazeJointId = request.gaze ? roleJoint("head") : undefined;
+    const anatomicalMode = request.gaze?.mode === "anatomical";
+    const gazeNeckId = anatomicalMode ? roleJoint("neck") : undefined;
+    const gazeControlRoot = anatomicalMode ? gazeNeckId : gazeJointId;
+    if (request.gaze) {
+      if (!byId.has(gazeJointId!)) fail(anatomicalMode ? "PF_GAZE_ANATOMY_UNAVAILABLE" : "PF_GAZE_ROLE_MISSING", "$.roles.head", `Gaze joint ${gazeJointId} does not exist.`, "Map roles.head to an existing head joint.");
+      if (anatomicalMode && !byId.has(gazeNeckId!)) fail("PF_GAZE_ANATOMY_UNAVAILABLE", "$.roles.neck", `Neck joint ${gazeNeckId} does not exist.`, "Map roles.neck to an existing neck joint.");
+      if (!anatomicalMode && request.gaze.anatomy) fail("PF_GAZE_PROFILE_INVALID", "$.gaze.anatomy", "An anatomical profile requires explicit anatomical mode.", "Set gaze.mode to anatomical, or remove the anatomy profile.");
+      if (!request.gaze.forward) fail("PF_GAZE_FORWARD_MISSING", "$.gaze.forward", "Gaze requires an explicit head-local forward reference.", "Supply a nonzero vector matching the artwork, e.g. [1,0] only when local +X is forward.");
+      if (Object.hasOwn(request.overrides?.rotations ?? {}, gazeJointId!)) fail("PF_GAZE_ROTATION_CONFLICT", "$.gaze", "Gaze and an explicit rotation both control the gaze joint.", "Choose semantic gaze or remove the explicit head rotation override.");
+      if (anatomicalMode && Object.hasOwn(request.overrides?.rotations ?? {}, gazeNeckId!)) fail("PF_GAZE_ROTATION_CONFLICT", "$.gaze", "Anatomical gaze conflicts with an explicit neck rotation override.", "Put baseline neck rotations in the pose library, or remove the conflicting override.");
+    }
+    const activeSides = (["left", "right"] as const).filter(side => request.hands?.[side] || request.attachment?.primaryHand === side || request.attachment?.secondaryGrip?.hand === side);
+    const activeChains = activeSides.map(side => request.roles?.[side === "left" ? "leftArm" : "rightArm"] ?? semanticPoseCapabilities.standardRoles[side === "left" ? "leftArm" : "rightArm"]);
+    if (gazeControlRoot && [...activeChains.map(c => c.end), ...base.targets.map(t => t.end)].some(end => isWithin(end, gazeControlRoot)))
+      fail("PF_SEMANTIC_CYCLE", "$.roles.head", "Rotating this gaze joint would invalidate a constrained hand or base-pose target.", "Map head to anatomy outside the constrained arm hierarchy.");
     const objects = new Map<string, HeldObject>();
     if ((context.objects?.length ?? 0) > 8) fail("PF_OBJECT_LIMIT", "$.attachment", "At most eight object resources may be supplied.", "Supply only the referenced resources.");
     for (const input of context.objects ?? []) {
@@ -68,14 +109,33 @@ export function resolveSemanticPose(rigInput: unknown, requestInput: unknown, co
       if (objects.has(object.id)) fail("PF_OBJECT_DUPLICATE", "$.attachment.object", `Duplicate object ${object.id}.`, "Supply each object ID once.");
       objects.set(object.id, object);
     }
-    const objectFor = (id: string) => objects.get(id) ?? fail("PF_OBJECT_MISSING", "$.attachment.object", `Object ${id} is not loaded.`, "Supply --object FILE with the matching object ID and existing shapes.");
-    const anchor = (object: HeldObject, id: string): Vec2 => Object.hasOwn(object.anchors, id) ? object.anchors[id]! :
-      fail("PF_ANCHOR_MISSING", "$.attachment.grip", `Object ${object.id} has no anchor ${id}.`, "Select an anchor declared in the object's anchors map.");
-    const objectPoint = (object: HeldObject, id: string): Vec2 => transform(anchor(object, id), affine(object.transform.position, object.transform.rotation));
+    const objectFor = (id: string, path = "$.attachment.object") => objects.get(id) ?? fail("PF_OBJECT_MISSING", path, `Object ${id} is not loaded.`, "Supply --object FILE with the matching object ID and existing shapes.");
+    const anchor = (object: HeldObject, id: string, path = "$.attachment.grip"): Vec2 => Object.hasOwn(object.anchors, id) ? object.anchors[id]! :
+      fail("PF_ANCHOR_MISSING", path, `Object ${object.id} has no anchor ${id}.`, "Select an anchor declared in the object's anchors map.");
     const contacts = new Map<string, Vec2[]>();
     for (const c of [...base.targets, ...(library?.animations.flatMap(a => a.contacts) ?? [])]) contacts.set(c.id, [...(contacts.get(c.id) ?? []), c.position]);
     // Joint-local targets are sampled after posture/overrides, before new hand IK.
     const beforeHands = forwardKinematics(rig, pose);
+    const placements = new Map<string, ResolvedObjectPlacement>();
+    const placementFor = (object: HeldObject): ResolvedObjectPlacement => {
+      const cached = placements.get(object.id); if (cached) return cached;
+      const override = request.attachment?.object === object.id ? request.attachment.placement : undefined;
+      const definition = override ?? object.transform, path = override ? "$.attachment.placement" : `$.objects[${JSON.stringify(object.id)}].transform`;
+      if (definition.space === "world") {
+        const resolved = { matrix: affine(definition.position, definition.rotation), position: definition.position, rotation: definition.rotation, space: "world" as const };
+        placements.set(object.id, resolved); return resolved;
+      }
+      const sourceRole = "role" in definition ? definition.role : undefined;
+      const sourceJoint = "joint" in definition ? definition.joint : roleJoint(definition.role);
+      if (!byId.has(sourceJoint)) fail("PF_PLACEMENT_JOINT_MISSING", path, `Placement joint ${sourceJoint} does not exist.`, "Choose an existing joint or provide the matching semantic role mapping.");
+      if (activeChains.some(c => isWithin(sourceJoint, c.root)) || (gazeControlRoot && isWithin(sourceJoint, gazeControlRoot)))
+        fail("PF_SEMANTIC_CYCLE", path, "Placement reference would move during later hand IK or gaze resolution.", "Use a stable torso joint, e.g. chest, outside the solved hand/head branches.");
+      const matrix = compose(beforeHands[sourceJoint]!.matrix, affine(definition.offset, definition.rotation));
+      const resolved = { matrix, position: [matrix[4], matrix[5]] as Vec2, rotation: Math.atan2(matrix[1], matrix[0]), space: "joint-local" as const,
+        sourceJoint, sourceRole, localOffset: definition.offset };
+      placements.set(object.id, resolved); return resolved;
+    };
+    const objectPoint = (object: HeldObject, id: string): Vec2 => transform(anchor(object, id), placementFor(object).matrix);
     const targetPosition = (target: SemanticTarget): Vec2 => {
       if (target.type === "coordinate") {
         if (target.space === "world") return [...target.position];
@@ -126,11 +186,16 @@ export function resolveSemanticPose(rigInput: unknown, requestInput: unknown, co
         solve(side, [original[0] + primary.reached[0] - primaryTarget![0], original[1] + primary.reached[1] - primaryTarget![1]], attachment.secondaryGrip.bend ?? (side === "right" ? 1 : -1));
       }
     }
+    let attachedObjectMatrix: Affine | undefined;
     if (attachment) {
       const primary = hands.find(h => h.hand === attachment.primaryHand)!;
-      const origin: Vec2 = [object!.transform.position[0] + primary.reached[0] - primaryTarget![0], object!.transform.position[1] + primary.reached[1] - primaryTarget![1]];
+      const placement = placementFor(object!);
+      const origin: Vec2 = [placement.position[0] + primary.reached[0] - primaryTarget![0], placement.position[1] + primary.reached[1] - primaryTarget![1]];
       const world = forwardKinematics(rig, pose), wrist = world[primary.chain.end]!;
-      const local = compose(inverse(wrist.matrix), affine(origin, object!.transform.rotation));
+      // Keep the old world-space matrix path byte-for-byte equivalent; local placement retains FK reflection.
+      attachedObjectMatrix = placement.space === "world" ? affine(origin, placement.rotation) : [...placement.matrix] as Affine;
+      attachedObjectMatrix[4] = origin[0]; attachedObjectMatrix[5] = origin[1];
+      const local = compose(inverse(wrist.matrix), attachedObjectMatrix);
       const prefix = "semantic-grip", layerNames = [`${prefix}-palm`, `${prefix}-object`, `${prefix}-front`];
       if (rig.layers.some(l => layerNames.includes(l))) fail("PF_LAYER_COLLISION", "$.attachment.occlusion", "Generated grip layer IDs already exist.", "Use an unmodified source rig without semantic-grip layers.");
       const occlusion = attachment.occlusion;
@@ -164,16 +229,68 @@ export function resolveSemanticPose(rigInput: unknown, requestInput: unknown, co
         }
       }
       result.attachment = { object: object!.id, primaryHand: attachment.primaryHand, grip: attachment.grip,
-        originalTarget: primaryTarget!, reachedGrip: primary.reached, objectOrigin: origin, rotation: object!.transform.rotation,
+        originalTarget: primaryTarget!, reachedGrip: primary.reached, objectOrigin: origin, rotation: placement.rotation,
         layers: occlusion.type === "sandwich" ? layerNames : [layerNames[1]!] };
+      if (attachment.placement || placement.space === "joint-local") result.placement = {
+        object: object!.id, space: placement.space, sourceJoint: placement.sourceJoint, sourceRole: placement.sourceRole, localOffset: placement.localOffset,
+        worldPosition: [...placement.position], objectRotation: placement.rotation, gripPosition: primaryTarget!,
+        attachedWorldPosition: origin, reachedGrip: primary.reached, matrix: attachedObjectMatrix,
+      };
+    }
+    if (request.gaze) {
+      const gaze = request.gaze, joint = byId.get(gazeJointId!)!, world = forwardKinematics(rig, pose), head = world[joint.id]!;
+      const reference = gaze.target;
+      let target: Vec2;
+      if (reference.type === "coordinate") target = [...reference.position];
+      else if (reference.type === "joint" || reference.type === "role") {
+        const id = reference.type === "joint" ? reference.id : roleJoint(reference.role);
+        if (!world[id]) fail("PF_GAZE_TARGET_UNKNOWN", "$.gaze.target", `Gaze target joint ${id} does not exist.`, "Choose an existing joint or a correctly mapped role.");
+        if (isWithin(id, gazeControlRoot!)) fail("PF_SEMANTIC_CYCLE", "$.gaze.target", "Gaze target belongs to the rotating head subtree.", "Choose a world target, independent joint, or a prop held outside the head hierarchy.");
+        target = [...world[id]!.position];
+      } else {
+        const targetObject = objectFor(reference.object, "$.gaze.target.object");
+        target = transform(anchor(targetObject, reference.anchor, "$.gaze.target.anchor"),
+          reference.object === attachment?.object ? attachedObjectMatrix! : placementFor(targetObject).matrix);
+      }
+      if (distance(target, head.position) < 1e-6) fail("PF_GAZE_COINCIDENT", "$.gaze.target", "Gaze target coincides with the head origin.", "Move the target away from the head origin to define a direction.");
+      if (anatomicalMode) {
+        const solved = solveAnatomicalGaze(rig, pose, gaze, target, gazeNeckId!, joint.id);
+        pose = solved.pose;
+        result.gaze = { joint: joint.id, targetWorld: target, headOrigin: solved.headOrigin, forwardLocal: [...gaze.forward!],
+          referenceWorldDirection: solved.referenceWorldDirection, desiredAngle: solved.desiredAngle, appliedAngle: solved.appliedAngle,
+          finalWorldDirection: solved.finalWorldDirection, directionError: solved.directionError, anatomical: solved.metadata };
+        if (solved.metadata.neck.atLimit || solved.metadata.head.atLimit) add("PF_GAZE_LIMIT_REACHED", "$.gaze.anatomy", "Anatomical gaze reached a neck or head limit.", "Inspect per-joint limits and the remaining rendered direction error; do not force extreme rotations.", "warning");
+        if (solved.directionError > 1e-5) add("PF_GAZE_TARGET_UNREACHABLE", "$.gaze.target", `Rendered head direction retains ${solved.directionError} radians of error (${solved.metadata.reason}).`, "Accept the bounded pose, reposition the target or deliberately revise the profile; eye pixels are unchanged.", "warning");
+      } else {
+      const forward = gaze.forward!, current = pose.rotations[joint.id] ?? joint.rotation;
+      // Inverse FK handles parent rotations and both facing parities without guessing a world-forward axis.
+      const localTarget = transform(target, inverse(head.matrix));
+      const delta = wrapAngle(Math.atan2(localTarget[1], localTarget[0]) - Math.atan2(forward[1], forward[0]));
+      const desired = wrapAngle(current + delta), lower = Math.max(joint.limits[0], gaze.limits?.[0] ?? -Math.PI), upper = Math.min(joint.limits[1], gaze.limits?.[1] ?? Math.PI);
+      if (lower > upper) fail("PF_GAZE_LIMITS_INVALID", "$.gaze.limits", "Gaze limits have no ordered intersection with the rig limits.", "Supply an increasing angle interval inside the head joint's declared limits.");
+      const interpolated = gaze.strength === 0 ? current : wrapAngle(current + delta * gaze.strength);
+      const applied = Math.max(lower, Math.min(upper, interpolated));
+      if (applied !== interpolated) add("PF_GAZE_LIMIT", "$.gaze", "Gaze was clamped to the permitted head angle interval.", "Move the target or revise explicit gaze limits; inspect the remaining direction error.", "warning");
+      const direction = (matrix: Affine): Vec2 => {
+        const x = matrix[0] * forward[0] + matrix[2] * forward[1], y = matrix[1] * forward[0] + matrix[3] * forward[1], length = Math.hypot(x, y);
+        return [x / length, y / length];
+      };
+      pose.rotations[joint.id] = applied;
+      const final = forwardKinematics(rig, pose), finalDirection = direction(final[joint.id]!.matrix);
+      const targetAngle = Math.atan2(target[1] - head.position[1], target[0] - head.position[0]);
+      result.gaze = { joint: joint.id, targetWorld: target, headOrigin: [...head.position], forwardLocal: [...forward], referenceWorldDirection: direction(head.matrix),
+        desiredAngle: desired, appliedAngle: applied, finalWorldDirection: finalDirection,
+        directionError: Math.abs(wrapAngle(targetAngle - Math.atan2(finalDirection[1], finalDirection[0]))) };
+      }
     }
     result.rig = parseRig(rig); result.pose = poseSchema.parse(pose);
     forwardKinematics(result.rig, result.pose);
     result.ok = !diagnostics.some(d => d.severity === "error");
   } catch (error) {
     if (!diagnostics.some(d => d.severity === "error")) {
-      if (error && typeof error === "object" && "issues" in error && Array.isArray(error.issues)) {
-        for (const issue of error.issues) add("PF_SEMANTIC_SCHEMA", "$" + (issue.path as PropertyKey[]).map(p => `[${JSON.stringify(p)}]`).join(""), issue.message as string, "Correct the field using capabilities --schema semanticPose or heldObject and the existing rig schema.");
+      if (error instanceof AnatomicalGazeError) add(error.code, error.path, error.message, error.suggestion);
+      else if (error && typeof error === "object" && "issues" in error && Array.isArray(error.issues)) {
+        for (const issue of error.issues) add((issue.path as PropertyKey[]).includes("anatomy") ? "PF_GAZE_PROFILE_INVALID" : "PF_SEMANTIC_SCHEMA", "$" + (issue.path as PropertyKey[]).map(p => `[${JSON.stringify(p)}]`).join(""), issue.message as string, "Correct the field using capabilities --schema semanticPose or heldObject and the existing rig schema.");
       } else add("PF_SEMANTIC_RESOLUTION", "$", error instanceof Error ? error.message : String(error), "Check explicit rotations, role mappings and resource references against the rig.");
     }
   }

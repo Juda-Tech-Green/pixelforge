@@ -1,6 +1,6 @@
 {
   "name": "@pixelforge/geometry",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "type": "module",
   "license": "MIT",
   "engines": {
@@ -18,7 +18,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@pixelforge/core": "0.8.1",
+    "@pixelforge/core": "0.8.2",
     "zod": "^4.1.0"
   }
 }

@@ -4,11 +4,11 @@ PixelForge creates editable pixel sprites and Phaser assets. Use the portable sk
 
 For procedural sound effects use `.agents/skills/pixelforge-audio-creator/SKILL.md` and `docs/audio/README.md`. Audio uses separate sound format1.0 and the `audio` CLI command group.
 
-For rig-driven characters or spatial scenes, read `.agents/skills/pixelforge-sprite-creator/references/geometry.md`. The `rig` and `scene` groups require the matching0.7.0 package set and generate ordinary editable sprite1.0 assets.
+For rig-driven characters or spatial scenes, read `.agents/skills/pixelforge-sprite-creator/references/geometry.md`. The `rig` and `scene` groups require the matching0.8.0 package set and generate ordinary editable sprite1.0 assets.
 
 ## In this checkout
 
-Use Node22.12+ and npm. `npm ci` installs dependencies; `npm run cli -- --version` invokes source without prebuilt declarations. `npm run typecheck`, `npm test`, `npm run build` verify changes. Core stays independent of Node filesystems, React, Sharp and Phaser. Document/game format1.0 is backward compatible; software version0.7.0.
+Use Node22.12+ and npm. `npm ci` installs dependencies; `npm run cli -- --version` invokes source without prebuilt declarations. `npm run typecheck`, `npm test`, `npm run build` verify changes. Core stays independent of Node filesystems, React, Sharp and Phaser. Document/game format1.0 is backward compatible; software version0.8.0.
 
 ## In another game
 

@@ -1,7 +1,7 @@
 # Geometry-aware characters and scenes (v0.7)
 
 Use **Specify → Construct Geometry → Generate Sprite → Inspect → Export**.
-Requires Node22.12+ and matching PixelForge0.7.0 packages: core, exporters, cli,
+Requires Node22.12+ and matching PixelForge0.8.0 packages: core, exporters, cli,
 phaser, audio-core, audio-exporters and geometry. Check the installed CLI version
 before using these commands. Earlier runtimes retain the ordinary sprite workflow
 but do not supply v0.7 rig/scene capabilities. See [CLI setup](cli.md).

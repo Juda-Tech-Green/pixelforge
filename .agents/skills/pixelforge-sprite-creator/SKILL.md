@@ -5,10 +5,36 @@ description: Creates, edits, validates and exports pixel-perfect 2D sprites, ani
 
 Use PixelForge locally; the editor is optional. Follow **Discover → Inspect → Specify → Generate/Edit → Render → Review → Validate → Export → Integrate**. Preserve the user's intended task and unrelated files.
 
+For v0.8.0 runtimes offering `capabilities`, prefer **Capabilities → Schema → Author/Edit →
+Doctor → Preview → Inspect image → Targeted edits → Production export**. Run
+`pixelforge capabilities --json`; this installed-runtime report is authoritative
+for commands, flags, formats and limits. Use `capabilities --schema TYPE` for
+required fields, then `doctor FILE --json` (with `--type TYPE` for incomplete
+assets, `--rig FILE` for pose references, or `--asset ID=FILE` for scene resources).
+Generate `preview FILE --out preview.png --json`, or add `--contact-sheet
+--animation NAME` for labeled frames and timing metadata. Preview defaults to
+transparent nearest-neighbor scaling; existing outputs require explicit `--force`.
+Sources remain authoritative. Open returned PNG paths only when image-reading
+tools are available; otherwise report structural verification without claiming
+visual review. Preview requires an ordinary sprite, including outputs from
+`rig animate`; direct rig/scene preview is unavailable. Both formats support doctor.
+Older runtimes retain the render/contact workflow below. Do not copy a separate
+capability catalog into skills; query the runtime.
+
+From the PixelForge source checkout (in a game use the installed `pixelforge` CLI):
+
+```sh
+npm run cli -- capabilities --json
+npm run cli -- capabilities --schema rig
+npm run cli -- doctor FILE --json
+npm run cli -- preview FILE --out preview.png --json
+npm run cli -- preview FILE --contact-sheet --out sheet.png --json
+```
+
 For articulated characters, proportion-preserving animation, or spatial scenes,
 use **Specify → Construct Geometry → Generate Sprite → Inspect → Export** and
 read [geometry-aware creation](references/geometry.md). Rig/scene commands require
-the matching PixelForge0.7.0 runtime/package set. Reuse one rig and pose library
+the matching PixelForge0.8.0 runtime/package set. Reuse one rig and pose library
 instead of guessing proportions independently in each frame. Ordinary pixel
 operations remain appropriate for icons, tiles, effects and targeted sprite edits;
 geometry is optional and the legacy workflow below remains available.

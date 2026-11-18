@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.8.0 — Agent diagnostics and fast previews
+
+- Runtime capability and JSON schema discovery derived from registered CLI commands and existing validators.
+- Read-only doctor diagnostics for sprite, sound, rig, pose, pose-library, rig-animation and scene assets, with optional rig/resource context.
+- Fast nearest-neighbor PNG previews and existing labeled animation contact sheets, with timing metadata, bounded outputs and explicit overwrite authorization.
+- Fully transparent single-frame warnings; direct rig/scene preview remains unavailable. Rig-generated ordinary sprites use the same preview workflow.
+- Updated portable agent guidance and synchronized package versions; asset/schema versions remain 1.0.
+- Acceptance evidence: five focused workflow tests previously passed, and the user reported successful Antigravity office-clerk evaluation. Evaluation assets remain local and are not release fixtures.
+- Local release preparation only; no package publication, tag or GitHub release is implied.
+
 ## 0.7.0 — Geometry-aware creation (development checkpoint)
 
 - Shared geometry workspace, rig/pose/scene formats, constrained kinematics, editable raster generation, animation and scene occlusion.

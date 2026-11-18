@@ -29,7 +29,7 @@ function cli(...args: string[]) {
 test("runtime capabilities expose commands, schemas, flags and limits", () => {
   const result = cli("capabilities", "--json");
   expect(result.status, result.stderr).toBe(0);
-  expect(result.data.runtimeVersion).toBe("0.8.0");
+  expect(result.data.runtimeVersion).toBe("0.8.1");
   expect(result.data.commands.find((c: { name: string }) => c.name === "preview").flags).toContainEqual(expect.objectContaining({ flags: "--out <png>", required: true }));
   expect(result.data.operations.length).toBeGreaterThan(0);
   expect(result.data.rendering.previewLimits.maxScale).toBe(16);

@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "rig": "semantic-clerk",
+  "poses": [
+    {
+      "id": "idle",
+      "facing": "right",
+      "rotations": {
+        "pelvis": 0,
+        "spine": 0,
+        "chest": 0,
+        "neck": 0,
+        "head": 0,
+        "left-shoulder": 0,
+        "left-elbow": 0,
+        "left-wrist": 0,
+        "left-hand": 0,
+        "left-hip": 0,
+        "left-knee": 0,
+        "left-ankle": 0,
+        "left-foot": 0,
+        "right-shoulder": 0,
+        "right-elbow": 0,
+        "right-wrist": 0,
+        "right-hand": 0,
+        "right-hip": 0,
+        "right-knee": 0,
+        "right-ankle": 0,
+        "right-foot": 0
+      },
+      "rootTranslation": [
+        0,
+        0
+      ],
+      "targets": []
+    }
+  ],
+  "animations": []
+}

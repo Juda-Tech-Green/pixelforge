@@ -1,6 +1,7 @@
 import type {Command} from "commander";
 import {readFile,lstat} from "node:fs/promises";
 import {resolve} from "node:path";
+import {registerSemanticCommand} from "./semantic.js";
 import {fromDocument,serializeProject,type Project} from "@pixelforge/core";
 import {assertNoSymlinkPath,exportFramePNG} from "@pixelforge/exporters";
 import {createRig,createPoseLibrary,rigPresetNames,parseRig,poseSchema,restPose,forwardKinematics,applyPose,solveRigIK,renderRig,generateRigAnimation,createInteriorScene,parseScene,validateScene,depthOrder,renderScene,validateCharacterConsistency,type Rig,type Pose,type RigPresetName,type SpriteResources,type Diagnostic} from "@pixelforge/geometry";
@@ -32,6 +33,7 @@ export function registerGeometryCommands(program:Command,atomicWrite:(path:strin
     await write(o.output,png,o.force,inputs);if(o.sprite)await write(o.sprite,definition,o.force,inputs);
   };
   const rig=program.command("rig").description("Construct, constrain and rasterize editable character geometry");
+  registerSemanticCommand(rig,atomicWrite);
   rig.command("create").argument("<name>").option("--preset <preset>",rigPresetNames.join(", "),"standard").requiredOption("-o, --output <file>").option("--poses <file>","Also create the reusable pose library").option("--force").action(async(name:string,o:{preset:string;output:string;poses?:string;force?:boolean})=>{
     if(!rigPresetNames.includes(o.preset as RigPresetName))throw new Error("Unknown rig preset");
     const created=parseRig({...createRig(o.preset as RigPresetName),name});

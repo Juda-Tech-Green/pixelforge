@@ -34,10 +34,25 @@ npm run cli -- preview FILE --contact-sheet --out sheet.png --json
 For articulated characters, proportion-preserving animation, or spatial scenes,
 use **Specify → Construct Geometry → Generate Sprite → Inspect → Export** and
 read [geometry-aware creation](references/geometry.md). Rig/scene commands require
-the matching PixelForge0.8.0 runtime/package set. Reuse one rig and pose library
+the matching PixelForge0.8.1 runtime/package set. Reuse one rig and pose library
 instead of guessing proportions independently in each frame. Ordinary pixel
 operations remain appropriate for icons, tiles, effects and targeted sprite edits;
 geometry is optional and the legacy workflow below remains available.
+
+For semantic humanoid posture, hand targets and one held prop, query
+`capabilities --json` → `semanticPosing`, then `capabilities --schema semanticPose`
+and `--schema heldObject`. Semantic posing is available in v0.8.1.
+Use `rig resolve-pose REQUEST --rig RIG --library POSES --object PROP --json`;
+omitting outputs is read-only. Postures use normalized strength and explicit role
+mapping for custom anatomy. Targets declare world/joint-local coordinates or name
+existing base-pose IK/library contacts or object anchors. Review reachable/residual
+reports; move unreachable targets or revise posture rather than stretching limbs.
+Held props require existing shapes, a named grip and explicit hand/occlusion choices;
+missing overlay geometry is an error, or select body-only intentionally. Write with
+`--out POSE --out-rig DERIVED_RIG`, then doctor/rig validate, `rig render` to an
+ordinary sprite and `preview`/`--contact-sheet` when an animation exists. Open PNGs
+only with image-reading tools. See [semantic posing](references/semantic-posing.md)
+and the separate `examples/semantic-pose/` fixture; preserve original sources.
 
 1. **Discover.** Inspect the game's package.json, engine/version, asset manifest, stable keys and scene conventions. Run installed `pixelforge --version` and the installed skill's `scripts/check-environment.mjs` from the game directory. If missing, read [CLI setup](references/cli.md); do not substitute an unrelated registry package. Use `operations list` and `operations describe NAME --example` for exact schema-derived fields before reading implementation source.
 2. **Inspect.** Use `inspect FILE --summary`, then `--animation NAME`, `--frame ID`, `--layer ID` or `--game`, with pagination. Never dump a dense .sprite.json into agent context just to understand it. Read [large projects](references/production-workflow.md). Execute core APIs locally when dense raster access is necessary.

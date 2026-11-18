@@ -1,0 +1,51 @@
+{
+  "format": "pixelforge-held-object",
+  "version": "1.0",
+  "id": "folder",
+  "transform": {
+    "space": "world",
+    "position": [
+      44,
+      36
+    ],
+    "rotation": 0
+  },
+  "anchors": {
+    "grip": [
+      0,
+      0
+    ],
+    "support": [
+      -7,
+      0
+    ]
+  },
+  "shapes": [
+    {
+      "id": "folder-body",
+      "type": "polygon",
+      "joint": "folder",
+      "layer": "paper",
+      "color": 4,
+      "outline": 1,
+      "points": [
+        [
+          -8,
+          -5
+        ],
+        [
+          1,
+          -5
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          -8,
+          8
+        ]
+      ]
+    }
+  ]
+}

@@ -5,11 +5,14 @@ import { z } from "zod";
 import { projectSchema, fromDocument, listOperations, getAnimation } from "@pixelforge/core";
 import { soundSchema } from "@pixelforge/audio-core";
 import { rigSchema, poseSchema, posesSchema, animationSchema, sceneSchema, parseRig,
-  applyPose, sampleRigAnimation, validateScene, type Diagnostic, type SpriteResources } from "@pixelforge/geometry";
+  applyPose, sampleRigAnimation, validateScene, semanticPoseSchema, heldObjectSchema,
+  semanticPoseCapabilities, resolveSemanticPose, type Diagnostic, type SpriteResources } from "@pixelforge/geometry";
+import { semanticContext } from "./semantic.js";
 import { exportPreview, exportContactSheet, PREVIEW_LIMITS, assertNoSymlinkPath } from "@pixelforge/exporters";
 
 const schemas = { sprite: projectSchema, sound: soundSchema, rig: rigSchema,
-  pose: poseSchema, poses: posesSchema, rigAnimation: animationSchema, scene: sceneSchema };
+  pose: poseSchema, poses: posesSchema, rigAnimation: animationSchema, scene: sceneSchema,
+  semanticPose: semanticPoseSchema, heldObject: heldObjectSchema };
 type AssetType = keyof typeof schemas;
 const report = (data: unknown) => process.stdout.write(JSON.stringify(data) + "\n");
 const integer = (value: string) => {
@@ -24,6 +27,8 @@ function detect(input: unknown, file: string): AssetType | undefined {
   const suffix = basename(file).split(".").at(-2);
   if (suffix && Object.hasOwn(schemas, suffix)) return suffix as AssetType;
   if (!input || typeof input !== "object" || Array.isArray(input)) return;
+  if ("format" in input && input.format === "pixelforge-semantic-pose") return "semanticPose";
+  if ("format" in input && input.format === "pixelforge-held-object") return "heldObject";
   if ("joints" in input) return "rig";
   if ("objects" in input) return "scene";
   if ("poses" in input || "rig" in input) return "poses";
@@ -51,7 +56,7 @@ export function registerAgentCommands(program: Command): void {
       const data = { runtimeVersion: program.version(), assetTypes: Object.keys(schemas).map(type => ({ type,
         formatVersion: type === "pose" || type === "rigAnimation" ? null : "1.0",
         schema: `capabilities --schema ${type}`, doctor: true })),
-        commands: commands(program), operations: listOperations(),
+        commands: commands(program), operations: listOperations(), semanticPosing: semanticPoseCapabilities,
         rendering: { preview: ["sprite", "rig-generated sprite"], outputs: ["png", "contact JSON"],
           previewLimits: PREVIEW_LIMITS, contactLimits: { maxCells: 1000, maxPixels: 67_108_864, maxDimension: 32767, maxColumns: 32, maxScale: 16 },
           productionExports: ["spritesheet", "frames", "phaser"],
@@ -63,8 +68,10 @@ export function registerAgentCommands(program: Command): void {
   program.command("doctor").description("Read-only strict asset preflight; errors exit 1, warnings exit 0")
     .argument("<file>").option("--json").option("--type <type>", "Explicit asset type")
     .option("--rig <file>", "Rig context for pose/library/animation references")
+    .option("--library <file>", "Semantic base pose/contact library")
+    .option("--object <file>", "Semantic held-object resource", (v: string, previous: string[]) => [...previous, v], [])
     .option("--asset <id=file>", "Scene sprite resource", (v: string, prev: string[]) => [...prev, v], [])
-    .action(async (file: string, o: { json?: boolean; type?: string; rig?: string; asset: string[] }) => {
+    .action(async (file: string, o: { json?: boolean; type?: string; rig?: string; library?: string; object: string[]; asset: string[] }) => {
       let assetType: string = o.type ?? "unknown";
       const diagnostics: Record<string, unknown>[] = [];
       const add = (code: string, path: string, message: string, suggestion: string, extra: Record<string, unknown> = {}) =>
@@ -85,6 +92,13 @@ export function registerAgentCommands(program: Command): void {
               { ...("expected" in issue ? { expected: issue.expected } : {}) });
           } else {
             const rig = o.rig ? parseRig(await json(o.rig)) : undefined;
+            if (type === "semanticPose") {
+              if (!rig) add("PF_CONTEXT_REQUIRED", "$.rig", "Request schema checked; semantic resolution requires a rig.", "Pass --rig FILE and any --library/--object resources.", { severity: "info" });
+              else {
+                const resolved = resolveSemanticPose(rig, input, await semanticContext(o));
+                for (const d of resolved.diagnostics) add(d.code, d.path, d.message, d.suggestion, { severity: d.severity });
+              }
+            }
             if (type === "pose") {
               const pose = poseSchema.parse(input);
               if (rig) geometry(applyPose(rig, pose).diagnostics);

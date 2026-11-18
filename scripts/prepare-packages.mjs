@@ -43,7 +43,7 @@ for (const name of ["core", "exporters", "cli", "phaser", "audio-core", "audio-e
   }
   if (name === "geometry") {
     await mkdir(resolve(dir, "schemas"), {recursive: true});
-    for (const schema of ["rig", "pose", "poses", "rigAnimation", "scene", "geometryObservations", "geometryCamera"])
+    for (const schema of ["rig", "pose", "poses", "rigAnimation", "scene", "geometryObservations", "geometryCamera", "semanticPose", "heldObject"])
       await cp(resolve(root, "schemas", `${schema}.schema.json`), resolve(dir, "schemas", `${schema}.schema.json`));
   }
   if (name === "cli") await chmod(resolve(dir, "dist/index.js"), 0o755);

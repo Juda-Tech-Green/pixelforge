@@ -1,0 +1,25 @@
+{
+  "format": "pixelforge-semantic-pose",
+  "version": "1.0",
+  "id": "slumped-folder",
+  "rig": "semantic-clerk",
+  "basePose": "idle",
+  "posture": {
+    "type": "slumped",
+    "strength": 0.65
+  },
+  "attachment": {
+    "object": "folder",
+    "primaryHand": "right",
+    "grip": "grip",
+    "occlusion": {
+      "type": "sandwich",
+      "palmShapes": [
+        "right-hand-shape"
+      ],
+      "frontShapes": [
+        "grip-overlay"
+      ]
+    }
+  }
+}

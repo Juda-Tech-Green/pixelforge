@@ -9,3 +9,5 @@ export * from "./scene-schema.js";
 export * from "./scene.js";
 export * from "./scene-presets.js";
 export * from "./consistency.js";
+export * from "./semantic-schema.js";
+export * from "./semantic.js";

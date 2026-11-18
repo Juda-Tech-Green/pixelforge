@@ -10,7 +10,7 @@ is local; there is no audio generation API or backend.
 
 ## Discover
 
-Requires Node 22.12+ and a matching PixelForge 0.6.0, 0.7.0 or 0.8.0 local package set.
+Requires Node 22.12+ and a matching PixelForge 0.6.0, 0.7.0, 0.8.0 or 0.8.1 local package set.
 Do not install an unrelated similarly named registry package. From the game:
 
 ```sh

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { rigSchema, poseSchema, posesSchema, animationSchema, sceneSchema, observationsSchema, cameraSchema } from "../packages/geometry/src/index.js";
+import { rigSchema, poseSchema, posesSchema, animationSchema, sceneSchema, observationsSchema, cameraSchema, semanticPoseSchema, heldObjectSchema } from "../packages/geometry/src/index.js";
 import { soundSchema, audioOperationsSchema, audioManifestSchema } from "../packages/audio-core/src/index.js";
 import {
   gameMetadataSchema,
@@ -29,6 +29,8 @@ for (const [name, schema] of Object.entries({
   pose: poseSchema,
   poses: posesSchema,
   rigAnimation: animationSchema,
+  semanticPose: semanticPoseSchema,
+  heldObject: heldObjectSchema,
   scene: sceneSchema,
   geometryObservations: observationsSchema,
   geometryCamera: cameraSchema,

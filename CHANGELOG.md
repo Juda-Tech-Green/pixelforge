@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.8.1 — Semantic Posing & Object Interaction
+
+- Normalized posture strength, neutral/upright/slumped/lean-forward presets, and explicit rig bone-role mappings.
+- World and joint-local hand targets, named contacts and existing two-bone IK, with reachability, wrist residual, chain and rotation diagnostics.
+- One held rigid object with named grip anchors, optional secondary grip, derived rig generation and explicit palm/object/front sandwich occlusion using existing geometry.
+- `rig resolve-pose` produces existing-schema-compatible pose output; capability/schema discovery and doctor support the new semanticPose and heldObject format 1.0 contracts.
+- Portable agent guidance and a minimal semantic-pose source fixture; package versions aligned to 0.8.1 while asset/schema versions remain 1.0.
+- Reported Antigravity acceptance: slumped posture, automatic right-arm IK, folder grip alignment, deterministic sandwich occlusion, editable sprite output, discovery, doctor and PNG preview. Reported wrist position was approximately [41, 33] with negligible numerical residual. Evaluation assets were not regenerated or included as release fixtures.
+- Limits: static humanoid posing, one rigid prop, no automatic animation generation or articulated props, restricted sprite-prop reflection, and no evaluation of named contact intervals. World placement may require authored coordinates; semantic gaze and joint-relative object placement remain future candidates.
+
 ## 0.8.0 — Agent diagnostics and fast previews
 
 - Runtime capability and JSON schema discovery derived from registered CLI commands and existing validators.

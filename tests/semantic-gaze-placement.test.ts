@@ -127,7 +127,7 @@ test("invalid gaze placement and circular references produce actionable diagnost
 });
 test("CLI schemas doctor rig rendering and preview preserve sources and version metadata", () => {
   const caps = cli("capabilities", "--json"); expect(caps.status, caps.stderr).toBe(0);
-  expect(caps.data.runtimeVersion).toBe("0.8.2"); expect(caps.data.semanticPosing.extensions.gaze.targets).toContain("object-anchor");
+  expect(caps.data.runtimeVersion).toBe("0.8.3"); expect(caps.data.semanticPosing.extensions.gaze.targets).toContain("object-anchor");
   for (const [name, schema] of Object.entries({ semanticPose: semanticPoseSchema, heldObject: heldObjectSchema })) {
     expect(cli("capabilities", "--schema", name).data).toEqual(z.toJSONSchema(schema));
     expect(JSON.parse(readFileSync(`schemas/${name}.schema.json`, "utf8"))).toEqual(z.toJSONSchema(schema));

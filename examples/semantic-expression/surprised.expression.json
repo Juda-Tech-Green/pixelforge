@@ -1,0 +1,18 @@
+{
+  "format": "pixelforge-semantic-expression",
+  "version": "1.0",
+  "id": "clerk-surprised",
+  "expression": {
+    "type": "surprised",
+    "intensity": 1
+  },
+  "targets": [
+    {
+      "frame": "surprised",
+      "origin": [
+        7,
+        4
+      ]
+    }
+  ]
+}

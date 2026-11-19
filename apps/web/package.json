@@ -1,6 +1,6 @@
 {
   "name": "@pixelforge/web",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,10 +9,10 @@
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
-    "@pixelforge/geometry": "0.8.2",
-    "@pixelforge/audio-core": "0.8.2",
-    "@pixelforge/audio-exporters": "0.8.2",
-    "@pixelforge/core": "0.8.2",
+    "@pixelforge/geometry": "0.8.3",
+    "@pixelforge/audio-core": "0.8.3",
+    "@pixelforge/audio-exporters": "0.8.3",
+    "@pixelforge/core": "0.8.3",
     "lucide-react": "^1.65.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

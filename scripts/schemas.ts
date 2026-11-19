@@ -8,6 +8,8 @@ import {
   gameAssetSchema,
   assetManifestSchema,
   semanticContractSchema,
+  semanticExpressionSchema,
+  facialLandmarksSchema,
 } from "../packages/core/src/index.js";
 import { mkdir, writeFile } from "node:fs/promises";
 import {
@@ -25,6 +27,8 @@ for (const [name, schema] of Object.entries({
   rigAnimation: animationSchema,
   semanticPose: semanticPoseSchema,
   heldObject: heldObjectSchema,
+  semanticExpression: semanticExpressionSchema,
+  facialLandmarks: facialLandmarksSchema,
   scene: sceneSchema,
   geometryObservations: observationsSchema,
   geometryCamera: cameraSchema,

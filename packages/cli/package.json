@@ -1,17 +1,17 @@
 {
   "name": "@pixelforge/cli",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "type": "module",
   "bin": {
     "pixelforge": "./dist/index.js"
   },
   "dependencies": {
-    "@pixelforge/geometry": "0.8.2",
-    "@pixelforge/audio-core": "0.8.2",
-    "@pixelforge/audio-exporters": "0.8.2",
+    "@pixelforge/geometry": "0.8.3",
+    "@pixelforge/audio-core": "0.8.3",
+    "@pixelforge/audio-exporters": "0.8.3",
     "commander": "^14.0.0",
-    "@pixelforge/core": "0.8.2",
-    "@pixelforge/exporters": "0.8.2",
+    "@pixelforge/core": "0.8.3",
+    "@pixelforge/exporters": "0.8.3",
     "zod": "^4.1.0"
   },
   "license": "MIT",

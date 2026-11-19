@@ -28,10 +28,11 @@ import { z } from "zod";
 import { registerAudioCommands } from "./audio.js";
 import { registerGeometryCommands } from "./geometry.js";
 import { registerAgentCommands } from "./agents.js";
+import { registerExpressionCommands } from "./expression.js";
 import { exportFramePNG, exportSpriteSheet } from "@pixelforge/exporters";
 const program = new Command()
   .name("pixelforge")
-  .version("0.8.2")
+  .version("0.8.3")
   .description("Deterministic, editable pixel art for agents and humans");
 const integer = (value: string) => {
   if (!/^\d+$/.test(value) || !Number.isSafeInteger(Number(value)))
@@ -393,6 +394,7 @@ program
   });
 registerAudioCommands(program, atomicWrite);
 registerGeometryCommands(program, atomicWrite);
+registerExpressionCommands(program, atomicWrite);
 registerAgentCommands(program);
 program.parseAsync().catch((error: unknown) => {
   process.stderr.write(

@@ -1,12 +1,12 @@
 # Installation, integration and recovery
 
 From the PixelForge source checkout, `npm run pack:release` builds local tarballs.
-For0.7.0/0.8.0/0.8.1/0.8.2 install all seven matching archives (core, exporters, cli, phaser,
+For0.7.0/0.8.0/0.8.1/0.8.2/0.8.3 install all seven matching archives (core, exporters, cli, phaser,
 audio-core, audio-exporters, geometry); existing0.6.0 uses its six-package set.
 Third-party dependencies need network or a populated
 npm cache. No registry publication is implied. Do not force incompatible peers.
 
-`check-environment.mjs` accepts0.6.0/0.7.0/0.8.0/0.8.1/0.8.2 with matching package versions and actually
+`check-environment.mjs` accepts0.6.0/0.7.0/0.8.0/0.8.1/0.8.2/0.8.3 with matching package versions and actually
 queries audio operation discovery. A v0.5 CLI cannot satisfy this check.
 
 During Phaser preload, import `loadPixelForgeAudio` from `@pixelforge/phaser` and

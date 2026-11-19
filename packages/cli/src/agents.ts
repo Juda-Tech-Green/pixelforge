@@ -2,7 +2,8 @@ import { Command, InvalidArgumentError } from "commander";
 import { readFile, writeFile, mkdir, lstat, realpath } from "node:fs/promises";
 import { resolve, dirname, basename } from "node:path";
 import { z } from "zod";
-import { projectSchema, fromDocument, listOperations, getAnimation } from "@pixelforge/core";
+import { projectSchema, fromDocument, listOperations, getAnimation, facialLandmarksSchema, semanticExpressionSchema, semanticExpressionCapabilities } from "@pixelforge/core";
+import { expressionContext } from "./expression.js";
 import { soundSchema } from "@pixelforge/audio-core";
 import { rigSchema, poseSchema, posesSchema, animationSchema, sceneSchema, parseRig,
   applyPose, sampleRigAnimation, validateScene, semanticPoseSchema, heldObjectSchema,
@@ -12,7 +13,8 @@ import { exportPreview, exportContactSheet, PREVIEW_LIMITS, assertNoSymlinkPath 
 
 const schemas = { sprite: projectSchema, sound: soundSchema, rig: rigSchema,
   pose: poseSchema, poses: posesSchema, rigAnimation: animationSchema, scene: sceneSchema,
-  semanticPose: semanticPoseSchema, heldObject: heldObjectSchema };
+  semanticPose: semanticPoseSchema, heldObject: heldObjectSchema,
+  semanticExpression: semanticExpressionSchema, facialLandmarks: facialLandmarksSchema };
 type AssetType = keyof typeof schemas;
 const report = (data: unknown) => process.stdout.write(JSON.stringify(data) + "\n");
 const integer = (value: string) => {
@@ -29,6 +31,8 @@ function detect(input: unknown, file: string): AssetType | undefined {
   if (!input || typeof input !== "object" || Array.isArray(input)) return;
   if ("format" in input && input.format === "pixelforge-semantic-pose") return "semanticPose";
   if ("format" in input && input.format === "pixelforge-held-object") return "heldObject";
+  if ("format" in input && input.format === "pixelforge-semantic-expression") return "semanticExpression";
+  if ("format" in input && input.format === "pixelforge-facial-landmarks") return "facialLandmarks";
   if ("joints" in input) return "rig";
   if ("objects" in input) return "scene";
   if ("poses" in input || "rig" in input) return "poses";
@@ -57,6 +61,7 @@ export function registerAgentCommands(program: Command): void {
         formatVersion: type === "pose" || type === "rigAnimation" ? null : "1.0",
         schema: `capabilities --schema ${type}`, doctor: true })),
         commands: commands(program), operations: listOperations(), semanticPosing: semanticPoseCapabilities,
+        semanticExpressions: semanticExpressionCapabilities,
         rendering: { preview: ["sprite", "rig-generated sprite"], outputs: ["png", "contact JSON"],
           previewLimits: PREVIEW_LIMITS, contactLimits: { maxCells: 1000, maxPixels: 67_108_864, maxDimension: 32767, maxColumns: 32, maxScale: 16 },
           productionExports: ["spritesheet", "frames", "phaser"],
@@ -69,9 +74,13 @@ export function registerAgentCommands(program: Command): void {
     .argument("<file>").option("--json").option("--type <type>", "Explicit asset type")
     .option("--rig <file>", "Rig context for pose/library/animation references")
     .option("--library <file>", "Semantic base pose/contact library")
+    .option("--sprite <file>", "Expression source sprite")
+    .option("--landmarks <file>", "Expression facial landmarks")
+    .option("--pose <file>", "Expression FK pose context")
+    .option("--joint <id>", "Expression head joint role mapping")
     .option("--object <file>", "Semantic held-object resource", (v: string, previous: string[]) => [...previous, v], [])
     .option("--asset <id=file>", "Scene sprite resource", (v: string, prev: string[]) => [...prev, v], [])
-    .action(async (file: string, o: { json?: boolean; type?: string; rig?: string; library?: string; object: string[]; asset: string[] }) => {
+    .action(async (file: string, o: { json?: boolean; type?: string; rig?: string; library?: string; object: string[]; asset: string[]; sprite?: string; landmarks?: string; pose?: string; joint?: string }) => {
       let assetType: string = o.type ?? "unknown";
       const diagnostics: Record<string, unknown>[] = [];
       const add = (code: string, path: string, message: string, suggestion: string, extra: Record<string, unknown> = {}) =>
@@ -86,12 +95,16 @@ export function registerAgentCommands(program: Command): void {
           if (!result.success) for (const issue of result.error.issues) {
             const contact = issue.path.includes("contacts") && issue.path.at(-1) === "id";
             const id = issue.code === "invalid_format";
-            add(contact ? "PF_CONTACT_ID_INVALID" : id ? "PF_IDENTIFIER_INVALID" : `PF_SCHEMA_${issue.code.toUpperCase()}`,
+            add(type === "semanticExpression" && issue.path.includes("intensity") ? "PF_EXPRESSION_INTENSITY_INVALID" : type === "facialLandmarks" && issue.path.includes("profile") ? "PF_FACE_PROFILE_UNSUPPORTED" : contact ? "PF_CONTACT_ID_INVALID" : id ? "PF_IDENTIFIER_INVALID" : `PF_SCHEMA_${issue.code.toUpperCase()}`,
               pathOf(issue.path), issue.message,
               id ? "Use a letter followed by up to 63 letters, digits, underscores or hyphens, e.g. left_foot." : `Correct this field using capabilities --schema ${type}.`,
               { ...("expected" in issue ? { expected: issue.expected } : {}) });
           } else {
             const rig = o.rig ? parseRig(await json(o.rig)) : undefined;
+            if (type === "semanticExpression") {
+              if (!o.sprite || !o.landmarks) add("PF_CONTEXT_REQUIRED", "$", "Request schema checked; facial resolution requires context.", "Pass --sprite FILE --landmarks FILE and optional --rig/--pose.", { severity: "info" });
+              else for (const d of (await expressionContext(input, o)).diagnostics) add(d.code, d.path, d.message, d.suggestion, { severity: d.severity });
+            }
             if (type === "semanticPose") {
               if (!rig) add("PF_CONTEXT_REQUIRED", "$.rig", "Request schema checked; semantic resolution requires a rig.", "Pass --rig FILE and any --library/--object resources.", { severity: "info" });
               else {

@@ -15,3 +15,5 @@ export * from "./analysis/discovery.js";
 export * from "./analysis/diff.js";
 export * from "./analysis/semantic.js";
 export * from "./analysis/assets.js";
+export * from "./expressions/schema.js";
+export * from "./expressions/resolve.js";

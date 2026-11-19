@@ -7,7 +7,7 @@
 Editable pixel sprites, timed animations, and Phaser-ready assets.<br>
 Build with a coding agent. Refine in the editor. Keep every pixel yours.
 
-[![Version 0.8.2](https://img.shields.io/badge/version-0.8.2-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
+[![Version 0.8.3](https://img.shields.io/badge/version-0.8.3-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
 [![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-78b7e5?style=flat-square&labelColor=20262c)](tsconfig.json)
 [![Node 22.12 or newer](https://img.shields.io/badge/Node.js-22.12%2B-b0db88?style=flat-square&labelColor=20262c)](package.json)
 [![Phaser 3.90 and 4.2](https://img.shields.io/badge/Phaser-3.90%20%7C%204.2-f4c46a?style=flat-square&labelColor=20262c)](docs/phaser-integration.md)
@@ -32,6 +32,19 @@ The headless CLI and browser editor share one deterministic renderer. Everything
 | TypeScript API, JSON operation batches, and a portable agent skill | Eight drawing tools, layers, palette editing, onion skins, timeline, undo/redo | Transparent PNGs, fixed-cell sheets, native Phaser atlases, animations, and game metadata |
 
 ## Production workflows in v0.5
+
+**New in v0.8.3 — Semantic Facial Expressions & Visual Storytelling:** choose
+neutral, tired, focused, worried, surprised, angry or happy with normalized
+intensity and optional feature overrides. Explicit reusable local landmarks
+(front or single-visible-eye profiles) resolve deterministic editable operations
+and selected-frame sprite variants; optional head FK reuses an existing rig pose.
+Discover schemas/capabilities, run contextual doctor, then preview/contact-sheet
+and inspect. Dedicated facial layers are required; no automatic landmark
+detection, direct rig-shape editing or continuous interpolation. Small changes
+may quantize to zero. Pad owned brow regions safely; movement warnings retain
+the feature instead of clipping.
+[Expression workflow and evaluated limitations](.agents/skills/pixelforge-sprite-creator/references/semantic-expression.md) ·
+[Editable minimal example](examples/semantic-expression/README.md)
 
 **New in v0.8.2 — Semantic Gaze & Anatomical Constraints:** place a held object
 relative to a postured joint or role and aim toward a world position, joint/role

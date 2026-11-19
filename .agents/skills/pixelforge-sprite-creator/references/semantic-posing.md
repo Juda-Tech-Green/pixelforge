@@ -1,6 +1,6 @@
 # Semantic posing (v0.8.2)
 
-Requires the matching 0.8.2 runtime/package set. `capabilities --json` reports the installed
+Requires the matching 0.8.3 runtime/package set. `capabilities --json` reports the installed
 semantic capabilities and postures; `capabilities --schema semanticPose` and
 `--schema heldObject` expose the separate format 1.0 contracts. Existing rig,
 pose, animation and sprite schemas retain their versions and behavior.
@@ -76,7 +76,7 @@ verification separately from actual PNG inspection and artistic quality.
 
 ## Optional gaze and relative placement (v0.8.2)
 
-Runtime/package versions are 0.8.2 and both extended schema versions remain
+Current runtime/package versions are 0.8.3 and both extended schema versions remain
 1.0. Query `capabilities --json` → `semanticPosing.extensions` and the live schemas.
 All new fields are optional: omitting them preserves the v0.8.1 behavior, default
 head angles, pose serialization and existing world-object transforms.

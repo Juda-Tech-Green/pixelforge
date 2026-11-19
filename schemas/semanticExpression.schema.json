@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/pixelforge-semantic-expression",
+  "$defs": {
+    "pixelforge-semantic-expression": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "const": "pixelforge-semantic-expression"
+        },
+        "version": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "expression": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "neutral",
+                "tired",
+                "focused",
+                "worried",
+                "surprised",
+                "angry",
+                "happy"
+              ]
+            },
+            "intensity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "overrides": {
+              "type": "object",
+              "properties": {
+                "eyeOpen": {
+                  "type": "number",
+                  "minimum": -1,
+                  "maximum": 1
+                },
+                "browLift": {
+                  "type": "number",
+                  "minimum": -1,
+                  "maximum": 1
+                },
+                "browTilt": {
+                  "type": "number",
+                  "minimum": -1,
+                  "maximum": 1
+                },
+                "mouthCurve": {
+                  "type": "number",
+                  "minimum": -1,
+                  "maximum": 1
+                },
+                "mouthOpen": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "type",
+            "intensity"
+          ],
+          "additionalProperties": false
+        },
+        "targets": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "frame": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "origin": {
+                "description": "Face-local origin on sprite; omit with explicit rig/pose context",
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "integer",
+                    "minimum": -1024,
+                    "maximum": 1024
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": -1024,
+                    "maximum": 1024
+                  }
+                ],
+                "items": false,
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "mirror": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "frame"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "format",
+        "version",
+        "id",
+        "expression",
+        "targets"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

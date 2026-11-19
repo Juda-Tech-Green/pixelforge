@@ -1,0 +1,490 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/pixelforge-facial-landmarks",
+  "$defs": {
+    "pixelforge-facial-landmarks": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "const": "pixelforge-facial-landmarks"
+        },
+        "version": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "profile": {
+          "type": "string",
+          "enum": [
+            "front",
+            "left-visible",
+            "right-visible"
+          ]
+        },
+        "layer": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Dedicated transparent feature layer"
+        },
+        "surfaceLayer": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Separate opaque face surface; edits cannot extend into transparent pixels"
+        },
+        "bounds": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "integer",
+              "minimum": -1024,
+              "maximum": 1024
+            },
+            "y": {
+              "type": "integer",
+              "minimum": -1024,
+              "maximum": 1024
+            },
+            "width": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "width",
+            "height"
+          ],
+          "additionalProperties": false
+        },
+        "maxMove": {
+          "default": 2,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "minSeparation": {
+          "default": 0,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "features": {
+          "type": "object",
+          "properties": {
+            "leftEye": {
+              "type": "object",
+              "properties": {
+                "box": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Neutral feature pixels, in face/head-local coordinates"
+                },
+                "region": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Exclusively owned editable region; may contain no unrelated artwork"
+                }
+              },
+              "required": [
+                "box",
+                "region"
+              ],
+              "additionalProperties": false
+            },
+            "rightEye": {
+              "type": "object",
+              "properties": {
+                "box": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Neutral feature pixels, in face/head-local coordinates"
+                },
+                "region": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Exclusively owned editable region; may contain no unrelated artwork"
+                }
+              },
+              "required": [
+                "box",
+                "region"
+              ],
+              "additionalProperties": false
+            },
+            "leftBrow": {
+              "type": "object",
+              "properties": {
+                "box": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Neutral feature pixels, in face/head-local coordinates"
+                },
+                "region": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Exclusively owned editable region; may contain no unrelated artwork"
+                }
+              },
+              "required": [
+                "box",
+                "region"
+              ],
+              "additionalProperties": false
+            },
+            "rightBrow": {
+              "type": "object",
+              "properties": {
+                "box": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Neutral feature pixels, in face/head-local coordinates"
+                },
+                "region": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Exclusively owned editable region; may contain no unrelated artwork"
+                }
+              },
+              "required": [
+                "box",
+                "region"
+              ],
+              "additionalProperties": false
+            },
+            "mouth": {
+              "type": "object",
+              "properties": {
+                "box": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Neutral feature pixels, in face/head-local coordinates"
+                },
+                "region": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": -1024,
+                      "maximum": 1024
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Exclusively owned editable region; may contain no unrelated artwork"
+                }
+              },
+              "required": [
+                "box",
+                "region"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "mouth"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "format",
+        "version",
+        "id",
+        "profile",
+        "layer",
+        "surfaceLayer",
+        "bounds",
+        "maxMove",
+        "minSeparation",
+        "features"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

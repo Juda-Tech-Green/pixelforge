@@ -1,0 +1,18 @@
+{
+  "format": "pixelforge-semantic-expression",
+  "version": "1.0",
+  "id": "clerk-tired",
+  "expression": {
+    "type": "tired",
+    "intensity": 1
+  },
+  "targets": [
+    {
+      "frame": "tired",
+      "origin": [
+        7,
+        4
+      ]
+    }
+  ]
+}

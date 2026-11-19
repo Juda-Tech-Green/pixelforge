@@ -12,14 +12,14 @@ npm run pack:release
 node scripts/verify-release.mjs release
 ```
 
-A GitHub clone can point at a different revision. Select the reviewed v0.8.2 source snapshot/revision before running the build commands. This builds from that source without preexisting dist declarations. Release metadata contains seven versioned tarballs, SHA256SUMS and versioned release notes. To use a different reviewed revision, select it through your normal Git workflow before building. This run does not publish a release or establish npm namespace ownership. Historical v0.5 verification remains separate from [current audio verification](audio/verification.md).
+A GitHub clone can point at a different revision. Select the reviewed v0.8.3 source snapshot/revision before running the build commands. This builds from that source without preexisting dist declarations. Release metadata contains seven versioned tarballs, SHA256SUMS and versioned release notes. To use a different reviewed revision, select it through your normal Git workflow before building. This run does not publish a release or establish npm namespace ownership. Historical v0.5 verification remains separate from [current audio verification](audio/verification.md).
 
 ## Install into an unrelated game
 
-Copy the seven matching0.8.2 tarballs into a stable directory **inside your game**, such as `vendor/pixelforge/`. From that game:
+Copy the seven matching0.8.3 tarballs into a stable directory **inside your game**, such as `vendor/pixelforge/`. From that game:
 
 ```sh
-npm install --ignore-scripts ./vendor/pixelforge/pixelforge-core-0.8.2.tgz ./vendor/pixelforge/pixelforge-exporters-0.8.2.tgz ./vendor/pixelforge/pixelforge-cli-0.8.2.tgz ./vendor/pixelforge/pixelforge-phaser-0.8.2.tgz ./vendor/pixelforge/pixelforge-audio-core-0.8.2.tgz ./vendor/pixelforge/pixelforge-audio-exporters-0.8.2.tgz ./vendor/pixelforge/pixelforge-geometry-0.8.2.tgz
+npm install --ignore-scripts ./vendor/pixelforge/pixelforge-core-0.8.3.tgz ./vendor/pixelforge/pixelforge-exporters-0.8.3.tgz ./vendor/pixelforge/pixelforge-cli-0.8.3.tgz ./vendor/pixelforge/pixelforge-phaser-0.8.3.tgz ./vendor/pixelforge/pixelforge-audio-core-0.8.3.tgz ./vendor/pixelforge/pixelforge-audio-exporters-0.8.3.tgz ./vendor/pixelforge/pixelforge-geometry-0.8.3.tgz
 node node_modules/@pixelforge/cli/dist/index.js --version
 ```
 

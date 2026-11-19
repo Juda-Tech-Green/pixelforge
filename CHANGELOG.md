@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.3 — Semantic Facial Expressions & Visual Storytelling
+
+- Seven opt-in semantic presets: neutral, tired, focused, worried, surprised, angry and happy. Intensity 0..1; normalized eye opening, brow lift/tilt and mouth curvature/opening overrides.
+- Explicit reusable facial landmarks, front/left-visible/right-visible profiles, owned feature regions, bounded integer movement, minimum separation and an opaque face-surface mask preserve palette references and unrelated artwork.
+- Deterministic editable operations 1.0 and frame-targeted sprite 1.0 variants through the existing apply pipeline; optional rig/head FK context reuses an already resolved pose. Existing pose/gaze/render behavior remains unchanged.
+- Agent-friendly sprite expression resolve command, JSON diagnostics/provenance, protected outputs, capability/schema discovery and contextual doctor checks. Portable skill and isolated example use the existing PNG preview/contact-sheet workflow. Package versions aligned to 0.8.3; schema versions remain 1.0.
+- User-reported Antigravity artistic acceptance: PASS for Tired → Focused → Surprised with the same geometry/palette, no manually authored facial setPixel coordinates, standard editable operations, valid sprite output, successful preflight, native/enlarged previews, actionable region diagnostics and preservation of the original sprite. Evaluation assets were not regenerated or included. Discrete frames do not establish continuous interpolation.
+- Limits: explicit landmark authoring and dedicated facial layers required; no automatic detection, direct rig-shape expression editing or continuous interpolation. Subpixel changes may quantize to zero: PF_EXPRESSION_QUANTIZED remains nonfatal. Pad brow regions for lift/tilt within disjoint owned regions and the face surface; PF_FACE_MOVEMENT_EXCEEDED retains unsafe features—deliberately enlarge safe padding or reduce intensity/overrides.
+
 ## 0.8.2 — Semantic Gaze & Anatomical Constraints
 
 - Gaze toward explicit world positions, named rig joints/roles and held-object anchors using an explicit head-local forward vector and authoritative FK.

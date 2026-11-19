@@ -1,0 +1,92 @@
+{
+  "format": "pixelforge-room",
+  "version": "1.0",
+  "id": "records-office-a",
+  "name": "Records office — Layout A",
+  "canvas": {
+    "width": 192,
+    "height": 112
+  },
+  "palette": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      190,
+      181,
+      159,
+      255
+    ],
+    [
+      113,
+      99,
+      76,
+      255
+    ]
+  ],
+  "background": {
+    "wallHeight": 74,
+    "wallColor": 1,
+    "floorColor": 2,
+    "wallAsset": "wall"
+  },
+  "assets": {
+    "cabinet": {
+      "source": "assets/cabinet.sprite.json"
+    },
+    "desk": {
+      "source": "assets/desk.sprite.json"
+    },
+    "wall": {
+      "source": "assets/wall.sprite.json"
+    },
+    "window": {
+      "source": "assets/window.sprite.json"
+    }
+  },
+  "instances": [
+    {
+      "id": "window",
+      "asset": "window",
+      "layer": "architecture",
+      "placement": {
+        "anchor": "room.wall.center",
+        "align": "center",
+        "offset": [
+          0,
+          -5
+        ]
+      }
+    },
+    {
+      "id": "desk",
+      "asset": "desk",
+      "layer": "furniture",
+      "depth": 1,
+      "placement": {
+        "anchor": "cabinet.ground",
+        "align": "ground",
+        "offset": [
+          80,
+          0
+        ]
+      }
+    },
+    {
+      "id": "cabinet",
+      "asset": "cabinet",
+      "layer": "furniture",
+      "placement": {
+        "anchor": "room.floor.left",
+        "align": "bottom-left",
+        "offset": [
+          12,
+          0
+        ]
+      }
+    }
+  ]
+}

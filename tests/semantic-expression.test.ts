@@ -125,7 +125,7 @@ test("CLI preserves sources, protects aliases, discovers/diagnoses and writes ed
   const alias = join(out, "alias.json"); linkSync(join(example, "source.sprite.json"), alias);
   expect(cli(...args, "--out", alias, "--force", "--json").status).toBe(1);
   const caps = cli("capabilities", "--json").data;
-  expect(caps.runtimeVersion).toBe("0.8.3"); expect(caps.semanticExpressions.expressions).toEqual([...expressionTypes]);
+  expect(caps.runtimeVersion).toBe("0.9.0"); expect(caps.semanticExpressions.expressions).toEqual([...expressionTypes]);
   expect(caps.assetTypes.some((a: { type: string }) => a.type === "facialLandmarks")).toBe(true);
   const doc = cli("doctor", join(example, "tired.expression.json"), "--sprite", join(example, "source.sprite.json"), "--landmarks", join(example, "face.landmarks.json"), "--json");
   expect(doc.status, doc.stderr).toBe(0); expect(doc.data.ok).toBe(true);
@@ -156,7 +156,10 @@ test("CLI preserves sources, protects aliases, discovers/diagnoses and writes ed
 
 test("published sprite/rig/semantic/gaze engines stay byte-identical, local FK works and unrelated changes survive", () => {
   const baseline = "a21ab52068b758295a9855d7147610d66872e1d2";
-  const files = execFileSync("git", ["ls-tree", "-r", "--name-only", baseline, "packages/core/src", "packages/geometry/src"], { encoding: "utf8" }).trim().split(/\r?\n/).filter(f => f !== "packages/core/src/index.ts");
+  // Public barrels may add opt-in exports; all previously exported engines remain frozen.
+  const barrels = ["packages/core/src/index.ts", "packages/geometry/src/index.ts"];
+  for (const f of barrels) expect(readFileSync(f, "utf8").replaceAll("\r\n", "\n").startsWith(execFileSync("git", ["show", `${baseline}:${f}`], { encoding: "utf8" }).replaceAll("\r\n", "\n"))).toBe(true);
+  const files = execFileSync("git", ["ls-tree", "-r", "--name-only", baseline, "packages/core/src", "packages/geometry/src"], { encoding: "utf8" }).trim().split(/\r?\n/).filter(f => !barrels.includes(f));
   for (const f of files) expect(readFileSync(f, "utf8").replaceAll("\r\n", "\n"), f).toBe(execFileSync("git", ["show", `${baseline}:${f}`], { encoding: "utf8" }).replaceAll("\r\n", "\n"));
   const fixture = read("tests/fixtures/semantic-gaze-legacy.json"), rig = read("examples/semantic-pose/clerk.rig.json"), context = { library: read("examples/semantic-pose/clerk.poses.json"), objects: [read("examples/semantic-pose/folder.object.json")] };
   for (const c of fixture.cases) expect(hash(JSON.stringify(resolveSemanticPose(rig, c.request, context)))).toBe(c.sha256);
@@ -177,7 +180,7 @@ test("published sprite/rig/semantic/gaze engines stay byte-identical, local FK w
   }
   expect(forwardKinematics(minimal, pose).head!.matrix).toHaveLength(6);
   const versions = ["package.json", ...["core", "exporters", "cli", "phaser", "geometry", "audio-core", "audio-exporters"].map(n => `packages/${n}/package.json`), "apps/web/package.json", "examples/phaser-playground/package.json"];
-  for (const file of versions) expect(read(file).version).toBe("0.8.3");
-  expect(read("package-lock.json").version).toBe("0.8.3");
+  for (const file of versions) expect(read(file).version).toBe("0.9.0");
+  expect(read("package-lock.json").version).toBe("0.9.0");
   if (process.env.PIXELFORGE_PRESERVATION_BASELINE) for (const [file, digest] of Object.entries(read(process.env.PIXELFORGE_PRESERVATION_BASELINE))) expect(hash(readFileSync(file)), file).toBe(digest);
 });

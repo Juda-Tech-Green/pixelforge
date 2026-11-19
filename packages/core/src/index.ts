@@ -17,3 +17,6 @@ export * from "./analysis/semantic.js";
 export * from "./analysis/assets.js";
 export * from "./expressions/schema.js";
 export * from "./expressions/resolve.js";
+export * from "./materials/schema.js";
+export * from "./materials/masks.js";
+export * from "./materials/apply.js";

@@ -7,7 +7,7 @@
 Editable pixel sprites, timed animations, and Phaser-ready assets.<br>
 Build with a coding agent. Refine in the editor. Keep every pixel yours.
 
-[![Version 0.8.3](https://img.shields.io/badge/version-0.8.3-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
+[![Version 0.9.0](https://img.shields.io/badge/version-0.9.0-b0db88?style=flat-square&labelColor=20262c)](CHANGELOG.md)
 [![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-78b7e5?style=flat-square&labelColor=20262c)](tsconfig.json)
 [![Node 22.12 or newer](https://img.shields.io/badge/Node.js-22.12%2B-b0db88?style=flat-square&labelColor=20262c)](package.json)
 [![Phaser 3.90 and 4.2](https://img.shields.io/badge/Phaser-3.90%20%7C%204.2-f4c46a?style=flat-square&labelColor=20262c)](docs/phaser-integration.md)
@@ -32,6 +32,16 @@ The headless CLI and browser editor share one deterministic renderer. Everything
 | TypeScript API, JSON operation batches, and a portable agent skill | Eight drawing tools, layers, palette editing, onion skins, timeline, undo/redo | Transparent PNGs, fixed-cell sheets, native Phaser atlases, animations, and game metadata |
 
 ## Production workflows in v0.5
+
+**New in v0.9.0 — Parametric Environments:** author desks, cabinets and windows;
+apply seeded wood, metal, plaster, brick or ordered dither through explicit
+surface ownership masks; then arrange immutable materialized sprites using room
+and instance anchors. Existing scene rendering preserves local texture pixels
+during integer translation. All native contracts remain format 1.0.
+[Integrated guide](docs/parametric-environments.md) ·
+[Props](examples/parametric-props/README.md) ·
+[Materials](examples/procedural-materials/README.md) ·
+[Two room layouts](examples/semantic-room/README.md)
 
 **New in v0.8.3 — Semantic Facial Expressions & Visual Storytelling:** choose
 neutral, tired, focused, worried, surprised, angry or happy with normalized

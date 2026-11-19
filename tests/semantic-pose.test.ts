@@ -92,7 +92,7 @@ test("attachment positioning and explicit palm/object/front order are determinis
 });
 test("CLI discovery, doctor, output protection and rendered examples preserve every source", () => {
   const caps = cli("capabilities", "--json"); expect(caps.status, caps.stderr).toBe(0);
-  expect(caps.data.runtimeVersion).toBe("0.8.3"); expect(caps.data.semanticPosing.postures).toContain("slumped");
+  expect(caps.data.runtimeVersion).toBe("0.9.0"); expect(caps.data.semanticPosing.postures).toContain("slumped");
   const schema = cli("capabilities", "--schema", "semanticPose").data;
   expect(schema.$defs["urn:pixelforge:semantic-pose:1.0"].properties.format.const).toBe("pixelforge-semantic-pose");
   const args = [join(dir, "hold.semantic-pose.json"), "--rig", join(dir, "clerk.rig.json"), "--library", join(dir, "clerk.poses.json"), "--object", join(dir, "folder.object.json")];

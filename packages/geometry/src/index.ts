@@ -11,3 +11,8 @@ export * from "./scene-presets.js";
 export * from "./consistency.js";
 export * from "./semantic-schema.js";
 export * from "./semantic.js";
+export * from "./prop-schema.js";
+export * from "./props.js";
+export * from "./prop-surfaces.js";
+export * from "./room-schema.js";
+export * from "./room.js";

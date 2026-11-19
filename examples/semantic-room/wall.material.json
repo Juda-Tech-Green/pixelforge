@@ -1,0 +1,18 @@
+{
+  "format": "pixelforge-material",
+  "version": "1.0",
+  "id": "office-plaster",
+  "type": "plaster",
+  "seed": 1952,
+  "intensity": 1,
+  "palette": {
+    "base": 2,
+    "highlight": 3,
+    "shadow": 4
+  },
+  "parameters": {
+    "patchSize": 12,
+    "density": 0.24,
+    "variation": 0.15
+  }
+}

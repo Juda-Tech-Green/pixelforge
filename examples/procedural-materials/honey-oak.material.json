@@ -1,0 +1,24 @@
+{
+  "format": "pixelforge-material",
+  "version": "1.0",
+  "id": "honey-oak",
+  "type": "wood",
+  "seed": 1957,
+  "intensity": 1,
+  "origin": [
+    0,
+    0
+  ],
+  "palette": {
+    "base": 13,
+    "highlight": 14,
+    "shadow": 15
+  },
+  "parameters": {
+    "direction": "horizontal",
+    "scale": 1,
+    "density": 0.22,
+    "variation": 0.3,
+    "wear": 0.02
+  }
+}

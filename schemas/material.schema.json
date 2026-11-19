@@ -1,0 +1,712 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/pixelforge-material",
+  "$defs": {
+    "pixelforge-material": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "pixelforge-material"
+            },
+            "version": {
+              "type": "string",
+              "const": "1.0"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "seed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "intensity": {
+              "default": 1,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "origin": {
+              "default": [
+                0,
+                0
+              ],
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                },
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "palette": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "highlight": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "shadow": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "mortar": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                }
+              },
+              "required": [
+                "base",
+                "highlight",
+                "shadow"
+              ],
+              "additionalProperties": false
+            },
+            "type": {
+              "type": "string",
+              "const": "wood"
+            },
+            "parameters": {
+              "default": {
+                "direction": "horizontal",
+                "scale": 1,
+                "density": 0.22,
+                "variation": 0.2,
+                "wear": 0.03
+              },
+              "type": "object",
+              "properties": {
+                "direction": {
+                  "default": "horizontal",
+                  "type": "string",
+                  "enum": [
+                    "horizontal",
+                    "vertical"
+                  ]
+                },
+                "scale": {
+                  "default": 1,
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8
+                },
+                "density": {
+                  "default": 0.22,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.45
+                },
+                "variation": {
+                  "default": 0.2,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5
+                },
+                "wear": {
+                  "default": 0.03,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.15
+                }
+              },
+              "required": [
+                "direction",
+                "scale",
+                "density",
+                "variation",
+                "wear"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "format",
+            "version",
+            "id",
+            "seed",
+            "intensity",
+            "origin",
+            "palette",
+            "type",
+            "parameters"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "pixelforge-material"
+            },
+            "version": {
+              "type": "string",
+              "const": "1.0"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "seed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "intensity": {
+              "default": 1,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "origin": {
+              "default": [
+                0,
+                0
+              ],
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                },
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "palette": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "highlight": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "shadow": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "mortar": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                }
+              },
+              "required": [
+                "base",
+                "highlight",
+                "shadow"
+              ],
+              "additionalProperties": false
+            },
+            "type": {
+              "type": "string",
+              "const": "metal"
+            },
+            "parameters": {
+              "default": {
+                "direction": "horizontal",
+                "scale": 1,
+                "density": 0.1,
+                "scratches": 0.02,
+                "wear": 0.01
+              },
+              "type": "object",
+              "properties": {
+                "direction": {
+                  "default": "horizontal",
+                  "type": "string",
+                  "enum": [
+                    "horizontal",
+                    "vertical"
+                  ]
+                },
+                "scale": {
+                  "default": 1,
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8
+                },
+                "density": {
+                  "default": 0.1,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.25
+                },
+                "scratches": {
+                  "default": 0.02,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.1
+                },
+                "wear": {
+                  "default": 0.01,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.1
+                }
+              },
+              "required": [
+                "direction",
+                "scale",
+                "density",
+                "scratches",
+                "wear"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "format",
+            "version",
+            "id",
+            "seed",
+            "intensity",
+            "origin",
+            "palette",
+            "type",
+            "parameters"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "pixelforge-material"
+            },
+            "version": {
+              "type": "string",
+              "const": "1.0"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "seed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "intensity": {
+              "default": 1,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "origin": {
+              "default": [
+                0,
+                0
+              ],
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                },
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "palette": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "highlight": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "shadow": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "mortar": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                }
+              },
+              "required": [
+                "base",
+                "highlight",
+                "shadow"
+              ],
+              "additionalProperties": false
+            },
+            "type": {
+              "type": "string",
+              "const": "plaster"
+            },
+            "parameters": {
+              "default": {
+                "patchSize": 6,
+                "density": 0.25,
+                "variation": 0.2
+              },
+              "type": "object",
+              "properties": {
+                "patchSize": {
+                  "default": 6,
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 16
+                },
+                "density": {
+                  "default": 0.25,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.4
+                },
+                "variation": {
+                  "default": 0.2,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5
+                }
+              },
+              "required": [
+                "patchSize",
+                "density",
+                "variation"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "format",
+            "version",
+            "id",
+            "seed",
+            "intensity",
+            "origin",
+            "palette",
+            "type",
+            "parameters"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "pixelforge-material"
+            },
+            "version": {
+              "type": "string",
+              "const": "1.0"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "seed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "intensity": {
+              "default": 1,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "origin": {
+              "default": [
+                0,
+                0
+              ],
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                },
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "palette": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "highlight": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "shadow": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "mortar": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                }
+              },
+              "required": [
+                "base",
+                "highlight",
+                "shadow"
+              ],
+              "additionalProperties": false
+            },
+            "type": {
+              "type": "string",
+              "const": "brick"
+            },
+            "parameters": {
+              "default": {
+                "brickWidth": 8,
+                "brickHeight": 4,
+                "mortarWidth": 1,
+                "stagger": true,
+                "variation": 0.12
+              },
+              "type": "object",
+              "properties": {
+                "brickWidth": {
+                  "default": 8,
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 32
+                },
+                "brickHeight": {
+                  "default": 4,
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 16
+                },
+                "mortarWidth": {
+                  "default": 1,
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 3
+                },
+                "stagger": {
+                  "default": true,
+                  "type": "boolean"
+                },
+                "variation": {
+                  "default": 0.12,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.3
+                }
+              },
+              "required": [
+                "brickWidth",
+                "brickHeight",
+                "mortarWidth",
+                "stagger",
+                "variation"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "format",
+            "version",
+            "id",
+            "seed",
+            "intensity",
+            "origin",
+            "palette",
+            "type",
+            "parameters"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "pixelforge-material"
+            },
+            "version": {
+              "type": "string",
+              "const": "1.0"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "seed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "intensity": {
+              "default": 1,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "origin": {
+              "default": [
+                0,
+                0
+              ],
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                },
+                {
+                  "type": "integer",
+                  "minimum": -1024,
+                  "maximum": 1024
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "palette": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "highlight": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "shadow": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                },
+                "mortar": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 255
+                }
+              },
+              "required": [
+                "base",
+                "highlight",
+                "shadow"
+              ],
+              "additionalProperties": false
+            },
+            "type": {
+              "type": "string",
+              "const": "dither"
+            },
+            "parameters": {
+              "default": {
+                "density": 0.25,
+                "scale": 1
+              },
+              "type": "object",
+              "properties": {
+                "density": {
+                  "default": 0.25,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5
+                },
+                "scale": {
+                  "default": 1,
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4
+                }
+              },
+              "required": [
+                "density",
+                "scale"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "format",
+            "version",
+            "id",
+            "seed",
+            "intensity",
+            "origin",
+            "palette",
+            "type",
+            "parameters"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

@@ -113,7 +113,7 @@ test("mirrored facing nonhorizontal forward and rotated base poses use local FK 
 });
 test("capabilities doctor and existing preview pipeline support anatomical mode without source changes", () => {
   const capabilities = cli("capabilities", "--json"); expect(capabilities.status, capabilities.stderr).toBe(0);
-  expect(capabilities.data.runtimeVersion).toBe("0.8.3"); expect(capabilities.data.semanticPosing.extensions.gaze.modes).toEqual(["legacy", "anatomical"]);
+  expect(capabilities.data.runtimeVersion).toBe("0.9.0"); expect(capabilities.data.semanticPosing.extensions.gaze.modes).toEqual(["legacy", "anatomical"]);
   expect(capabilities.data.semanticPosing.extensions.gaze.defaultMode).toBe("legacy");
   expect(cli("capabilities", "--schema", "semanticPose").data).toEqual(z.toJSONSchema(semanticPoseSchema));
   expect(JSON.parse(readFileSync("schemas/semanticPose.schema.json", "utf8"))).toEqual(z.toJSONSchema(semanticPoseSchema));

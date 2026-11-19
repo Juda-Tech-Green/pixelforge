@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { rigSchema, poseSchema, posesSchema, animationSchema, sceneSchema, observationsSchema, cameraSchema, semanticPoseSchema, heldObjectSchema } from "../packages/geometry/src/index.js";
+import { rigSchema, poseSchema, posesSchema, animationSchema, sceneSchema, observationsSchema, cameraSchema, semanticPoseSchema, heldObjectSchema, parametricPropSchema, roomSchema } from "../packages/geometry/src/index.js";
 import { soundSchema, audioOperationsSchema, audioManifestSchema } from "../packages/audio-core/src/index.js";
 import {
   gameMetadataSchema,
@@ -10,6 +10,9 @@ import {
   semanticContractSchema,
   semanticExpressionSchema,
   facialLandmarksSchema,
+  materialSchema,
+  surfaceMaskSchema,
+  surfaceRegionsSchema,
 } from "../packages/core/src/index.js";
 import { mkdir, writeFile } from "node:fs/promises";
 import {
@@ -27,6 +30,11 @@ for (const [name, schema] of Object.entries({
   rigAnimation: animationSchema,
   semanticPose: semanticPoseSchema,
   heldObject: heldObjectSchema,
+  prop: parametricPropSchema,
+  room: roomSchema,
+  material: materialSchema,
+  surfaceMask: surfaceMaskSchema,
+  surfaceRegions: surfaceRegionsSchema,
   semanticExpression: semanticExpressionSchema,
   facialLandmarks: facialLandmarksSchema,
   scene: sceneSchema,

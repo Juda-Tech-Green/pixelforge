@@ -1,0 +1,382 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/pixelforge-parametric-prop",
+  "$defs": {
+    "pixelforge-parametric-prop": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "const": "pixelforge-parametric-prop"
+        },
+        "version": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "padding": {
+          "default": 2,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16
+        },
+        "palette": {
+          "minItems": 2,
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255
+              },
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255
+              },
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255
+              },
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255
+              }
+            ],
+            "items": false,
+            "minItems": 4,
+            "maxItems": 4
+          }
+        },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "outline": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 255
+            },
+            "body": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 255
+            },
+            "light": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 255
+            },
+            "shadow": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 255
+            },
+            "hardware": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 255
+            },
+            "glass": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 255
+            }
+          },
+          "required": [
+            "outline",
+            "body",
+            "light",
+            "shadow",
+            "hardware"
+          ],
+          "additionalProperties": false
+        },
+        "component": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "desk"
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 12,
+                  "maximum": 128
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 12,
+                  "maximum": 128
+                },
+                "depth": {
+                  "default": 5,
+                  "description": "Projected top depth in pixels, not a world-space measurement",
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16
+                },
+                "topThickness": {
+                  "default": 3,
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 8
+                },
+                "legWidth": {
+                  "default": 3,
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 12
+                },
+                "legInset": {
+                  "default": 3,
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16
+                },
+                "legHeight": {
+                  "default": 5,
+                  "description": "Visible feet below drawer pedestals",
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 24
+                },
+                "drawers": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "default": 2,
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 6
+                    },
+                    "gap": {
+                      "default": 1,
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 4
+                    },
+                    "labels": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "hardware": {
+                      "default": "bar",
+                      "type": "string",
+                      "enum": [
+                        "bar",
+                        "knob",
+                        "none"
+                      ]
+                    },
+                    "side": {
+                      "type": "string",
+                      "enum": [
+                        "left",
+                        "right",
+                        "both"
+                      ]
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 6,
+                      "maximum": 40
+                    }
+                  },
+                  "required": [
+                    "count",
+                    "gap",
+                    "labels",
+                    "hardware",
+                    "side",
+                    "width"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "type",
+                "width",
+                "height",
+                "depth",
+                "topThickness",
+                "legWidth",
+                "legInset",
+                "legHeight"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "cabinet"
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 12,
+                  "maximum": 128
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 12,
+                  "maximum": 128
+                },
+                "depth": {
+                  "default": 4,
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16
+                },
+                "baseHeight": {
+                  "default": 3,
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 12
+                },
+                "drawers": {
+                  "default": {
+                    "count": 4,
+                    "gap": 1,
+                    "labels": true,
+                    "hardware": "bar"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "default": 4,
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 6
+                    },
+                    "gap": {
+                      "default": 1,
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 4
+                    },
+                    "labels": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "hardware": {
+                      "default": "bar",
+                      "type": "string",
+                      "enum": [
+                        "bar",
+                        "knob",
+                        "none"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "count",
+                    "gap",
+                    "labels",
+                    "hardware"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "type",
+                "width",
+                "height",
+                "depth",
+                "baseHeight",
+                "drawers"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "window"
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 12,
+                  "maximum": 128
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 12,
+                  "maximum": 128
+                },
+                "frame": {
+                  "default": 3,
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8
+                },
+                "columns": {
+                  "default": 2,
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "rows": {
+                  "default": 2,
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "mullion": {
+                  "default": 2,
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4
+                },
+                "sillHeight": {
+                  "default": 3,
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 6
+                }
+              },
+              "required": [
+                "type",
+                "width",
+                "height",
+                "frame",
+                "columns",
+                "rows",
+                "mullion",
+                "sillHeight"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "format",
+        "version",
+        "id",
+        "name",
+        "padding",
+        "palette",
+        "colors",
+        "component"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "format": "pixelforge-surface-regions",
+  "version": "1.0",
+  "id": "wall-mask",
+  "surfaces": [
+    {
+      "id": "wall",
+      "frame": "frame-0",
+      "layer": "base",
+      "regions": [
+        {
+          "x": 2,
+          "y": 2,
+          "width": 28,
+          "height": 20
+        }
+      ],
+      "protected": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 30,
+          "height": 1
+        },
+        {
+          "x": 1,
+          "y": 22,
+          "width": 30,
+          "height": 1
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "width": 1,
+          "height": 20
+        },
+        {
+          "x": 30,
+          "y": 2,
+          "width": 1,
+          "height": 20
+        }
+      ]
+    }
+  ]
+}

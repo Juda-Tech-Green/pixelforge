@@ -1,0 +1,25 @@
+{
+  "format": "pixelforge-material",
+  "version": "1.0",
+  "id": "aged-brick",
+  "type": "brick",
+  "seed": 1951,
+  "intensity": 1,
+  "origin": [
+    0,
+    0
+  ],
+  "palette": {
+    "base": 5,
+    "highlight": 6,
+    "shadow": 7,
+    "mortar": 8
+  },
+  "parameters": {
+    "brickWidth": 7,
+    "brickHeight": 4,
+    "mortarWidth": 1,
+    "stagger": true,
+    "variation": 0.18
+  }
+}

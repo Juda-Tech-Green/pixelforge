@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0 — Parametric Props, Procedural Materials & Semantic Room Composition
+
+- Parametric desk, cabinet and window sources compile deterministic editable rig/sprite output through existing geometry; structural fit diagnostics, prop create/resolve and explicit palette roles.
+- Seeded wood, metal, plaster, brick and ordered dithering produce native sprite operations/variants through explicit ownership masks. Named prop-part masks protect outlines, hardware, labels and unselected surfaces; non-parametric sprites use authored regions/protection. Mask fingerprints require explicit refresh after source layout changes.
+- Semantic room sources resolve wall/floor and instance anchors, dependency cycles, layers/depth and clipping diagnostics into existing scene1.0. Already materialized sprites are translated at integer positions without regenerating geometry or texture. Source/instance mappings, anchor metadata, exact RGBA palette merging and immutable references remain editable.
+- Runtime capability/schema discovery, doctor, portable Sprite Creator guidance, canonical examples and the integrated parametric-environments guide connect the full workflow. Package/CLI versions aligned to 0.9.0; all asset/request schema formats remain 1.0.
+- User-reported Antigravity artistic acceptance: alpha.1 props PASS, alpha.2 materials PASS and alpha.3 room composition PASS. Prior focused implementation suites reported8/8 each; release verification uses one bounded integration invocation. Evaluation directories are preserved locally and excluded from release fixtures; artwork was not regenerated for publication.
+- Limits: three prop types, one static component, fixed2D projection and flat base shading with optional axis-aligned material texturing; authored regions for arbitrary sprites; static integer room translation, one selected frame per asset, exact-size backgrounds and256 merged colors. No automatic collision-aware layout, advanced lighting, physics,3D perspective, articulation or automatic clutter.
+
 ## 0.8.3 — Semantic Facial Expressions & Visual Storytelling
 
 - Seven opt-in semantic presets: neutral, tired, focused, worried, surprised, angry and happy. Intensity 0..1; normalized eye opening, brow lift/tilt and mouth curvature/opening overrides.

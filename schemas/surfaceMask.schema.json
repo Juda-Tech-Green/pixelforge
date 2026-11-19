@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/pixelforge-surface-mask",
+  "$defs": {
+    "pixelforge-surface-mask": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "const": "pixelforge-surface-mask"
+        },
+        "version": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1024
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1024
+            },
+            "fingerprint": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$"
+            }
+          },
+          "required": [
+            "width",
+            "height",
+            "fingerprint"
+          ],
+          "additionalProperties": false
+        },
+        "surfaces": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "frame": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "layer": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "runs": {
+                "maxItems": 8192,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1023
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1023
+                    },
+                    "length": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1024
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "length"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "protected": {
+                "default": [],
+                "maxItems": 8192,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1023
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1023
+                    },
+                    "length": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1024
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "length"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "id",
+              "frame",
+              "layer",
+              "runs",
+              "protected"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "format",
+        "version",
+        "id",
+        "source",
+        "surfaces"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

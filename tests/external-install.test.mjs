@@ -47,7 +47,7 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
     const npm = process.env.npm_execpath;
     assert.ok(npm, "Run through npm run test:external");
     const tarballs = ["core", "exporters", "cli", "phaser", "audio-core", "audio-exporters", "geometry"].map((name) =>
-      resolve(root, "release", `pixelforge-${name}-0.8.3.tgz`),
+      resolve(root, "release", `pixelforge-${name}-0.9.0.tgz`),
     );
     run([
       npm,
@@ -74,7 +74,7 @@ test("packed CLI and dependency graph run outside the workspace", async () => {
           "utf8",
         ),
       );
-      assert.equal(p.version, "0.8.3");
+      assert.equal(p.version, "0.9.0");
       const files = await readdir(
         join(dir, "node_modules", "@pixelforge", name),
       );

@@ -1,0 +1,21 @@
+{
+  "format": "pixelforge-surface-regions",
+  "version": "1.0",
+  "id": "office-wall",
+  "surfaces": [
+    {
+      "id": "wall",
+      "frame": "frame-0",
+      "layer": "base",
+      "regions": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 192,
+          "height": 74
+        }
+      ],
+      "protected": []
+    }
+  ]
+}

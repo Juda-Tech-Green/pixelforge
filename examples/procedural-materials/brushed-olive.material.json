@@ -1,0 +1,24 @@
+{
+  "format": "pixelforge-material",
+  "version": "1.0",
+  "id": "brushed-olive",
+  "type": "metal",
+  "seed": 1954,
+  "intensity": 1,
+  "origin": [
+    0,
+    0
+  ],
+  "palette": {
+    "base": 10,
+    "highlight": 11,
+    "shadow": 12
+  },
+  "parameters": {
+    "direction": "horizontal",
+    "scale": 1,
+    "density": 0.1,
+    "scratches": 0.02,
+    "wear": 0.01
+  }
+}

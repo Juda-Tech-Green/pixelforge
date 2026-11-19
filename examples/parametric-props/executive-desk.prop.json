@@ -1,0 +1,95 @@
+{
+  "format": "pixelforge-parametric-prop",
+  "version": "1.0",
+  "id": "executive-desk",
+  "name": "Executive walnut desk",
+  "padding": 2,
+  "palette": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      42,
+      35,
+      32,
+      255
+    ],
+    [
+      133,
+      85,
+      58,
+      255
+    ],
+    [
+      191,
+      143,
+      91,
+      255
+    ],
+    [
+      82,
+      54,
+      43,
+      255
+    ],
+    [
+      202,
+      171,
+      102,
+      255
+    ],
+    [
+      112,
+      151,
+      153,
+      255
+    ],
+    [
+      114,
+      124,
+      99,
+      255
+    ],
+    [
+      73,
+      83,
+      68,
+      255
+    ],
+    [
+      181,
+      188,
+      157,
+      255
+    ]
+  ],
+  "colors": {
+    "outline": 1,
+    "body": 2,
+    "light": 3,
+    "shadow": 4,
+    "hardware": 5,
+    "glass": 6
+  },
+  "component": {
+    "type": "desk",
+    "width": 72,
+    "height": 36,
+    "depth": 8,
+    "topThickness": 3,
+    "legWidth": 3,
+    "legInset": 3,
+    "legHeight": 6,
+    "drawers": {
+      "count": 3,
+      "gap": 1,
+      "labels": false,
+      "hardware": "bar",
+      "side": "both",
+      "width": 18
+    }
+  }
+}

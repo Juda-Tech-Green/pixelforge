@@ -1,0 +1,24 @@
+{
+  "format": "pixelforge-material",
+  "version": "1.0",
+  "id": "walnut",
+  "type": "wood",
+  "seed": 1953,
+  "intensity": 1,
+  "origin": [
+    0,
+    0
+  ],
+  "palette": {
+    "base": 10,
+    "highlight": 11,
+    "shadow": 12
+  },
+  "parameters": {
+    "direction": "horizontal",
+    "scale": 1,
+    "density": 0.25,
+    "variation": 0.25,
+    "wear": 0.03
+  }
+}

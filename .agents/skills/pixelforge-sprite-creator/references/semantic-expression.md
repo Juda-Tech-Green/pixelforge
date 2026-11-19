@@ -1,6 +1,6 @@
 # Semantic facial expressions (v0.8.3)
 
-Requires the matching 0.8.3 runtime/package set. Check live
+Requires the matching 0.9.0 runtime/package set. Check live
 `capabilities --json` → `semanticExpressions`; 0.8.2 installations do not
 include this opt-in feature. Query `capabilities --schema
 semanticExpression` and `--schema facialLandmarks`; these are authoritative.

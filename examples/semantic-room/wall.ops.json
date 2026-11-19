@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "operations": [
+    {
+      "op": "drawRect",
+      "frame": "frame-0",
+      "layer": "base",
+      "x": 0,
+      "y": 0,
+      "width": 192,
+      "height": 74,
+      "color": 2,
+      "filled": true
+    }
+  ]
+}

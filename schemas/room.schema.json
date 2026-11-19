@@ -1,0 +1,327 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/pixelforge-room",
+  "$defs": {
+    "pixelforge-room": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "const": "pixelforge-room"
+        },
+        "version": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "canvas": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 512
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 512
+            }
+          },
+          "required": [
+            "width",
+            "height"
+          ],
+          "additionalProperties": false
+        },
+        "palette": {
+          "minItems": 2,
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255
+              },
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255
+              },
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255
+              },
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255
+              }
+            ],
+            "items": false,
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "description": "Background palette; exact sprite colors are merged deterministically"
+        },
+        "background": {
+          "type": "object",
+          "properties": {
+            "wallHeight": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 511
+            },
+            "wallColor": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 255
+            },
+            "floorColor": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 255
+            },
+            "wallAsset": {
+              "description": "Already materialized wall sprite, exactly the wall-region size",
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+            },
+            "floorAsset": {
+              "description": "Already materialized floor sprite, exactly the floor-region size",
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+            }
+          },
+          "required": [
+            "wallHeight",
+            "wallColor",
+            "floorColor"
+          ],
+          "additionalProperties": false
+        },
+        "assets": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "type": {
+                "default": "sprite",
+                "type": "string",
+                "enum": [
+                  "sprite",
+                  "prop"
+                ]
+              },
+              "frame": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "anchors": {
+                "default": {},
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                },
+                "additionalProperties": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "integer",
+                      "minimum": -4096,
+                      "maximum": 4096
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -4096,
+                      "maximum": 4096
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            },
+            "required": [
+              "source",
+              "type",
+              "anchors"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "instances": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+              },
+              "asset": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+              },
+              "layer": {
+                "type": "string",
+                "enum": [
+                  "architecture",
+                  "background-furniture",
+                  "furniture",
+                  "actors",
+                  "foreground"
+                ]
+              },
+              "depth": {
+                "default": 0,
+                "type": "integer",
+                "minimum": -64,
+                "maximum": 64
+              },
+              "placement": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "anchor": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 192
+                      },
+                      "align": {
+                        "default": "origin",
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                      },
+                      "offset": {
+                        "default": [
+                          0,
+                          0
+                        ],
+                        "type": "array",
+                        "prefixItems": [
+                          {
+                            "type": "integer",
+                            "minimum": -4096,
+                            "maximum": 4096
+                          },
+                          {
+                            "type": "integer",
+                            "minimum": -4096,
+                            "maximum": 4096
+                          }
+                        ],
+                        "items": false,
+                        "minItems": 2,
+                        "maxItems": 2
+                      }
+                    },
+                    "required": [
+                      "anchor",
+                      "align",
+                      "offset"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "position": {
+                        "type": "array",
+                        "prefixItems": [
+                          {
+                            "type": "integer",
+                            "minimum": -4096,
+                            "maximum": 4096
+                          },
+                          {
+                            "type": "integer",
+                            "minimum": -4096,
+                            "maximum": 4096
+                          }
+                        ],
+                        "items": false,
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "description": "Explicit top-left canvas position"
+                      }
+                    },
+                    "required": [
+                      "position"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "allowClipping": {
+                "default": false,
+                "type": "boolean"
+              },
+              "transform": {
+                "type": "object",
+                "properties": {
+                  "scale": {
+                    "type": "number",
+                    "const": 1
+                  },
+                  "rotation": {
+                    "type": "number",
+                    "const": 0
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "asset",
+              "layer",
+              "depth",
+              "placement",
+              "allowClipping"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "format",
+        "version",
+        "id",
+        "name",
+        "canvas",
+        "palette",
+        "background",
+        "assets",
+        "instances"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

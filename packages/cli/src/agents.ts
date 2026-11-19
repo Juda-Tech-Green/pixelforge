@@ -2,19 +2,23 @@ import { Command, InvalidArgumentError } from "commander";
 import { readFile, writeFile, mkdir, lstat, realpath } from "node:fs/promises";
 import { resolve, dirname, basename } from "node:path";
 import { z } from "zod";
-import { projectSchema, fromDocument, listOperations, getAnimation, facialLandmarksSchema, semanticExpressionSchema, semanticExpressionCapabilities } from "@pixelforge/core";
+import { projectSchema, fromDocument, listOperations, getAnimation, facialLandmarksSchema, semanticExpressionSchema, semanticExpressionCapabilities,
+  materialSchema, surfaceMaskSchema, surfaceRegionsSchema, materialCapabilities, materialSettingsDiagnostics, validateSurfaceMask, surfaceMaskFromRegions } from "@pixelforge/core";
+import { materialContext, readMaterialInput } from "./materials.js";
 import { expressionContext } from "./expression.js";
 import { soundSchema } from "@pixelforge/audio-core";
 import { rigSchema, poseSchema, posesSchema, animationSchema, sceneSchema, parseRig,
   applyPose, sampleRigAnimation, validateScene, semanticPoseSchema, heldObjectSchema,
-  semanticPoseCapabilities, resolveSemanticPose, type Diagnostic, type SpriteResources } from "@pixelforge/geometry";
+  semanticPoseCapabilities, resolveSemanticPose, parametricPropSchema, parametricPropCapabilities, buildProp, roomSchema, roomCapabilities, type Diagnostic, type SpriteResources } from "@pixelforge/geometry";
+import { roomContext } from "./room.js";
 import { semanticContext } from "./semantic.js";
 import { exportPreview, exportContactSheet, PREVIEW_LIMITS, assertNoSymlinkPath } from "@pixelforge/exporters";
 
 const schemas = { sprite: projectSchema, sound: soundSchema, rig: rigSchema,
   pose: poseSchema, poses: posesSchema, rigAnimation: animationSchema, scene: sceneSchema,
   semanticPose: semanticPoseSchema, heldObject: heldObjectSchema,
-  semanticExpression: semanticExpressionSchema, facialLandmarks: facialLandmarksSchema };
+  semanticExpression: semanticExpressionSchema, facialLandmarks: facialLandmarksSchema, prop: parametricPropSchema,
+  material: materialSchema, surfaceMask: surfaceMaskSchema, surfaceRegions: surfaceRegionsSchema, room: roomSchema };
 type AssetType = keyof typeof schemas;
 const report = (data: unknown) => process.stdout.write(JSON.stringify(data) + "\n");
 const integer = (value: string) => {
@@ -33,6 +37,11 @@ function detect(input: unknown, file: string): AssetType | undefined {
   if ("format" in input && input.format === "pixelforge-held-object") return "heldObject";
   if ("format" in input && input.format === "pixelforge-semantic-expression") return "semanticExpression";
   if ("format" in input && input.format === "pixelforge-facial-landmarks") return "facialLandmarks";
+  if ("format" in input && input.format === "pixelforge-parametric-prop") return "prop";
+  if ("format" in input && input.format === "pixelforge-material") return "material";
+  if ("format" in input && input.format === "pixelforge-surface-mask") return "surfaceMask";
+  if ("format" in input && input.format === "pixelforge-surface-regions") return "surfaceRegions";
+  if ("format" in input && input.format === "pixelforge-room") return "room";
   if ("joints" in input) return "rig";
   if ("objects" in input) return "scene";
   if ("poses" in input || "rig" in input) return "poses";
@@ -62,6 +71,9 @@ export function registerAgentCommands(program: Command): void {
         schema: `capabilities --schema ${type}`, doctor: true })),
         commands: commands(program), operations: listOperations(), semanticPosing: semanticPoseCapabilities,
         semanticExpressions: semanticExpressionCapabilities,
+        parametricProps: parametricPropCapabilities,
+        materials: materialCapabilities,
+        rooms: roomCapabilities,
         rendering: { preview: ["sprite", "rig-generated sprite"], outputs: ["png", "contact JSON"],
           previewLimits: PREVIEW_LIMITS, contactLimits: { maxCells: 1000, maxPixels: 67_108_864, maxDimension: 32767, maxColumns: 32, maxScale: 16 },
           productionExports: ["spritesheet", "frames", "phaser"],
@@ -76,11 +88,13 @@ export function registerAgentCommands(program: Command): void {
     .option("--library <file>", "Semantic base pose/contact library")
     .option("--sprite <file>", "Expression source sprite")
     .option("--landmarks <file>", "Expression facial landmarks")
+    .option("--mask <file>", "Material ownership mask")
+    .option("--surfaces <ids>", "Material surface IDs")
     .option("--pose <file>", "Expression FK pose context")
     .option("--joint <id>", "Expression head joint role mapping")
     .option("--object <file>", "Semantic held-object resource", (v: string, previous: string[]) => [...previous, v], [])
     .option("--asset <id=file>", "Scene sprite resource", (v: string, prev: string[]) => [...prev, v], [])
-    .action(async (file: string, o: { json?: boolean; type?: string; rig?: string; library?: string; object: string[]; asset: string[]; sprite?: string; landmarks?: string; pose?: string; joint?: string }) => {
+    .action(async (file: string, o: { json?: boolean; type?: string; rig?: string; library?: string; object: string[]; asset: string[]; sprite?: string; landmarks?: string; pose?: string; joint?: string; mask?: string; surfaces?: string }) => {
       let assetType: string = o.type ?? "unknown";
       const diagnostics: Record<string, unknown>[] = [];
       const add = (code: string, path: string, message: string, suggestion: string, extra: Record<string, unknown> = {}) =>
@@ -92,7 +106,20 @@ export function registerAgentCommands(program: Command): void {
         if (!Object.hasOwn(schemas, assetType)) add("PF_ASSET_UNSUPPORTED", "$", "Cannot identify a supported asset type.", `Use --type ${Object.keys(schemas).join("|")} for incomplete assets.`);
         else {
           const type = assetType as AssetType, result = schemas[type].safeParse(input);
-          if (!result.success) for (const issue of result.error.issues) {
+          if (type === "room") {
+            for (const d of (await roomContext(input, file)).result.diagnostics) add(d.code, d.path, d.message, d.suggestion, { severity: d.severity });
+          } else if (type === "material") {
+            const items = o.sprite && o.mask ? (await materialContext(input, { ...o, sprite: o.sprite })).diagnostics : materialSettingsDiagnostics(input);
+            for (const d of items) add(d.code, d.path, d.message, d.suggestion, { severity: d.severity });
+            if (!o.sprite || !o.mask) add("PF_CONTEXT_REQUIRED", "$", "Material settings checked; ownership/palette checks need context.", "Pass --sprite FILE --mask FILE and optional --surfaces IDS.", { severity: "info" });
+          } else if (type === "surfaceMask") {
+            for (const d of validateSurfaceMask(input, o.sprite ? await readMaterialInput(o.sprite, 67_108_864) : undefined).diagnostics) add(d.code, d.path, d.message, d.suggestion, { severity: d.severity });
+            if (!o.sprite) add("PF_CONTEXT_REQUIRED", "$", "Mask bounds checked; source binding/palette safety requires a sprite.", "Pass --sprite FILE.", { severity: "info" });
+          } else if (type === "surfaceRegions" && o.sprite) {
+            for (const d of surfaceMaskFromRegions(await readMaterialInput(o.sprite, 67_108_864), input).diagnostics) add(d.code, d.path, d.message, d.suggestion, { severity: d.severity });
+          } else if (type === "prop") {
+            for (const d of buildProp(input).diagnostics) add(d.code, d.path, d.message, d.suggestion, { severity: d.severity });
+          } else if (!result.success) for (const issue of result.error.issues) {
             const contact = issue.path.includes("contacts") && issue.path.at(-1) === "id";
             const id = issue.code === "invalid_format";
             add(type === "semanticExpression" && issue.path.includes("intensity") ? "PF_EXPRESSION_INTENSITY_INVALID" : type === "facialLandmarks" && issue.path.includes("profile") ? "PF_FACE_PROFILE_UNSUPPORTED" : contact ? "PF_CONTACT_ID_INVALID" : id ? "PF_IDENTIFIER_INVALID" : `PF_SCHEMA_${issue.code.toUpperCase()}`,

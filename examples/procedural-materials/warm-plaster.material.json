@@ -1,0 +1,22 @@
+{
+  "format": "pixelforge-material",
+  "version": "1.0",
+  "id": "warm-plaster",
+  "type": "plaster",
+  "seed": 1952,
+  "intensity": 1,
+  "origin": [
+    0,
+    0
+  ],
+  "palette": {
+    "base": 2,
+    "highlight": 3,
+    "shadow": 4
+  },
+  "parameters": {
+    "patchSize": 6,
+    "density": 0.38,
+    "variation": 0.25
+  }
+}

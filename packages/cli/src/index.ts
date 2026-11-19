@@ -29,10 +29,13 @@ import { registerAudioCommands } from "./audio.js";
 import { registerGeometryCommands } from "./geometry.js";
 import { registerAgentCommands } from "./agents.js";
 import { registerExpressionCommands } from "./expression.js";
+import { registerPropCommands } from "./props.js";
+import { registerMaterialCommands } from "./materials.js";
+import { registerRoomCommands } from "./room.js";
 import { exportFramePNG, exportSpriteSheet } from "@pixelforge/exporters";
 const program = new Command()
   .name("pixelforge")
-  .version("0.8.3")
+  .version("0.9.0")
   .description("Deterministic, editable pixel art for agents and humans");
 const integer = (value: string) => {
   if (!/^\d+$/.test(value) || !Number.isSafeInteger(Number(value)))
@@ -395,6 +398,9 @@ program
 registerAudioCommands(program, atomicWrite);
 registerGeometryCommands(program, atomicWrite);
 registerExpressionCommands(program, atomicWrite);
+registerPropCommands(program, atomicWrite);
+registerMaterialCommands(program, atomicWrite);
+registerRoomCommands(program, atomicWrite);
 registerAgentCommands(program);
 program.parseAsync().catch((error: unknown) => {
   process.stderr.write(

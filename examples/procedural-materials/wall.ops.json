@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "operations": [
+    {
+      "op": "drawRect",
+      "frame": "frame-0",
+      "layer": "base",
+      "x": 1,
+      "y": 1,
+      "width": 30,
+      "height": 22,
+      "color": 2,
+      "filled": true
+    },
+    {
+      "op": "drawRect",
+      "frame": "frame-0",
+      "layer": "base",
+      "x": 1,
+      "y": 1,
+      "width": 30,
+      "height": 22,
+      "color": 1,
+      "filled": false
+    }
+  ]
+}
